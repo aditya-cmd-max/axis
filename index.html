@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exonova Axis</title>
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-gradient-dark: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --card-shadow-dark: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+            --m3-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+            --m3-elevation-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+            --m3-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: all 0.3s ease;
+            color: #2d3748;
+            background-color: #f7fafc;
+            overflow-x: hidden;
+        }
+
+        .dark body {
+            color: #e2e8f0;
+            background-color: #111827;
+        }
+
+        .gradient-bg body {
+            color: #ffffff;
+            background: var(--primary-gradient);
+        }
+
+        .gradient-bg-dark body {
+            color: #ffffff;
+            background: var(--primary-gradient-dark);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+        }
+
+        /* Main container styling */
+        #main-container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 0.5rem;
+        }
+
+        #main-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #ffffff;
+            color: #2d3748;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            min-height: 90vh;
+        }
+
+        .dark #main-container {
+            background-color: #1f2937;
+            color: #e2e8f0;
+            box-shadow: var(--card-shadow-dark);
+        }
+        
+        .gradient-bg #main-container,
+        .gradient-bg-dark #main-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Header styling */
+        .app-header {
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1rem 1.2rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .dark .app-header {
+            background: #1f2937;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .gradient-bg .app-header,
+        .gradient-bg-dark .app-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Product card styling */
+        .product-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: var(--m3-elevation-1);
+            position: relative;
+        }
+
+        .dark .product-card {
+            background: #1f2937;
+            box-shadow: var(--m3-elevation-1);
+        }
+
+        .gradient-bg .product-card,
+        .gradient-bg-dark .product-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--m3-elevation-3);
+        }
+
+        .dark .product-card:hover {
+            box-shadow: var(--m3-elevation-3);
+        }
+
+        /* App view container */
+        .app-view-container {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background-color: #f7fafc;
+            color: #2d3748;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .dark .app-view-container {
+            background-color: #111827;
+            color: #e2e8f0;
+        }
+
+        .gradient-bg .app-view-container,
+        .gradient-bg-dark .app-view-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ffffff;
+        }
+
+        .app-view-container.active {
+            transform: translateX(0);
+        }
+
+        /* Theme buttons */
+        .theme-btn {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .dark .theme-btn {
+            border: 2px solid #4b5563;
+        }
+
+        .theme-btn.active {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
+        }
+
+        /* Search overlay */
+        #search-overlay {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        #search-modal {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .dark #search-modal {
+            background: #1f2937;
+            box-shadow: var(--card-shadow-dark);
+        }
+
+        /* Settings modal */
+        #settings-modal > div {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .dark #settings-modal > div {
+            background: #1f2937;
+            box-shadow: var(--card-shadow-dark);
+        }
+
+        /* Bottom navigation for mobile app feel */
+        .bottom-nav {
+            background: #ffffff;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+            border-radius: 20px 20px 0 0;
+            padding: 0.75rem 0;
+        }
+
+        .dark .bottom-nav {
+            background: #1f2937;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .gradient-bg .bottom-nav,
+        .gradient-bg-dark .bottom-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            padding: 0.5rem;
+        }
+
+        .nav-item.active {
+            color: #0ea5e9;
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Tab content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .empty-state .material-icons {
+            font-size: 4rem;
+            color: #cbd5e0;
+            margin-bottom: 1rem;
+        }
+
+        .dark .empty-state .material-icons {
+            color: #4b5563;
+        }
+
+        /* Material 3 button styles */
+        .m3-button {
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-weight: 500;
+            text-transform: none;
+            transition: all 0.2s ease;
+            box-shadow: var(--m3-elevation-1);
+        }
+
+        .m3-button:hover {
+            box-shadow: var(--m3-elevation-2);
+        }
+
+        .m3-button:active {
+            box-shadow: var(--m3-elevation-1);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            #main-container-wrapper {
+                padding: 0;
+            }
+            
+            #main-container {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            
+            .app-header {
+                border-radius: 0;
+            }
+            
+            .bottom-nav {
+                border-radius: 0;
+            }
+            
+            .product-card {
+                padding: 1rem;
+            }
+            
+            .product-card h3 {
+                font-size: 0.9rem;
+            }
+            
+            .product-card p {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Animation for favorite button */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .favorite-pulse {
+            animation: pulse 0.5s ease;
+        }
+
+        /* Status bar styling */
+        .status-bar {
+            height: 44px;
+        }
+
+        /* Material 3 surface variants */
+        .m3-surface {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: var(--m3-elevation-1);
+        }
+
+        .dark .m3-surface {
+            background-color: #1e293b;
+        }
+
+        /* Loading animation */
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(200px + 100%) 0; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200px 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .dark .shimmer {
+            background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+            background-size: 200px 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: #323232;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            box-shadow: var(--m3-elevation-3);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+    </style>
+</head>
+
+<body class="light">
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Wrapper to simulate mobile screen on desktop -->
+    <div id="main-container-wrapper">
+        <!-- Main Container -->
+        <div id="main-container" class="min-h-screen flex flex-col">
+
+            <!-- Status Bar (for mobile app feel) -->
+            <div class="status-bar flex justify-between items-center px-5 py-3 text-xs text-gray-500 dark:text-gray-400">
+                <div id="current-time" class="font-medium">12:00 PM</div>
+                <div class="flex items-center space-x-1">
+                    <span class="material-icons text-sm">network_wifi</span>
+                    <span class="material-icons text-sm">signal_cellular_4_bar</span>
+                    <span class="material-icons text-sm">battery_5_bar</span>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <header class="app-header flex items-center justify-between py-4 mb-2 px-6">
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="h-10 w-10 rounded-xl shadow-lg animate-pulse-slow" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></div>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Exonova Axis</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">All of Exonova • At one place</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="search-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 ripple">
+                        <span class="material-icons text-gray-600 dark:text-gray-300">search</span>
+                    </button>
+                    <button id="settings-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 ripple">
+                        <span class="material-icons text-gray-600 dark:text-gray-300">settings</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Search Bar Overlay -->
+            <div id="search-overlay" class="hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
+                <div id="search-modal" class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-5 transform transition-all duration-300 scale-95 opacity-0">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="material-icons text-gray-400 dark:text-gray-500">search</span>
+                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="input-field flex-grow bg-transparent border-none focus:outline-none text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500">
+                        <button id="close-search-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ripple">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div id="search-results" class="max-h-72 overflow-y-auto">
+                        <!-- Search results will be rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Modal -->
+            <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-4 backdrop-blur-sm">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm">
+                    <div class="flex justify-between items-center mb-5">
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Appearance</h2>
+                        <button id="close-settings-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ripple">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <button data-theme="light" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                            <div class="bg-white w-full h-8 rounded-lg mb-2 border border-gray-200"></div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Light</span>
+                        </button>
+                        <button data-theme="dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                            <div class="bg-gray-800 w-full h-8 rounded-lg mb-2 border border-gray-700"></div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark</span>
+                        </button>
+                        <button data-theme="gradient" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                            <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Gradient</span>
+                        </button>
+                        <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Night</span>
+                        </button>
+                    </div>
+                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                        <h3 class="font-medium mb-3 text-gray-800 dark:text-white">Other Settings</h3>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-gray-600 dark:text-gray-400">Notifications</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-gray-600 dark:text-gray-400">Auto-update</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <main id="main-content" class="flex-grow px-5 pb-20 overflow-y-auto">
+                <!-- Tab content will be rendered here -->
+            </main>
+
+            <!-- Bottom Navigation (for mobile app feel) -->
+            <nav class="bottom-nav flex justify-around items-center">
+                <a href="#" data-tab="home" class="nav-item active flex flex-col items-center text-xs ripple">
+                    <span class="material-icons text-blue-500">home</span>
+                    <span class="mt-1 text-blue-500">Home</span>
+                </a>
+                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center text-xs text-gray-500 dark:text-gray-400 ripple">
+                    <span class="material-icons">favorite</span>
+                    <span class="mt-1">Favorites</span>
+                </a>
+                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center text-xs text-gray-500 dark:text-gray-400 ripple">
+                    <span class="material-icons">update</span>
+                    <span class="mt-1">Updates</span>
+                </a>
+            </nav>
+
+            <!-- Dynamic View Container (for opening apps) -->
+            <div id="app-view" class="fixed inset-0 z-40 p-4 transition-transform duration-500 ease-in-out transform translate-x-full overflow-y-auto app-view-container">
+                <div class="p-4 flex items-center justify-between mb-2">
+                    <button id="back-to-home-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 ripple">
+                        <span class="material-icons">arrow_back</span>
+                    </button>
+                    <h2 id="app-title" class="text-xl font-semibold flex-grow text-center"></h2>
+                    <div class="w-8"></div> <!-- Spacer to center title -->
+                </div>
+                <div class="p-4" id="app-content">
+                    <!-- App content will be loaded here -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Data for Exonova Products with real logos and URLs
+        const products = [{
+            id: 'el-futuro',
+            name: 'El Futuro',
+            description: 'Intelligent AI • Useful for everyday tasks',
+            logoUrl: 'https://aditya-cmd-max.github.io/exonovaai/logo.png',
+            color: 'bg-blue-500',
+            url: 'https://aditya-cmd-max.github.io/exonovaai/chat.html'
+        }, {
+            id: 'skycast-pro',
+            name: 'SkyCast Pro',
+            description: 'Interactive environmental science platform with real-world data visualization.',
+            logoUrl: 'https://aditya-cmd-max.github.io/exonovaweather/skycast.png',
+            color: 'bg-green-500',
+            url: 'https://aditya-cmd-max.github.io/exonovaweather/'
+        }, {
+            id: 'popout-pro',
+            name: 'PopOut Pro',
+            description: 'AI-powered visual learning tool for creating engaging educational content.',
+            logoUrl: 'https://aditya-cmd-max.github.io/popout/ChatGPT Image Aug 15, 2025, 08_26_20 PM.png',
+            color: 'bg-black',
+            url: 'https://aditya-cmd-max.github.io/popout/'
+        }, {
+            id: 'exo-code',
+            name: 'ExoCode',
+            description: 'An in-browser code editor.',
+            logoUrl: 'https://placehold.co/128x128/f56565/ffffff?text=ExoCo',
+            color: 'bg-red-500',
+            url: 'https://exonova-phi.vercel.app/'
+        }, {
+            id: 'exo-drive',
+            name: 'ExoDrive',
+            description: 'Cloud storage and file management.',
+            logoUrl: 'https://placehold.co/128x128/ecc94b/ffffff?text=ExoD',
+            color: 'bg-yellow-500',
+            url: 'https://exonova-phi.vercel.app/'
+        }, 
+                         ];
+
+        let currentAnimation = 'slide-in';
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let currentTab = 'home';
+
+        // DOM Elements
+        const mainContent = document.getElementById('main-content');
+        const settingsModal = document.getElementById('settings-modal');
+        const searchOverlay = document.getElementById('search-overlay');
+        const searchModal = document.getElementById('search-modal');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        const appView = document.getElementById('app-view');
+        const appTitle = document.getElementById('app-title');
+        const appContent = document.getElementById('app-content');
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        const navItems = document.querySelectorAll('.nav-item');
+        const currentTimeElement = document.getElementById('current-time');
+        const toastElement = document.getElementById('toast');
+
+        // Functions
+        function applyTheme(theme) {
+            document.documentElement.className = '';
+            if (theme === 'gradient') {
+                document.documentElement.classList.add('gradient-bg');
+            } else if (theme === 'gradient-dark') {
+                document.documentElement.classList.add('gradient-bg-dark');
+            } else {
+                document.documentElement.classList.add(theme);
+            }
+            localStorage.setItem('theme', theme);
+            currentTheme = theme;
+            updateThemeButtons();
+        }
+
+        function updateThemeButtons() {
+            themeButtons.forEach(btn => {
+                if (btn.dataset.theme === currentTheme) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update navigation
+            navItems.forEach(item => {
+                if (item.dataset.tab === tabName) {
+                    item.classList.add('active');
+                    item.querySelector('span:first-child').classList.add('text-blue-500');
+                    item.querySelector('span:last-child').classList.add('text-blue-500');
+                    item.querySelector('span:first-child').classList.remove('text-gray-500', 'dark:text-gray-400');
+                    item.querySelector('span:last-child').classList.remove('text-gray-500', 'dark:text-gray-400');
+                } else {
+                    item.classList.remove('active');
+                    item.querySelector('span:first-child').classList.remove('text-blue-500');
+                    item.querySelector('span:last-child').classList.remove('text-blue-500');
+                    item.querySelector('span:first-child').classList.add('text-gray-500', 'dark:text-gray-400');
+                    item.querySelector('span:last-child').classList.add('text-gray-500', 'dark:text-gray-400');
+                }
+            });
+            
+            // Render appropriate content
+            if (tabName === 'home') {
+                renderHomePage();
+            } else if (tabName === 'favorites') {
+                renderFavoritesPage();
+            } else if (tabName === 'updates') {
+                renderUpdatesPage();
+            }
+        }
+
+        function renderFavoritesPage() {
+            const favoriteProducts = products.filter(p => favorites.includes(p.id));
+            
+            if (favoriteProducts.length === 0) {
+                mainContent.innerHTML = `
+                    <div class="empty-state animate-fade-in">
+                        <span class="material-icons">favorite_border</span>
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">No favorites yet</h3>
+                        <p class="text-gray-500 dark:text-gray-400">Tap the star icon on any app to add it to your favorites</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            mainContent.innerHTML = `
+                <div class="animate-fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Your Favorites</h2>
+                        <span class="material-icons text-yellow-500 text-3xl">star</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        ${favoriteProducts.map(p => renderProductCard(p)).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners to the favorite buttons
+            attachFavoriteButtonListeners();
+            
+            // Add animations to elements
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.product-card');
+                cards.forEach((card, index) => {
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    card.classList.add('animate-slide-up');
+                });
+            }, 100);
+        }
+
+        function renderHomePage() {
+            mainContent.innerHTML = `
+                ${renderWelcomeHeader()}
+                ${renderUpdatesSection()}
+                ${renderProducts()}
+            `;
+            
+            // Add event listeners to the favorite buttons
+            attachFavoriteButtonListeners();
+            
+            // Add animations to elements
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.product-card');
+                cards.forEach((card, index) => {
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    card.classList.add('animate-slide-up');
+                });
+            }, 100);
+        }
+
+        function renderUpdatesPage() {
+            mainContent.innerHTML = `
+                <div class="animate-fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Latest Updates</h2>
+                        <span class="material-icons text-blue-500 text-3xl">update</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="m3-surface p-5 rounded-2xl">
+                            <div class="flex items-center mb-3">
+                                <span class="material-icons text-blue-500 mr-2">new_releases</span>
+                                <h3 class="font-semibold text-gray-900 dark:text-white">Blog#8 gets 2k views</h3>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Our blog on the topic 'Bananas are Radioactive' got 2k views.</p>
+                            <a href="https://aditya-cmd-max.github.io/exonova-/blogs/blog8.html" class="text-blue-500 text-sm font-medium flex items-center">
+                                Read Blog #8
+                                <span class="material-icons text-sm ml-1">arrow_forward</span>
+                            </a>
+                            <div class="text-xs text-gray-400 mt-3">14/09/2025</div>
+                        </div>
+                        
+                        <div class="m3-surface p-5 rounded-2xl">
+                            <div class="flex items-center mb-3">
+                                <span class="material-icons text-green-500 mr-2">rocket_launch</span>
+                                <h3 class="font-semibold text-gray-900 dark:text-white">Introducing 'Exonova Axis'</h3>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Use all the exonova products at one place to increase your productivity.</p>
+                            <a href="https://exonova-phi.vercel.app/" class="text-blue-500 text-sm font-medium flex items-center">
+                                Visit Exonova Website
+                                <span class="material-icons text-sm ml-1">arrow_forward</span>
+                            </a>
+                            <div class="text-xs text-gray-400 mt-3">15/09/2025</div>
+                        </div>
+                        
+                        <div class="m3-surface p-5 rounded-2xl">
+                            <div class="flex items-center mb-3">
+                                <span class="material-icons text-purple-500 mr-2">bug_report</span>
+                                <h3 class="font-semibold text-gray-900 dark:text-white">Bug Fixes & Improvements</h3>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Fixed several UI issues and improved performance on mobile devices.</p>
+                            <div class="text-xs text-gray-400 mt-3">16/09/2025</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderWelcomeHeader() {
+            return `
+                <div class="mb-8 animate-slide-up">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Welcome to Exonova Axis</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Your <strong>all-in-one</strong> productivity suite with powerful tools for work and creativity.</p>
+                </div>
+            `;
+        }
+
+        function renderUpdatesSection() {
+            return `
+                <div class="m3-surface p-5 rounded-2xl mb-8 animate-fade-in">
+                    <div class="flex items-center mb-4">
+                        <span class="material-icons text-blue-500 mr-2">new_releases</span>
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">What's New in Exonova</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-blue-500 pl-4 py-1">
+                            <h3 class="font-medium text-gray-900 dark:text-white">Blog#8 gets 2k views</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Our blog on the topic 'Bananas are Radioactive' got 2k views.</p>
+                            <a href="https://aditya-cmd-max.github.io/exonova-/blogs/blog8.html" class="text-blue-500 text-xs">Exonova Blog 8</a>
+                            <div class="text-xs text-gray-400 mt-1">14/09/2025</div>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4 py-1">
+                            <h3 class="font-medium text-gray-900 dark:text-white">Introducing 'Exonova Axis'</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Use all the exonova products at one place to increase your productivity.</p>
+                            <a href="https://exonova-phi.vercel.app/" class="text-blue-500 text-xs">Exonova Oficial Website</a>
+                            <div class="text-xs text-gray-400 mt-1">15/09/2025</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProducts(filteredProducts = products) {
+            const nonFavoriteProducts = filteredProducts.filter(p => !favorites.includes(p.id));
+            if (nonFavoriteProducts.length === 0 && favorites.length > 0) {
+                return '';
+            }
+            return `
+                <div class="animate-fade-in">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">All Products</h2>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">${products.length} apps</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        ${nonFavoriteProducts.map(p => renderProductCard(p)).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProductCard(product) {
+            const isFavorite = favorites.includes(product.id);
+            return `
+                <div class="product-card p-5 rounded-2xl flex flex-col items-center text-center relative group ripple" data-id="${product.id}">
+                    <button class="favorite-btn absolute top-3 right-3 p-1 rounded-full bg-white dark:bg-gray-800 shadow-md hover:scale-110 transition-transform" data-id="${product.id}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="${isFavorite ? 'currentColor' : 'none'}" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 ${isFavorite ? 'text-yellow-400' : 'text-gray-400'} transition-colors">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.123 5.143 5.584.404a.562.562 0 01.321.988l-4.202 3.656 1.25 5.437a.562.562 0 01-.84.6l-4.832-2.88-4.833 2.88a.562.562 0 01-.84-.6l1.25-5.437-4.201-3.656a.562.562 0 01.32-.988l5.584-.404 2.124-5.143z" />
+                        </svg>
+                    </button>
+                    <div class="w-16 h-16 mb-4 rounded-2xl ${product.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                        <img src="${product.logoUrl}" alt="${product.name} Logo" class="w-10 h-10 object-contain" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
+                    </div>
+                    <h3 class="font-semibold text-gray-900 dark:text-white mb-1">${product.name}</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">${product.description}</p>
+                </div>
+            `;
+        }
+
+        function attachFavoriteButtonListeners() {
+            // Add event listeners to all favorite buttons
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = btn.dataset.id;
+                    toggleFavorite(id);
+                });
+            });
+            
+            // Add event listeners to all product cards
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = card.dataset.id;
+                    openProduct(id);
+                });
+            });
+        }
+
+        function toggleFavorite(id) {
+            const index = favorites.indexOf(id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+                showToast('Removed from favorites');
+            } else {
+                favorites.push(id);
+                showToast('Added to favorites');
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // Add animation to the favorite button
+            const favBtn = document.querySelector(`.favorite-btn[data-id="${id}"]`);
+            if (favBtn) {
+                favBtn.classList.add('favorite-pulse');
+                setTimeout(() => {
+                    favBtn.classList.remove('favorite-pulse');
+                }, 500);
+            }
+            
+            // Refresh current view
+            if (currentTab === 'home') {
+                renderHomePage();
+            } else if (currentTab === 'favorites') {
+                renderFavoritesPage();
+            }
+        }
+
+        function openProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            appTitle.textContent = product.name;
+            appContent.innerHTML = `
+                <div class="text-center p-8 animate-fade-in">
+                    <div class="w-24 h-24 ${product.color} rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <img src="${product.logoUrl}" alt="${product.name} Logo" class="w-12 h-12 object-contain" onerror="this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to ${product.name}!</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">${product.description}</p>
+                    <button class="m3-button px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors font-medium ripple launch-app-btn" data-url="${product.url}">
+                        Launch ${product.name}
+                    </button>
+                </div>
+            `;
+            
+            // Add event listener to the launch button
+            document.querySelector('.launch-app-btn').addEventListener('click', function() {
+                window.open(this.dataset.url, '_blank');
+            });
+            
+            appView.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeProduct() {
+            appView.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showToast(message) {
+            toastElement.textContent = message;
+            toastElement.classList.add('show');
+            
+            setTimeout(() => {
+                toastElement.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            currentTimeElement.textContent = timeString;
+        }
+
+        // Event Listeners
+        document.getElementById('search-btn').addEventListener('click', () => {
+            searchOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                searchModal.classList.add('scale-100', 'opacity-100');
+                searchInput.focus();
+            }, 10);
+        });
+
+        document.getElementById('close-search-btn').addEventListener('click', () => {
+            searchModal.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                searchOverlay.classList.add('hidden');
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+            }, 300);
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filteredProducts = products.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.description.toLowerCase().includes(query)
+            );
+            
+            if (query.length > 0) {
+                searchResults.innerHTML = filteredProducts.map(p => `
+                    <div class="flex items-center space-x-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors ripple" data-id="${p.id}">
+                        <div class="w-12 h-12 ${p.color} rounded-2xl flex-shrink-0 flex items-center justify-center">
+                            <img src="${p.logoUrl}" alt="${p.name} Logo" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=${p.name.charAt(0)}'">
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-900 dark:text-white">${p.name}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">${p.description}</p>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Add click event to search results
+                document.querySelectorAll('#search-results > div').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const id = item.dataset.id;
+                        openProduct(id);
+                        searchModal.classList.remove('scale-100', 'opacity-100');
+                        setTimeout(() => {
+                            searchOverlay.classList.add('hidden');
+                            searchInput.value = '';
+                            searchResults.innerHTML = '';
+                        }, 300);
+                    });
+                });
+            } else {
+                searchResults.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 py-4">Type to search Exonova apps</p>';
+            }
+        });
+
+        document.getElementById('settings-btn').addEventListener('click', () => {
+            settingsModal.classList.remove('hidden');
+        });
+
+        document.getElementById('close-settings-btn').addEventListener('click', () => {
+            settingsModal.classList.add('hidden');
+        });
+
+        document.getElementById('back-to-home-btn').addEventListener('click', () => {
+            closeProduct();
+        });
+
+        // Theme buttons event listeners
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                applyTheme(theme);
+            });
+        });
+        
+        // Navigation items event listeners
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tab = item.dataset.tab;
+                switchTab(tab);
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.classList.add('hidden');
+            }
+            if (e.target === searchOverlay) {
+                searchModal.classList.remove('scale-100', 'opacity-100');
+                setTimeout(() => {
+                    searchOverlay.classList.add('hidden');
+                    searchInput.value = '';
+                    searchResults.innerHTML = '';
+                }, 300);
+            }
+        });
+        
+        // Initial rendering on load
+        window.onload = function() {
+            applyTheme(currentTheme);
+            renderHomePage();
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 60000);
+            
+            // Add subtle animation to logo
+            const logo = document.querySelector('header img');
+            if (logo) {
+                setInterval(() => {
+                    logo.classList.toggle('animate-bounce-subtle');
+                }, 4000);
+            }
+        }
+
+    </script>
+</body>
+</html>
