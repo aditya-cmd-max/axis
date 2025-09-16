@@ -65,6 +65,7 @@
                 }
             }
         }
+
     </script>
     <style>
         :root {
@@ -491,11 +492,93 @@
             opacity: 1;
         }
 
+
+ #splash {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff004c, #a600ff, #007bff);
+      background-size: 400% 400%;
+      animation: gradientMove 6s infinite alternate;
+      z-index: 9999;
+    }
+
+    #splash img {
+      width: 130px;
+      height: 130px;
+      border-radius: 28px;
+      animation: logoPop 1.6s ease-in-out forwards;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+    }
+
+    #splash h1 {
+      margin-top: 20px;
+      font-size: 30px;
+      color: #fff;
+      letter-spacing: 2px;
+      font-weight: 700;
+      opacity: 0;
+      animation: fadeInText 1.8s ease forwards 1.2s;
+    }
+
+    #splash p {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #f0f0f0;
+      opacity: 0;
+      font-weight: 400;
+      letter-spacing: 1px;
+      animation: slideUp 1.8s ease forwards 2.2s;
+    }
+
+    /* Animations */
+    @keyframes gradientMove {
+      0% { background-position: left top; }
+      100% { background-position: right bottom; }
+    }
+
+    @keyframes logoPop {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeInText {
+      0% { opacity: 0; transform: translateY(20px) scale(0.9); letter-spacing: 6px; }
+      100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 2px; }
+    }
+
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hide splash on desktop */
+    @media (min-width: 768px) {
+      #splash {
+        display: none;
+      }
+     }
+            
     </style>
 </head>
 
 <body class="light">
 
+   
+   <div id="splash">
+    <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo">
+    <h1>Exonova Axis</h1>
+    <p>All of Exonova • In one place</p>
+   </div> 
+    
+    
     <!-- Toast notification -->
     <div id="toast" class="toast"></div>
 
@@ -1137,5 +1220,16 @@
         }
 
     </script>
-</body>
+
+<script>
+    // Auto hide splash after 3.5s
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("main").style.display = "block";
+      }, 3500);
+    });
+</script>
+
+</body> 
 </html>
