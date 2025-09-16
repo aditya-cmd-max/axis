@@ -94,6 +94,11 @@
             overflow-x: hidden;
         }
 
+        .light body {
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+
         .dark body {
             color: #ffffff;
             background-color: #111827;
@@ -104,7 +109,7 @@
             background: var(--primary-gradient);
         }
 
-        .gradient-bg-dark body {
+        .gradient-dark body {
             color: #ffffff;
             background: var(--primary-gradient-dark);
         }
@@ -154,11 +159,18 @@
             box-shadow: var(--card-shadow-dark);
         }
         
-        .gradient-bg #main-container,
-        .gradient-bg-dark #main-container {
-            background-color: rgba(255, 255, 255, 0.1);
+        .gradient-bg #main-container {
+            background-color: rgba(255, 255, 255, 0.15);
             color: white;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark #main-container {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -177,7 +189,7 @@
         }
 
         .gradient-bg .app-header,
-        .gradient-bg-dark .app-header {
+        .gradient-dark .app-header {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -200,7 +212,7 @@
         }
 
         .gradient-bg .product-card,
-        .gradient-bg-dark .product-card {
+        .gradient-dark .product-card {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -217,11 +229,16 @@
 
         /* App view container */
         .app-view-container {
-            transform: translateX(100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateY(100%);
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             background-color: #f7fafc;
             color: #2d3748;
-            border-radius: 20px 20px 0 0;
+            z-index: 100;
         }
 
         .dark .app-view-container {
@@ -229,16 +246,18 @@
             color: #ffffff;
         }
 
-        .gradient-bg .app-view-container,
-        .gradient-bg-dark .app-view-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        .gradient-bg .app-view-container {
+            background: var(--primary-gradient);
+            color: #ffffff;
+        }
+
+        .gradient-dark .app-view-container {
+            background: var(--primary-gradient-dark);
             color: #ffffff;
         }
 
         .app-view-container.active {
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
         /* Theme buttons */
@@ -300,7 +319,7 @@
         }
 
         .gradient-bg .bottom-nav,
-        .gradient-bg-dark .bottom-nav {
+        .gradient-dark .bottom-nav {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -561,9 +580,42 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Thank you banner */
+        .thank-banner {
+            position: relative;
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+            color: white;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .burst {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #ffde59;
+            border-radius: 50%;
+        }
+
+        .burst.left {
+            top: -5px;
+            left: -5px;
+        }
+
+        .burst.right {
+            top: -5px;
+            right: -5px;
+        }
+
+        .burst.top {
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         /* Animations */
@@ -586,6 +638,11 @@
         @keyframes slideUp {
             0% { opacity: 0; transform: translateY(40px); }
             100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Hide splash on desktop */
@@ -681,7 +738,7 @@
                             <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
                             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Gradient</span>
                         </button>
-                        <button data-theme="gradient-bg-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                        <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
                             <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
                             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Night</span>
                         </button>
@@ -736,7 +793,7 @@
             </footer>
 
             <!-- Dynamic View Container (for opening apps) -->
-            <div id="app-view" class="fixed inset-0 z-40 p-4 transition-transform duration-500 ease-in-out transform translate-x-full overflow-y-auto app-view-container">
+            <div id="app-view" class="app-view-container">
                 <div class="p-4 flex items-center justify-between mb-2">
                     <button id="back-to-home-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 ripple">
                         <span class="material-icons">arrow_back</span>
@@ -744,11 +801,8 @@
                     <h2 id="app-title" class="text-xl font-semibold flex-grow text-center"></h2>
                     <div class="w-8"></div> <!-- Spacer to center title -->
                 </div>
-                <div class="p-4" id="app-content">
+                <div id="app-content" class="h-full">
                     <!-- App content will be loaded here -->
-                </div>
-                <div class="app-footer py-4 text-center text-gray-500 dark:text-gray-400 text-sm">
-                    Made with ❤️ by Aditya Jha
                 </div>
             </div>
 
@@ -893,7 +947,15 @@
             
             html += `</div>
                 <div class="text-center py-6 border-t border-gray-200 dark:border-gray-800 animate-fade-in">
-                    <p class="text-gray-500 dark:text-gray-400">Thanks for using Exonova!</p>
+                    <div class="home-section">
+                        <div class="thank-banner">
+                            <span>THANK YOU</span>
+                            <div class="burst left"></div>
+                            <div class="burst right"></div>
+                            <div class="burst top"></div>
+                        </div>
+                    </div>
+                    <p class="text-xl font-medium text-gray-700 dark:text-gray-300 mt-4">Thanks for using Exonova!</p>
                 </div>
             `;
             return html;
@@ -1075,9 +1137,6 @@
             // Back to home button
             document.getElementById('back-to-home-btn').addEventListener('click', () => {
                 appView.classList.remove('active');
-                setTimeout(() => {
-                    appView.style.transform = 'translateX(100%)';
-                }, 10);
             });
             
             // Close search on overlay click
@@ -1167,24 +1226,19 @@
             
             // Show loading state
             appContent.innerHTML = `
-                <div class="flex flex-col items-center justify-center h-64">
+                <div class="flex flex-col items-center justify-center h-full">
                     <div class="spinner"></div>
                     <p class="mt-4 text-gray-600 dark:text-gray-400">Loading ${product.name}...</p>
                 </div>
             `;
             
             // Show app view
-            appView.style.transform = 'translateX(0)';
-            setTimeout(() => {
-                appView.classList.add('active');
-            }, 10);
+            appView.classList.add('active');
             
             // Load the app content in an iframe (full screen)
             setTimeout(() => {
                 appContent.innerHTML = `
-                    <div class="w-full h-screen">
-                        <iframe src="${product.url}" class="w-full h-full border-0" frameborder="0" loading="lazy"></iframe>
-                    </div>
+                    <iframe src="${product.url}" class="w-full h-full border-0" frameborder="0" loading="lazy"></iframe>
                 `;
             }, 1000);
         }
