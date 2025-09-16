@@ -30,18 +30,6 @@
                             700: '#0369a1',
                             800: '#075985',
                             900: '#0c4a6e',
-                        },
-                        dark: {
-                            50: '#f9fafb',
-                            100: '#f3f4f6',
-                            200: '#e5e7eb',
-                            300: '#d1d5db',
-                            400: '#9ca3af',
-                            500: '#6b7280',
-                            600: '#4b5563',
-                            700: '#374151',
-                            800: '#1f2937',
-                            900: '#111827',
                         }
                     },
                     animation: {
@@ -89,29 +77,281 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             transition: all 0.3s ease;
-            color: #2d3748;
-            background-color: #f7fafc;
             overflow-x: hidden;
         }
 
+        /* Light theme (default) */
         .light body {
             color: #2d3748;
-            background-color: #f7fafc;
+            background-color: #ffffff;
         }
 
+        .light #main-container {
+            background-color: #ffffff;
+            color: #2d3748;
+            box-shadow: var(--card-shadow);
+        }
+
+        .light .app-header {
+            background: #ffffff;
+            color: #2d3748;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .light .product-card {
+            background: #ffffff;
+            color: #2d3748;
+            box-shadow: var(--m3-elevation-1);
+        }
+
+        .light .m3-surface {
+            background-color: #f8fafc;
+            color: #2d3748;
+        }
+
+        .light .bottom-nav {
+            background: #ffffff;
+            color: #2d3748;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .light .nav-item {
+            color: #64748b;
+        }
+
+        .light .nav-item.active {
+            color: #0ea5e9;
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .light #search-modal {
+            background: #ffffff;
+            color: #2d3748;
+        }
+
+        .light #settings-modal > div {
+            background: #ffffff;
+            color: #2d3748;
+        }
+
+        /* Dark theme */
         .dark body {
             color: #ffffff;
             background-color: #111827;
         }
 
+        .dark #main-container {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            box-shadow: var(--card-shadow-dark);
+        }
+
+        .dark .app-header {
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark .product-card {
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: var(--m3-elevation-1);
+        }
+
+        .dark .m3-surface {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .dark .bottom-nav {
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark .nav-item {
+            color: #9ca3af;
+        }
+
+        .dark .nav-item.active {
+            color: #0ea5e9;
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .dark #search-modal {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .dark #settings-modal > div {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        /* Gradient theme */
         .gradient-bg body {
             color: #ffffff;
             background: var(--primary-gradient);
         }
 
+        .gradient-bg #main-container {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .app-header {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .product-card {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .m3-surface {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .bottom-nav {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .nav-item {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .gradient-bg .nav-item.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .gradient-bg #search-modal {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg #settings-modal > div {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Gradient Dark theme */
         .gradient-dark body {
             color: #ffffff;
             background: var(--primary-gradient-dark);
+        }
+
+        .gradient-dark #main-container {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .app-header {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .product-card {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .m3-surface {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .bottom-nav {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .nav-item {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .gradient-dark .nav-item.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .gradient-dark #search-modal {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark #settings-modal > div {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* App view container */
+        .app-view-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 100;
+        }
+
+        .light .app-view-container {
+            background-color: #f7fafc;
+            color: #2d3748;
+        }
+
+        .dark .app-view-container {
+            background-color: #111827;
+            color: #ffffff;
+        }
+
+        .gradient-bg .app-view-container {
+            background: var(--primary-gradient);
+            color: #ffffff;
+        }
+
+        .gradient-dark .app-view-container {
+            background: var(--primary-gradient-dark);
+            color: #ffffff;
+        }
+
+        .app-view-container.active {
+            transform: translateY(0);
         }
 
         /* Custom scrollbar */
@@ -144,55 +384,16 @@
         #main-container {
             width: 100%;
             max-width: 480px;
-            background-color: #ffffff;
-            color: #2d3748;
-            box-shadow: var(--card-shadow);
             position: relative;
             border-radius: 20px;
             overflow: hidden;
             min-height: 90vh;
         }
 
-        .dark #main-container {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            box-shadow: var(--card-shadow-dark);
-        }
-        
-        .gradient-bg #main-container {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: white;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-dark #main-container {
-            background-color: rgba(0, 0, 0, 0.2);
-            color: white;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
         /* Header styling */
         .app-header {
-            background: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             padding: 1rem 1.2rem;
             border-radius: 0 0 20px 20px;
-        }
-
-        .dark .app-header {
-            background: #1a1a1a;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .gradient-bg .app-header,
-        .gradient-dark .app-header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
 
         /* Product card styling */
@@ -201,63 +402,12 @@
             cursor: pointer;
             border-radius: 16px;
             overflow: hidden;
-            background: #ffffff;
-            box-shadow: var(--m3-elevation-1);
             position: relative;
-        }
-
-        .dark .product-card {
-            background: #1a1a1a;
-            box-shadow: var(--m3-elevation-1);
-        }
-
-        .gradient-bg .product-card,
-        .gradient-dark .product-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
 
         .product-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--m3-elevation-3);
-        }
-
-        .dark .product-card:hover {
-            box-shadow: var(--m3-elevation-3);
-        }
-
-        /* App view container */
-        .app-view-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            background-color: #f7fafc;
-            color: #2d3748;
-            z-index: 100;
-        }
-
-        .dark .app-view-container {
-            background-color: #111827;
-            color: #ffffff;
-        }
-
-        .gradient-bg .app-view-container {
-            background: var(--primary-gradient);
-            color: #ffffff;
-        }
-
-        .gradient-dark .app-view-container {
-            background: var(--primary-gradient-dark);
-            color: #ffffff;
-        }
-
-        .app-view-container.active {
-            transform: translateY(0);
         }
 
         /* Theme buttons */
@@ -282,58 +432,26 @@
             -webkit-backdrop-filter: blur(5px);
         }
 
-        #search-modal {
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .dark #search-modal {
-            background: #1a1a1a;
-            box-shadow: var(--card-shadow-dark);
-        }
-
         /* Settings modal */
         #settings-modal > div {
-            background: #ffffff;
             border-radius: 20px;
             box-shadow: var(--card-shadow);
         }
 
         .dark #settings-modal > div {
-            background: #1a1a1a;
             box-shadow: var(--card-shadow-dark);
         }
 
         /* Bottom navigation for mobile app feel */
         .bottom-nav {
-            background: #ffffff;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
             border-radius: 20px 20px 0 0;
             padding: 0.75rem 0;
-        }
-
-        .dark .bottom-nav {
-            background: #1a1a1a;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .gradient-bg .bottom-nav,
-        .gradient-dark .bottom-nav {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
 
         .nav-item {
             transition: all 0.3s ease;
             border-radius: 12px;
             padding: 0.5rem;
-        }
-
-        .nav-item.active {
-            color: #0ea5e9;
-            background: rgba(14, 165, 233, 0.1);
         }
 
         .nav-item:hover {
@@ -358,8 +476,11 @@
 
         .empty-state .material-icons {
             font-size: 4rem;
-            color: #cbd5e0;
             margin-bottom: 1rem;
+        }
+
+        .light .empty-state .material-icons {
+            color: #cbd5e0;
         }
 
         .dark .empty-state .material-icons {
@@ -430,17 +551,6 @@
         /* Status bar styling */
         .status-bar {
             height: 44px;
-        }
-
-        /* Material 3 surface variants */
-        .m3-surface {
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: var(--m3-elevation-1);
-        }
-
-        .dark .m3-surface {
-            background-color: #1a1a1a;
         }
 
         /* Loading animation */
@@ -560,13 +670,21 @@
         .app-footer {
             padding: 1rem;
             text-align: center;
-            color: rgba(255, 255, 255, 0.8);
             font-size: 0.875rem;
             margin-top: auto;
         }
 
+        .light .app-footer {
+            color: #64748b;
+        }
+
         .dark .app-footer {
             color: rgba(255, 255, 255, 0.7);
+        }
+
+        .gradient-bg .app-footer,
+        .gradient-dark .app-footer {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* Spinner loader */
@@ -674,7 +792,7 @@
         <div id="main-container" class="min-h-screen flex flex-col">
 
             <!-- Status Bar (for mobile app feel) -->
-            <div class="status-bar flex justify-between items-center px-5 py-3 text-xs text-gray-500 dark:text-gray-400">
+            <div class="status-bar flex justify-between items-center px-5 py-3 text-xs">
                 <div id="current-time" class="font-medium">12:00 PM</div>
             </div>
 
@@ -687,25 +805,25 @@
                     </div>
                     <div>
                         <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Exonova Axis</h1>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">All of Exonova • At one place</p>
+                        <p class="text-xs opacity-75">All of Exonova • At one place</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
                     <button id="search-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 ripple">
-                        <span class="material-icons text-gray-600 dark:text-gray-300">search</span>
+                        <span class="material-icons">search</span>
                     </button>
                     <button id="settings-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 ripple">
-                        <span class="material-icons text-gray-600 dark:text-gray-300">settings</span>
+                        <span class="material-icons">settings</span>
                     </button>
                 </div>
             </header>
 
             <!-- Search Bar Overlay -->
             <div id="search-overlay" class="hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
-                <div id="search-modal" class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-5 transform transition-all duration-300 scale-95 opacity-0">
+                <div id="search-modal" class="w-full max-w-md rounded-2xl shadow-2xl p-5 transform transition-all duration-300 scale-95 opacity-0">
                     <div class="flex items-center space-x-3 mb-4">
-                        <span class="material-icons text-gray-400 dark:text-gray-500">search</span>
-                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="input-field flex-grow bg-transparent border-none focus:outline-none text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500">
+                        <span class="material-icons opacity-75">search</span>
+                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="input-field flex-grow bg-transparent border-none focus:outline-none placeholder-opacity-75">
                         <button id="close-search-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ripple">
                             <span class="material-icons">close</span>
                         </button>
@@ -718,9 +836,9 @@
 
             <!-- Settings Modal -->
             <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-4 backdrop-blur-sm">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm">
+                <div class="rounded-2xl p-6 w-full max-w-sm">
                     <div class="flex justify-between items-center mb-5">
-                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Appearance</h2>
+                        <h2 class="text-xl font-semibold">Appearance</h2>
                         <button id="close-settings-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ripple">
                             <span class="material-icons">close</span>
                         </button>
@@ -728,32 +846,32 @@
                     <div class="grid grid-cols-2 gap-4 mb-6">
                         <button data-theme="light" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
                             <div class="bg-white w-full h-8 rounded-lg mb-2 border border-gray-200"></div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Light</span>
+                            <span class="text-sm font-medium">Light</span>
                         </button>
                         <button data-theme="dark" class="theme-btn active p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
                             <div class="bg-gray-800 w-full h-8 rounded-lg mb-2 border border-gray-700"></div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark</span>
+                            <span class="text-sm font-medium">Dark</span>
                         </button>
                         <button data-theme="gradient-bg" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
                             <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Gradient</span>
+                            <span class="text-sm font-medium">Gradient</span>
                         </button>
                         <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
                             <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Night</span>
+                            <span class="text-sm font-medium">Night</span>
                         </button>
                     </div>
                     <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
-                        <h3 class="font-medium mb-3 text-gray-800 dark:text-white">Other Settings</h3>
+                        <h3 class="font-medium mb-3">Other Settings</h3>
                         <div class="flex items-center justify-between py-2">
-                            <span class="text-gray-600 dark:text-gray-400">Notifications</span>
+                            <span class="opacity-75">Notifications</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" class="sr-only peer" checked>
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             </label>
                         </div>
                         <div class="flex items-center justify-between py-2">
-                            <span class="text-gray-600 dark:text-gray-400">Auto-update</span>
+                            <span class="opacity-75">Auto-update</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" class="sr-only peer">
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
@@ -761,7 +879,7 @@
                         </div>
                     </div>
                     <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 text-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Made with ❤️ by Aditya Jha</p>
+                        <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
                     </div>
                 </div>
             </div>
@@ -777,18 +895,18 @@
                     <span class="material-icons text-blue-500">home</span>
                     <span class="mt-1 text-blue-500">Home</span>
                 </a>
-                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center text-xs text-gray-500 dark:text-gray-400 ripple">
+                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center text-xs ripple">
                     <span class="material-icons">favorite</span>
                     <span class="mt-1">Favorites</span>
                 </a>
-                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center text-xs text-gray-500 dark:text-gray-400 ripple">
+                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center text-xs ripple">
                     <span class="material-icons">update</span>
                     <span class="mt-1">Updates</span>
                 </a>
             </nav>
 
             <!-- Footer -->
-            <footer class="app-footer py-4 text-center text-gray-500 dark:text-gray-400 text-sm">
+            <footer class="app-footer py-4 text-center text-sm">
                 Made with ❤️ by Aditya Jha
             </footer>
 
@@ -921,8 +1039,8 @@
         function renderHomeTab() {
             let html = `
                 <div class="mb-6 animate-fade-in">
-                    <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Welcome to Exonova</h2>
-                    <p class="text-gray-600 dark:text-gray-400">All of Exonova's tools in one place</p>
+                    <h2 class="text-2xl font-bold mb-2">Welcome to Exonova</h2>
+                    <p class="opacity-75">All of Exonova's tools in one place</p>
                 </div>
                 <div class="grid grid-cols-1 gap-4 mb-8">
             `;
@@ -935,8 +1053,8 @@
                             <img src="${product.logoUrl}" alt="${product.name}" class="w-12 h-12 rounded-xl" onerror="this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
                         </div>
                         <div class="flex-grow">
-                            <h3 class="font-semibold text-gray-800 dark:text-white">${product.name}</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">${product.description}</p>
+                            <h3 class="font-semibold">${product.name}</h3>
+                            <p class="text-sm opacity-75">${product.description}</p>
                         </div>
                         <button class="favorite-btn p-2 rounded-full ${isFavorite ? 'text-red-500' : 'text-gray-400'} hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-product-id="${product.id}">
                             <span class="material-icons">${isFavorite ? 'favorite' : 'favorite_border'}</span>
@@ -955,7 +1073,7 @@
                             <div class="burst top"></div>
                         </div>
                     </div>
-                    <p class="text-xl font-medium text-gray-700 dark:text-gray-300 mt-4">Thanks for using Exonova!</p>
+                    <p class="text-xl font-medium mt-4">Thanks for using Exonova!</p>
                 </div>
             `;
             return html;
@@ -969,16 +1087,16 @@
                 return `
                     <div class="empty-state animate-fade-in">
                         <span class="material-icons">favorite</span>
-                        <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-white">No favorites yet</h3>
-                        <p class="text-gray-600 dark:text-gray-400">Add some products to your favorites to see them here</p>
+                        <h3 class="text-lg font-semibold mb-2">No favorites yet</h3>
+                        <p class="opacity-75">Add some products to your favorites to see them here</p>
                     </div>
                 `;
             }
             
             let html = `
                 <div class="mb-6 animate-fade-in">
-                    <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Your Favorites</h2>
-                    <p class="text-gray-600 dark:text-gray-400">Your most used tools</p>
+                    <h2 class="text-2xl font-bold mb-2">Your Favorites</h2>
+                    <p class="opacity-75">Your most used tools</p>
                 </div>
                 <div class="grid grid-cols-1 gap-4">
             `;
@@ -990,8 +1108,8 @@
                             <img src="${product.logoUrl}" alt="${product.name}" class="w-12 h-12 rounded-xl" onerror="this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
                         </div>
                         <div class="flex-grow">
-                            <h3 class="font-semibold text-gray-800 dark:text-white">${product.name}</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">${product.description}</p>
+                            <h3 class="font-semibold">${product.name}</h3>
+                            <p class="text-sm opacity-75">${product.description}</p>
                         </div>
                         <button class="favorite-btn p-2 rounded-full text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-product-id="${product.id}">
                             <span class="material-icons">favorite</span>
@@ -1008,8 +1126,8 @@
         function renderUpdatesTab() {
             return `
                 <div class="mb-6 animate-fade-in">
-                    <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Recent Updates</h2>
-                    <p class="text-gray-600 dark:text-gray-400">What's new in Exonova</p>
+                    <h2 class="text-2xl font-bold mb-2">Recent Updates</h2>
+                    <p class="opacity-75">What's new in Exonova</p>
                 </div>
                 <div class="space-y-4 animate-fade-in">
                     <div class="m3-surface p-4">
@@ -1018,11 +1136,11 @@
                                 <span class="material-icons text-blue-600 dark:text-blue-300">update</span>
                             </div>
                             <div>
-                                <h3 class="font-semibold text-gray-800 dark:text-white">New UI Design</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">2 days ago</p>
+                                <h3 class="font-semibold">New UI Design</h3>
+                                <p class="text-xs opacity-75">2 days ago</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">We've completely redesigned the Exonova Axis interface for a better user experience.</p>
+                        <p class="opacity-75">We've completely redesigned the Exonova Axis interface for a better user experience.</p>
                     </div>
                     <div class="m3-surface p-4">
                         <div class="flex items-center space-x-3 mb-2">
@@ -1030,11 +1148,11 @@
                                 <span class="material-icons text-green-600 dark:text-green-300">add</span>
                             </div>
                             <div>
-                                <h3 class="font-semibold text-gray-800 dark:text-white">New Apps Added</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">1 week ago</p>
+                                <h3 class="font-semibold">New Apps Added</h3>
+                                <p class="text-xs opacity-75">1 week ago</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Added support for Mindscribe and Peo-TTS to the Exonova Axis platform.</p>
+                        <p class="opacity-75">Added support for Mindscribe and Peo-TTS to the Exonova Axis platform.</p>
                     </div>
                     <div class="m3-surface p-4">
                         <div class="flex items-center space-x-3 mb-2">
@@ -1042,11 +1160,11 @@
                                 <span class="material-icons text-purple-600 dark:text-purple-300">bug_report</span>
                             </div>
                             <div>
-                                <h3 class="font-semibold text-gray-800 dark:text-white">Bug Fixes</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">2 weeks ago</p>
+                                <h3 class="font-semibold">Bug Fixes</h3>
+                                <p class="text-xs opacity-75">2 weeks ago</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Fixed several issues with theme switching and app loading performance.</p>
+                        <p class="opacity-75">Fixed several issues with theme switching and app loading performance.</p>
                     </div>
                     <div class="m3-surface p-4">
                         <div class="flex items-center space-x-3 mb-2">
@@ -1054,11 +1172,11 @@
                                 <span class="material-icons text-yellow-600 dark:text-yellow-300">public</span>
                             </div>
                             <div>
-                                <h3 class="font-semibold text-gray-800 dark:text-white">Official Website</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Visit our website</p>
+                                <h3 class="font-semibold">Official Website</h3>
+                                <p class="text-xs opacity-75">Visit our website</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Check out our official website for more information about Exonova products.</p>
+                        <p class="opacity-75">Check out our official website for more information about Exonova products.</p>
                         <a href="https://exonova-phi.vercel.app/" target="_blank" class="text-blue-500 text-sm font-medium flex items-center mt-2">
                             Visit Exonova Website
                             <span class="material-icons text-sm ml-1">open_in_new</span>
@@ -1118,15 +1236,11 @@
                         i.classList.remove('active');
                         i.querySelector('span:first-child').classList.remove('text-blue-500');
                         i.querySelector('span:last-child').classList.remove('text-blue-500');
-                        i.querySelector('span:first-child').classList.add('text-gray-500', 'dark:text-gray-400');
-                        i.querySelector('span:last-child').classList.add('text-gray-500', 'dark:text-gray-400');
                     });
                     
                     item.classList.add('active');
                     item.querySelector('span:first-child').classList.add('text-blue-500');
                     item.querySelector('span:last-child').classList.add('text-blue-500');
-                    item.querySelector('span:first-child').classList.remove('text-gray-500', 'dark:text-gray-400');
-                    item.querySelector('span:last-child').classList.remove('text-gray-500', 'dark:text-gray-400');
                     
                     // Update content
                     currentTab = tab;
@@ -1228,7 +1342,7 @@
             appContent.innerHTML = `
                 <div class="flex flex-col items-center justify-center h-full">
                     <div class="spinner"></div>
-                    <p class="mt-4 text-gray-600 dark:text-gray-400">Loading ${product.name}...</p>
+                    <p class="mt-4 opacity-75">Loading ${product.name}...</p>
                 </div>
             `;
             
@@ -1248,7 +1362,7 @@
             const query = searchInput.value.toLowerCase();
             
             if (query.length === 0) {
-                searchResults.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 py-4">Type to search across Exonova tools</p>';
+                searchResults.innerHTML = '<p class="text-center opacity-75 py-4">Type to search across Exonova tools</p>';
                 return;
             }
             
@@ -1258,7 +1372,7 @@
             );
             
             if (results.length === 0) {
-                searchResults.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 py-4">No results found</p>';
+                searchResults.innerHTML = '<p class="text-center opacity-75 py-4">No results found</p>';
                 return;
             }
             
@@ -1269,8 +1383,8 @@
                         <div class="flex items-center space-x-3">
                             <img src="${product.logoUrl}" alt="${product.name}" class="w-8 h-8 rounded-lg" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
                             <div>
-                                <h4 class="font-medium text-gray-800 dark:text-white">${product.name}</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">${product.description}</p>
+                                <h4 class="font-medium">${product.name}</h4>
+                                <p class="text-sm opacity-75">${product.description}</p>
                             </div>
                         </div>
                     </div>
