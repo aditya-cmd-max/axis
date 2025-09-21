@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exonova Axis</title>
-    <!-- Inter Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Product Sans Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Tailwind CSS -->
@@ -17,6 +15,9 @@
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        'sans': ['Product Sans', 'sans-serif'],
+                    },
                     colors: {
                         primary: {
                             50: '#f0f9ff',
@@ -29,18 +30,6 @@
                             700: '#0369a1',
                             800: '#075985',
                             900: '#0c4a6e',
-                        },
-                        dark: {
-                            50: '#f9fafb',
-                            100: '#f3f4f6',
-                            200: '#e5e7eb',
-                            300: '#d1d5db',
-                            400: '#9ca3af',
-                            500: '#6b7280',
-                            600: '#4b5563',
-                            700: '#374151',
-                            800: '#1f2937',
-                            900: '#111827',
                         }
                     },
                     animation: {
@@ -65,53 +54,331 @@
                 }
             }
         }
-
     </script>
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --primary-gradient-dark: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            --card-shadow-dark: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
-            --m3-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
-            --m3-elevation-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
-            --m3-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
+            --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --card-shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.2);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Product Sans', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             transition: all 0.3s ease;
-            color: #2d3748;
-            background-color: #f7fafc;
             overflow-x: hidden;
         }
 
-        .dark body {
-            color: #e2e8f0;
-            background-color: #111827;
+        /* Status bar */
+        .status-bar {
+            height: 24px;
+            padding: 0 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        .gradient-bg body {
+        /* Light theme */
+        .light {
+            color: #000000;
+            background-color: #ffffff;
+        }
+
+        .light .status-bar {
+            color: #000000;
+            background-color: #ffffff;
+        }
+
+        .light #main-container {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .light .app-header {
+            background: #ffffff;
+            color: #000000;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .light .product-card {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #f0f0f0;
+        }
+
+        .light .m3-surface {
+            background-color: #f8f9fa;
+            color: #000000;
+        }
+
+        .light .bottom-nav {
+            background: #ffffff;
+            color: #000000;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .light .nav-item {
+            color: #666666;
+        }
+
+        .light .nav-item.active {
+            color: #0ea5e9;
+        }
+
+        .light #search-modal {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .light #settings-modal > div {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* Dark theme */
+        .dark {
+            color: #ffffff;
+            background-color: #000000;
+        }
+
+        .dark .status-bar {
+            color: #ffffff;
+            background-color: #000000;
+        }
+
+        .dark #main-container {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .dark .app-header {
+            background: #000000;
+            color: #ffffff;
+            border-bottom: 1px solid #222222;
+        }
+
+        .dark .product-card {
+            background: #111111;
+            color: #ffffff;
+            box-shadow: var(--card-shadow-dark);
+            border: 1px solid #222222;
+        }
+
+        .dark .m3-surface {
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        .dark .bottom-nav {
+            background: #000000;
+            color: #ffffff;
+            border-top: 1px solid #222222;
+        }
+
+        .dark .nav-item {
+            color: #888888;
+        }
+
+        .dark .nav-item.active {
+            color: #0ea5e9;
+        }
+
+        .dark #search-modal {
+            background: #111111;
+            color: #ffffff;
+        }
+
+        .dark #settings-modal > div {
+            background: #111111;
+            color: #ffffff;
+        }
+
+        /* Gradient theme */
+        .gradient-bg {
             color: #ffffff;
             background: var(--primary-gradient);
         }
 
-        .gradient-bg-dark body {
+        .gradient-bg .status-bar {
+            color: #ffffff;
+            background: var(--primary-gradient);
+        }
+
+        .gradient-bg #main-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .app-header {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-bg .product-card {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-bg .m3-surface {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .bottom-nav {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-bg .nav-item {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .gradient-bg .nav-item.active {
+            color: #ffffff;
+        }
+
+        .gradient-bg #search-modal {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg #settings-modal > div {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Gradient Dark theme */
+        .gradient-dark {
             color: #ffffff;
             background: var(--primary-gradient-dark);
         }
 
+        .gradient-dark .status-bar {
+            color: #ffffff;
+            background: var(--primary-gradient-dark);
+        }
+
+        .gradient-dark #main-container {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .app-header {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-dark .product-card {
+            background: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-dark .m3-surface {
+            background-color: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .bottom-nav {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-dark .nav-item {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .gradient-dark .nav-item.active {
+            color: #ffffff;
+        }
+
+        .gradient-dark #search-modal {
+            background: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark #settings-modal > div {
+            background: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* App view container */
+        .app-view-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            background: #ffffff;
+        }
+
+        .dark .app-view-container {
+            background-color: #000000;
+        }
+
+        .gradient-bg .app-view-container {
+            background: var(--primary-gradient);
+        }
+
+        .gradient-dark .app-view-container {
+            background: var(--primary-gradient-dark);
+        }
+
+        .app-view-container.active {
+            transform: translateY(0);
+        }
+
         /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
 
         ::-webkit-scrollbar-track {
@@ -120,7 +387,7 @@
 
         ::-webkit-scrollbar-thumb {
             background: #cbd5e0;
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         .dark ::-webkit-scrollbar-thumb {
@@ -133,117 +400,40 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            padding: 0.5rem;
+            padding: 0;
         }
 
         #main-container {
             width: 100%;
             max-width: 480px;
-            background-color: #ffffff;
-            color: #2d3748;
-            box-shadow: var(--card-shadow);
             position: relative;
-            border-radius: 20px;
+            border-radius: 0;
             overflow: hidden;
-            min-height: 90vh;
-        }
-
-        .dark #main-container {
-            background-color: #1f2937;
-            color: #e2e8f0;
-            box-shadow: var(--card-shadow-dark);
-        }
-        
-        .gradient-bg #main-container,
-        .gradient-bg-dark #main-container {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            min-height: 100vh;
         }
 
         /* Header styling */
         .app-header {
-            background: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            padding: 1rem 1.2rem;
-            border-radius: 0 0 20px 20px;
-        }
-
-        .dark .app-header {
-            background: #1f2937;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .gradient-bg .app-header,
-        .gradient-bg-dark .app-header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            padding: 16px;
+            border-radius: 0;
         }
 
         /* Product card styling */
         .product-card {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
             border-radius: 16px;
             overflow: hidden;
-            background: #ffffff;
-            box-shadow: var(--m3-elevation-1);
             position: relative;
         }
 
-        .dark .product-card {
-            background: #1f2937;
-            box-shadow: var(--m3-elevation-1);
-        }
-
-        .gradient-bg .product-card,
-        .gradient-bg-dark .product-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--m3-elevation-3);
-        }
-
-        .dark .product-card:hover {
-            box-shadow: var(--m3-elevation-3);
-        }
-
-        /* App view container */
-        .app-view-container {
-            transform: translateX(100%);
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            background-color: #f7fafc;
-            color: #2d3748;
-            border-radius: 20px 20px 0 0;
-        }
-
-        .dark .app-view-container {
-            background-color: #111827;
-            color: #e2e8f0;
-        }
-
-        .gradient-bg .app-view-container,
-        .gradient-bg-dark .app-view-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: #ffffff;
-        }
-
-        .app-view-container.active {
-            transform: translateX(0);
+        .product-card:active {
+            transform: scale(0.98);
         }
 
         /* Theme buttons */
         .theme-btn {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             border: 2px solid #e5e7eb;
         }
 
@@ -253,72 +443,35 @@
 
         .theme-btn.active {
             border-color: #0ea5e9;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
         }
 
         /* Search overlay */
         #search-overlay {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
         }
 
-        #search-modal {
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .dark #search-modal {
-            background: #1f2937;
-            box-shadow: var(--card-shadow-dark);
-        }
-
         /* Settings modal */
         #settings-modal > div {
-            background: #ffffff;
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: var(--card-shadow);
         }
 
         .dark #settings-modal > div {
-            background: #1f2937;
             box-shadow: var(--card-shadow-dark);
         }
 
         /* Bottom navigation for mobile app feel */
         .bottom-nav {
-            background: #ffffff;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
-            border-radius: 20px 20px 0 0;
-            padding: 0.75rem 0;
-        }
-
-        .dark .bottom-nav {
-            background: #1f2937;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .gradient-bg .bottom-nav,
-        .gradient-bg-dark .bottom-nav {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border-radius: 0;
+            padding: 8px 0;
         }
 
         .nav-item {
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            padding: 0.5rem;
-        }
-
-        .nav-item.active {
-            color: #0ea5e9;
-            background: rgba(14, 165, 233, 0.1);
-        }
-
-        .nav-item:hover {
-            transform: translateY(-3px);
+            transition: all 0.2s ease;
+            border-radius: 16px;
+            padding: 8px;
         }
 
         /* Tab content */
@@ -328,19 +481,22 @@
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.3s ease-out;
         }
 
         /* Empty state */
         .empty-state {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 48px 16px;
         }
 
         .empty-state .material-icons {
-            font-size: 4rem;
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .light .empty-state .material-icons {
             color: #cbd5e0;
-            margin-bottom: 1rem;
         }
 
         .dark .empty-state .material-icons {
@@ -354,74 +510,17 @@
             font-weight: 500;
             text-transform: none;
             transition: all 0.2s ease;
-            box-shadow: var(--m3-elevation-1);
-        }
-
-        .m3-button:hover {
-            box-shadow: var(--m3-elevation-2);
-        }
-
-        .m3-button:active {
-            box-shadow: var(--m3-elevation-1);
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 480px) {
-            #main-container-wrapper {
-                padding: 0;
-            }
-            
-            #main-container {
-                border-radius: 0;
-                min-height: 100vh;
-            }
-            
-            .app-header {
-                border-radius: 0;
-            }
-            
-            .bottom-nav {
-                border-radius: 0;
-            }
-            
-            .product-card {
-                padding: 1rem;
-            }
-            
-            .product-card h3 {
-                font-size: 0.9rem;
-            }
-            
-            .product-card p {
-                font-size: 0.75rem;
-            }
         }
 
         /* Animation for favorite button */
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
         
         .favorite-pulse {
-            animation: pulse 0.5s ease;
-        }
-
-        /* Status bar styling */
-        .status-bar {
-            height: 44px;
-        }
-
-        /* Material 3 surface variants */
-        .m3-surface {
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: var(--m3-elevation-1);
-        }
-
-        .dark .m3-surface {
-            background-color: #1e293b;
+            animation: pulse 0.3s ease;
         }
 
         /* Loading animation */
@@ -474,17 +573,17 @@
         /* Toast notification */
         .toast {
             position: fixed;
-            bottom: 100px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background-color: #323232;
             color: white;
             padding: 12px 24px;
-            border-radius: 4px;
+            border-radius: 24px;
             z-index: 1000;
             opacity: 0;
             transition: transform 0.3s, opacity 0.3s;
-            box-shadow: var(--m3-elevation-3);
+            font-size: 14px;
         }
 
         .toast.show {
@@ -492,92 +591,146 @@
             opacity: 1;
         }
 
+        /* Splash screen - Simplified Android style */
+        #splash {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000000;
+            z-index: 9999;
+        }
 
- #splash {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff004c, #a600ff, #007bff);
-      background-size: 400% 400%;
-      animation: gradientMove 6s infinite alternate;
-      z-index: 9999;
-    }
+        #splash img {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            animation: logoPop 0.6s ease-in-out forwards;
+        }
 
-    #splash img {
-      width: 130px;
-      height: 130px;
-      border-radius: 28px;
-      animation: logoPop 1.6s ease-in-out forwards;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-    }
+        #splash h1 {
+            margin-top: 16px;
+            font-size: 24px;
+            color: #fff;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeInText 0.5s ease forwards 0.3s;
+        }
 
-    #splash h1 {
-      margin-top: 20px;
-      font-size: 30px;
-      color: #fff;
-      letter-spacing: 2px;
-      font-weight: 700;
-      opacity: 0;
-      animation: fadeInText 1.8s ease forwards 1.2s;
-    }
+        /* Footer styling */
+        .app-footer {
+            padding: 16px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: auto;
+        }
 
-    #splash p {
-      margin-top: 10px;
-      font-size: 16px;
-      color: #f0f0f0;
-      opacity: 0;
-      font-weight: 400;
-      letter-spacing: 1px;
-      animation: slideUp 1.8s ease forwards 2.2s;
-    }
+        .light .app-footer {
+            color: #666666;
+        }
 
-    /* Animations */
-    @keyframes gradientMove {
-      0% { background-position: left top; }
-      100% { background-position: right bottom; }
-    }
+        .dark .app-footer {
+            color: rgba(255, 255, 255, 0.7);
+        }
 
-    @keyframes logoPop {
-      0% { transform: scale(0.5); opacity: 0; }
-      70% { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); }
-    }
+        .gradient-bg .app-footer,
+        .gradient-dark .app-footer {
+            color: rgba(255, 255, 255, 0.8);
+        }
 
-    @keyframes fadeInText {
-      0% { opacity: 0; transform: translateY(20px) scale(0.9); letter-spacing: 6px; }
-      100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 2px; }
-    }
+        /* Spinner loader */
+        .spinner {
+            width: 32px;
+            height: 32px;
+            margin: 20px auto;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #fff;
+            animation: spin 1s linear infinite;
+        }
 
-    @keyframes slideUp {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+        /* Animations */
+        @keyframes logoPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
-    /* Hide splash on desktop */
-    @media (min-width: 768px) {
-      #splash {
-        display: none;
-      }
-     }
+        @keyframes fadeInText {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Android-style back button */
+        .back-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:active {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .back-button:active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Improved app bar */
+        .app-bar {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+        }
+
+        /* Improved product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            padding: 16px;
+        }
+
+        /* Hide splash on desktop */
+        @media (min-width: 768px) {
+            #splash {
+                display: none;
+            }
             
+            #main-container {
+                border-radius: 12px;
+                margin: 12px 0;
+                min-height: calc(100vh - 24px);
+            }
+        }
     </style>
 </head>
 
-<body class="light">
-
+<body class="dark">
    
    <div id="splash">
-    <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo">
-    <h1>Exonova Axis</h1>
-    <p>All of Exonova • In one place</p>
+        <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo">
+        <h1>Exonova Axis</h1>
    </div> 
-    
     
     <!-- Toast notification -->
     <div id="toast" class="toast"></div>
@@ -588,42 +741,38 @@
         <div id="main-container" class="min-h-screen flex flex-col">
 
             <!-- Status Bar (for mobile app feel) -->
-            <div class="status-bar flex justify-between items-center px-5 py-3 text-xs text-gray-500 dark:text-gray-400">
+            <div class="status-bar">
                 <div id="current-time" class="font-medium">12:00 PM</div>
-                <div class="flex items-center space-x-1">
-                  
-                </div>
             </div>
 
             <!-- Header -->
-            <header class="app-header flex items-center justify-between py-4 mb-2 px-6">
+            <header class="app-header flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="relative">
-                        <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="h-10 w-10 rounded-xl shadow-lg animate-pulse-slow" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
-                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></div>
+                        <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="h-10 w-10 rounded-xl" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Exonova Axis</h1>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">All of Exonova • At one place</p>
+                        <h1 class="text-xl font-bold">Exonova Axis</h1>
+                        <p class="text-xs opacity-75">All of Exonova • At one place</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <button id="search-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 ripple">
-                        <span class="material-icons text-gray-600 dark:text-gray-300">search</span>
+                    <button id="search-btn" class="p-2 rounded-full ripple">
+                        <span class="material-icons">search</span>
                     </button>
-                    <button id="settings-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 ripple">
-                        <span class="material-icons text-gray-600 dark:text-gray-300">settings</span>
+                    <button id="settings-btn" class="p-2 rounded-full ripple">
+                        <span class="material-icons">settings</span>
                     </button>
                 </div>
             </header>
 
             <!-- Search Bar Overlay -->
             <div id="search-overlay" class="hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
-                <div id="search-modal" class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-5 transform transition-all duration-300 scale-95 opacity-0">
+                <div id="search-modal" class="w-full max-w-md rounded-2xl shadow-2xl p-5 transform transition-all duration-300 scale-95 opacity-0">
                     <div class="flex items-center space-x-3 mb-4">
-                        <span class="material-icons text-gray-400 dark:text-gray-500">search</span>
-                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="input-field flex-grow bg-transparent border-none focus:outline-none text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500">
-                        <button id="close-search-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ripple">
+                        <span class="material-icons opacity-75">search</span>
+                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="input-field flex-grow bg-transparent border-none focus:outline-none placeholder-opacity-75">
+                        <button id="close-search-btn" class="p-2 rounded-full ripple">
                             <span class="material-icons">close</span>
                         </button>
                     </div>
@@ -635,82 +784,90 @@
 
             <!-- Settings Modal -->
             <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-4 backdrop-blur-sm">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm">
+                <div class="rounded-2xl p-6 w-full max-w-sm">
                     <div class="flex justify-between items-center mb-5">
-                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Appearance</h2>
-                        <button id="close-settings-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ripple">
+                        <h2 class="text-xl font-semibold">Appearance</h2>
+                        <button id="close-settings-btn" class="p-2 rounded-full ripple">
                             <span class="material-icons">close</span>
                         </button>
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-6">
-                        <button data-theme="light" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                        <button data-theme="light" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-white w-full h-8 rounded-lg mb-2 border border-gray-200"></div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Light</span>
+                            <span class="text-sm font-medium">Light</span>
                         </button>
-                        <button data-theme="dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
-                            <div class="bg-gray-800 w-full h-8 rounded-lg mb-2 border border-gray-700"></div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark</span>
+                        <button data-theme="dark" class="theme-btn active p-4 rounded-xl flex flex-col items-center transition-all ripple">
+                            <div class="bg-gray-900 w-full h-8 rounded-lg mb-2 border border-gray-800"></div>
+                            <span class="text-sm font-medium">Dark</span>
                         </button>
-                        <button data-theme="gradient" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                        <button data-theme="gradient-bg" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Gradient</span>
+                            <span class="text-sm font-medium">Gradient</span>
                         </button>
-                        <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                        <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Night</span>
+                            <span class="text-sm font-medium">Night</span>
                         </button>
                     </div>
                     <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
-                        <h3 class="font-medium mb-3 text-gray-800 dark:text-white">Other Settings</h3>
+                        <h3 class="font-medium mb-3">Other Settings</h3>
                         <div class="flex items-center justify-between py-2">
-                            <span class="text-gray-600 dark:text-gray-400">Notifications</span>
+                            <span class="opacity-75">Notifications</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" class="sr-only peer" checked>
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             </label>
                         </div>
                         <div class="flex items-center justify-between py-2">
-                            <span class="text-gray-600 dark:text-gray-400">Auto-update</span>
+                            <span class="opacity-75">Auto-update</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" class="sr-only peer">
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             </label>
                         </div>
                     </div>
+                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 text-center">
+                        <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Main Content Area -->
-            <main id="main-content" class="flex-grow px-5 pb-20 overflow-y-auto">
+            <main id="main-content" class="flex-grow overflow-y-auto">
                 <!-- Tab content will be rendered here -->
             </main>
 
             <!-- Bottom Navigation (for mobile app feel) -->
             <nav class="bottom-nav flex justify-around items-center">
                 <a href="#" data-tab="home" class="nav-item active flex flex-col items-center text-xs ripple">
-                    <span class="material-icons text-blue-500">home</span>
-                    <span class="mt-1 text-blue-500">Home</span>
+                    <span class="material-icons">home</span>
+                    <span class="mt-1">Home</span>
                 </a>
-                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center text-xs text-gray-500 dark:text-gray-400 ripple">
+                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center text-xs ripple">
                     <span class="material-icons">favorite</span>
                     <span class="mt-1">Favorites</span>
                 </a>
-                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center text-xs text-gray-500 dark:text-gray-400 ripple">
+                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center text-xs ripple">
                     <span class="material-icons">update</span>
                     <span class="mt-1">Updates</span>
                 </a>
             </nav>
 
+            <!-- Footer -->
+            <footer class="app-footer py-4 text-center text-sm">
+                Made with ❤️ by Aditya Jha
+            </footer>
+
             <!-- Dynamic View Container (for opening apps) -->
-            <div id="app-view" class="fixed inset-0 z-40 p-4 transition-transform duration-500 ease-in-out transform translate-x-full overflow-y-auto app-view-container">
-                <div class="p-4 flex items-center justify-between mb-2">
-                    <button id="back-to-home-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 ripple">
+            <div id="app-view" class="app-view-container">
+                <div class="app-bar">
+                    <button id="back-to-home-btn" class="back-button ripple">
                         <span class="material-icons">arrow_back</span>
                     </button>
                     <h2 id="app-title" class="text-xl font-semibold flex-grow text-center"></h2>
-                    <div class="w-8"></div> <!-- Spacer to center title -->
+                    <div class="w-48px"></div> <!-- Spacer to center title -->
                 </div>
-                <div class="p-4" id="app-content">
+                <div id="app-content" class="h-full">
                     <!-- App content will be loaded here -->
                 </div>
             </div>
@@ -726,7 +883,7 @@
             description: 'Intelligent AI • Useful for everyday tasks',
             logoUrl: 'https://aditya-cmd-max.github.io/exonovaai/logo.png',
             color: 'bg-blue-500',
-            url: 'https://aditya-cmd-max.github.io/exonovaai/chat.html'
+            url: 'https://aditya-cmd-max.github.io/exonovaai/chat/'
         }, {
             id: 'skycast-pro',
             name: 'SkyCast Pro',
@@ -755,11 +912,9 @@
             logoUrl: 'https://aditya-cmd-max.github.io/Peo/tts.png',
             color: 'bg-yellow-500',
             url: 'https://aditya-cmd-max.github.io/Peo/app.html'
-        }, 
-                         ];
+        }];
 
-        let currentAnimation = 'slide-in';
-        let currentTheme = localStorage.getItem('theme') || 'light';
+        let currentTheme = localStorage.getItem('theme') || 'dark';
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let currentTab = 'home';
 
@@ -773,463 +928,381 @@
         const appView = document.getElementById('app-view');
         const appTitle = document.getElementById('app-title');
         const appContent = document.getElementById('app-content');
-        const themeButtons = document.querySelectorAll('.theme-btn');
-        const navItems = document.querySelectorAll('.nav-item');
-        const currentTimeElement = document.getElementById('current-time');
-        const toastElement = document.getElementById('toast');
+        const splashScreen = document.getElementById('splash');
+        const toast = document.getElementById('toast');
 
-        // Functions
-        function applyTheme(theme) {
-            document.documentElement.className = '';
-            if (theme === 'gradient') {
-                document.documentElement.classList.add('gradient-bg');
-            } else if (theme === 'gradient-dark') {
-                document.documentElement.classList.add('gradient-bg-dark');
-            } else {
-                document.documentElement.classList.add(theme);
-            }
-            localStorage.setItem('theme', theme);
-            currentTheme = theme;
-            updateThemeButtons();
-        }
-
-        function updateThemeButtons() {
-            themeButtons.forEach(btn => {
+        // Initialize the app
+        function initApp() {
+            updateTime();
+            setInterval(updateTime, 60000);
+            
+            // Apply saved theme
+            applyTheme(currentTheme);
+            
+            // Render initial content
+            renderContent();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Set active theme button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
                 if (btn.dataset.theme === currentTheme) {
                     btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
                 }
             });
         }
 
-        function switchTab(tabName) {
-            currentTab = tabName;
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', options);
+        }
+
+        // Apply theme to the app
+        function applyTheme(theme) {
+            document.documentElement.className = theme;
+            localStorage.setItem('theme', theme);
+            currentTheme = theme;
+        }
+
+        // Render content based on current tab
+        function renderContent() {
+            let html = '';
             
-            // Update navigation
-            navItems.forEach(item => {
-                if (item.dataset.tab === tabName) {
-                    item.classList.add('active');
-                    item.querySelector('span:first-child').classList.add('text-blue-500');
-                    item.querySelector('span:last-child').classList.add('text-blue-500');
-                    item.querySelector('span:first-child').classList.remove('text-gray-500', 'dark:text-gray-400');
-                    item.querySelector('span:last-child').classList.remove('text-gray-500', 'dark:text-gray-400');
-                } else {
-                    item.classList.remove('active');
-                    item.querySelector('span:first-child').classList.remove('text-blue-500');
-                    item.querySelector('span:last-child').classList.remove('text-blue-500');
-                    item.querySelector('span:first-child').classList.add('text-gray-500', 'dark:text-gray-400');
-                    item.querySelector('span:last-child').classList.add('text-gray-500', 'dark:text-gray-400');
-                }
+            if (currentTab === 'home') {
+                html = renderHomeTab();
+            } else if (currentTab === 'favorites') {
+                html = renderFavoritesTab();
+            } else if (currentTab === 'updates') {
+                html = renderUpdatesTab();
+            }
+            
+            mainContent.innerHTML = html;
+            
+            // Add event listeners to product cards
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const productId = card.dataset.productId;
+                    openProduct(productId);
+                });
             });
             
-            // Render appropriate content
-            if (tabName === 'home') {
-                renderHomePage();
-            } else if (tabName === 'favorites') {
-                renderFavoritesPage();
-            } else if (tabName === 'updates') {
-                renderUpdatesPage();
-            }
-        }
-
-        function renderFavoritesPage() {
-            const favoriteProducts = products.filter(p => favorites.includes(p.id));
-            
-            if (favoriteProducts.length === 0) {
-                mainContent.innerHTML = `
-                    <div class="empty-state animate-fade-in">
-                        <span class="material-icons">favorite_border</span>
-                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">No favorites yet</h3>
-                        <p class="text-gray-500 dark:text-gray-400">Tap the star icon on any app to add it to your favorites</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            mainContent.innerHTML = `
-                <div class="animate-fade-in">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Your Favorites</h2>
-                        <span class="material-icons text-yellow-500 text-3xl">star</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        ${favoriteProducts.map(p => renderProductCard(p)).join('')}
-                    </div>
-                </div>
-            `;
-            
-            // Add event listeners to the favorite buttons
-            attachFavoriteButtonListeners();
-            
-            // Add animations to elements
-            setTimeout(() => {
-                const cards = document.querySelectorAll('.product-card');
-                cards.forEach((card, index) => {
-                    card.style.animationDelay = `${index * 0.1}s`;
-                    card.classList.add('animate-slide-up');
-                });
-            }, 100);
-        }
-
-        function renderHomePage() {
-            mainContent.innerHTML = `
-                ${renderWelcomeHeader()}
-                ${renderUpdatesSection()}
-                ${renderProducts()}
-            `;
-            
-            // Add event listeners to the favorite buttons
-            attachFavoriteButtonListeners();
-            
-            // Add animations to elements
-            setTimeout(() => {
-                const cards = document.querySelectorAll('.product-card');
-                cards.forEach((card, index) => {
-                    card.style.animationDelay = `${index * 0.1}s`;
-                    card.classList.add('animate-slide-up');
-                });
-            }, 100);
-        }
-
-        function renderUpdatesPage() {
-            mainContent.innerHTML = `
-                <div class="animate-fade-in">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Latest Updates</h2>
-                        <span class="material-icons text-blue-500 text-3xl">update</span>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="m3-surface p-5 rounded-2xl">
-                            <div class="flex items-center mb-3">
-                                <span class="material-icons text-blue-500 mr-2">new_releases</span>
-                                <h3 class="font-semibold text-gray-900 dark:text-white">Blog#8 gets 2k views</h3>
-                            </div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Our blog on the topic 'Bananas are Radioactive' got 2k views.</p>
-                            <a href="https://aditya-cmd-max.github.io/exonova-/blogs/blog8.html" class="text-blue-500 text-sm font-medium flex items-center">
-                                Read Blog #8
-                                <span class="material-icons text-sm ml-1">arrow_forward</span>
-                            </a>
-                            <div class="text-xs text-gray-400 mt-3">14/09/2025</div>
-                        </div>
-                        
-                        <div class="m3-surface p-5 rounded-2xl">
-                            <div class="flex items-center mb-3">
-                                <span class="material-icons text-green-500 mr-2">rocket_launch</span>
-                                <h3 class="font-semibold text-gray-900 dark:text-white">Introducing 'Exonova Axis'</h3>
-                            </div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Use all the exonova products at one place to increase your productivity.</p>
-                            <a href="https://exonova-phi.vercel.app/" class="text-blue-500 text-sm font-medium flex items-center">
-                                Visit Exonova Website
-                                <span class="material-icons text-sm ml-1">arrow_forward</span>
-                            </a>
-                            <div class="text-xs text-gray-400 mt-3">15/09/2025</div>
-                        </div>
-                        
-                        <div class="m3-surface p-5 rounded-2xl">
-                            <div class="flex items-center mb-3">
-                                <span class="material-icons text-purple-500 mr-2">bug_report</span>
-                                <h3 class="font-semibold text-gray-900 dark:text-white">Bug Fixes & Improvements</h3>
-                            </div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Fixed several UI issues and improved performance on mobile devices.</p>
-                            <div class="text-xs text-gray-400 mt-3">16/09/2025</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderWelcomeHeader() {
-            return `
-                <div class="mb-8 animate-slide-up">
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Welcome to Exonova Axis</h1>
-                    <p class="text-gray-600 dark:text-gray-400">Your <strong>all-in-one</strong> productivity suite with powerful tools for work and creativity.</p>
-                </div>
-            `;
-        }
-
-        function renderUpdatesSection() {
-            return `
-                <div class="m3-surface p-5 rounded-2xl mb-8 animate-fade-in">
-                    <div class="flex items-center mb-4">
-                        <span class="material-icons text-blue-500 mr-2">new_releases</span>
-                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">What's New in Exonova</h2>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="border-l-4 border-blue-500 pl-4 py-1">
-                            <h3 class="font-medium text-gray-900 dark:text-white">Blog#8 gets 2k views</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Our blog on the topic 'Bananas are Radioactive' got 2k views.</p>
-                            <a href="https://aditya-cmd-max.github.io/exonova-/blogs/blog8.html" class="text-blue-500 text-xs">Exonova Blog 8</a>
-                            <div class="text-xs text-gray-400 mt-1">14/09/2025</div>
-                        </div>
-                        <div class="border-l-4 border-green-500 pl-4 py-1">
-                            <h3 class="font-medium text-gray-900 dark:text-white">Introducing 'Exonova Axis'</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Use all the exonova products at one place to increase your productivity.</p>
-                            <a href="https://exonova-phi.vercel.app/" class="text-blue-500 text-xs">Exonova Oficial Website</a>
-                            <div class="text-xs text-gray-400 mt-1">15/09/2025</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderProducts(filteredProducts = products) {
-            const nonFavoriteProducts = filteredProducts.filter(p => !favorites.includes(p.id));
-            if (nonFavoriteProducts.length === 0 && favorites.length > 0) {
-                return '';
-            }
-            return `
-                <div class="animate-fade-in">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">All Products</h2>
-                        <span class="text-xs text-gray-500 dark:text-gray-400">${products.length} apps</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        ${nonFavoriteProducts.map(p => renderProductCard(p)).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderProductCard(product) {
-            const isFavorite = favorites.includes(product.id);
-            return `
-                <div class="product-card p-5 rounded-2xl flex flex-col items-center text-center relative group ripple" data-id="${product.id}">
-                    <button class="favorite-btn absolute top-3 right-3 p-1 rounded-full bg-white dark:bg-gray-800 shadow-md hover:scale-110 transition-transform" data-id="${product.id}">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="${isFavorite ? 'currentColor' : 'none'}" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 ${isFavorite ? 'text-yellow-400' : 'text-gray-400'} transition-colors">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.123 5.143 5.584.404a.562.562 0 01.321.988l-4.202 3.656 1.25 5.437a.562.562 0 01-.84.6l-4.832-2.88-4.833 2.88a.562.562 0 01-.84-.6l1.25-5.437-4.201-3.656a.562.562 0 01.32-.988l5.584-.404 2.124-5.143z" />
-                        </svg>
-                    </button>
-                    <div class="w-16 h-16 mb-4 rounded-2xl ${product.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                        <img src="${product.logoUrl}" alt="${product.name} Logo" class="w-10 h-10 object-contain" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
-                    </div>
-                    <h3 class="font-semibold text-gray-900 dark:text-white mb-1">${product.name}</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">${product.description}</p>
-                </div>
-            `;
-        }
-
-        function attachFavoriteButtonListeners() {
-            // Add event listeners to all favorite buttons
+            // Add event listeners to favorite buttons
             document.querySelectorAll('.favorite-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    const id = btn.dataset.id;
-                    toggleFavorite(id);
-                });
-            });
-            
-            // Add event listeners to all product cards
-            document.querySelectorAll('.product-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const id = card.dataset.id;
-                    openProduct(id);
+                    const productId = btn.dataset.productId;
+                    toggleFavorite(productId);
                 });
             });
         }
 
-        function toggleFavorite(id) {
-            const index = favorites.indexOf(id);
-            if (index > -1) {
+        // Render Home Tab
+        function renderHomeTab() {
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-2">Welcome to Exonova</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Explore all our products in one place to increase your productivity.</p>
+                    <div class="product-grid">
+                        ${products.map(product => `
+                            <div class="product-card p-4 flex items-center space-x-4 ripple" data-product-id="${product.id}">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center ${product.color}">
+                                    <img src="${product.logoUrl}" alt="${product.name}" class="w-8 h-8" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="font-medium">${product.name}</h3>
+                                    <p class="text-sm opacity-75">${product.description}</p>
+                                </div>
+                                <button class="favorite-btn p-2 rounded-full ripple" data-product-id="${product.id}">
+                                    <span class="material-icons ${favorites.includes(product.id) ? 'text-red-500' : 'opacity-50'}">favorite</span>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-8 text-center py-4 border-t border-gray-200 dark:border-gray-800">
+                        <p class="text-gray-600 dark:text-gray-400">Thank you for using Exonova Axis</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Favorites Tab
+        function renderFavoritesTab() {
+            const favoriteProducts = products.filter(product => favorites.includes(product.id));
+            
+            if (favoriteProducts.length === 0) {
+                return `
+                    <div class="empty-state">
+                        <span class="material-icons">favorite_border</span>
+                        <h3 class="font-medium mb-2">No favorites yet</h3>
+                        <p class="opacity-75">Add products to favorites to see them here</p>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-6">Your Favorites</h2>
+                    <div class="product-grid">
+                        ${favoriteProducts.map(product => `
+                            <div class="product-card p-4 flex items-center space-x-4 ripple" data-product-id="${product.id}">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center ${product.color}">
+                                    <img src="${product.logoUrl}" alt="${product.name}" class="w-8 h-8" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="font-medium">${product.name}</h3>
+                                    <p class="text-sm opacity-75">${product.description}</p>
+                                </div>
+                                <button class="favorite-btn p-2 rounded-full ripple" data-product-id="${product.id}">
+                                    <span class="material-icons text-red-500">favorite</span>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Updates Tab
+        function renderUpdatesTab() {
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-6">Recent Updates</h2>
+                    <div class="m3-surface rounded-xl p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-blue-500">update</span>
+                            <div>
+                                <h3 class="font-medium">Exonova Axis v2.0</h3>
+                                <p class="text-sm opacity-75">Completely redesigned UI with Android app feel</p>
+                                <p class="text-xs opacity-50 mt-1">2 days ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m3-surface rounded-xl p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-green-500">update</span>
+                            <div>
+                                <h3 class="font-medium">El Futuro AI Enhancements</h3>
+                                <p class="text-sm opacity-75">Added new AI models for better responses</p>
+                                <p class="text-xs opacity-50 mt-1">1 week ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m3-surface rounded-xl p-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-purple-500">update</span>
+                            <div>
+                                <h3 class="font-medium">SkyCast Pro Weather Data</h3>
+                                <p class="text-sm opacity-75">Added 10-day forecast and severe weather alerts</p>
+                                <p class="text-xs opacity-50 mt-1">2 weeks ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle favorite status for a product
+        function toggleFavorite(productId) {
+            const index = favorites.indexOf(productId);
+            
+            if (index === -1) {
+                favorites.push(productId);
+                showToast('Added to favorites');
+            } else {
                 favorites.splice(index, 1);
                 showToast('Removed from favorites');
-            } else {
-                favorites.push(id);
-                showToast('Added to favorites');
             }
+            
             localStorage.setItem('favorites', JSON.stringify(favorites));
             
-            // Add animation to the favorite button
-            const favBtn = document.querySelector(`.favorite-btn[data-id="${id}"]`);
-            if (favBtn) {
-                favBtn.classList.add('favorite-pulse');
-                setTimeout(() => {
-                    favBtn.classList.remove('favorite-pulse');
-                }, 500);
+            // Update UI
+            const favoriteBtn = document.querySelector(`.favorite-btn[data-product-id="${productId}"]`);
+            if (favoriteBtn) {
+                const icon = favoriteBtn.querySelector('.material-icons');
+                if (favorites.includes(productId)) {
+                    icon.classList.remove('opacity-50');
+                    icon.classList.add('text-red-500');
+                    icon.classList.add('favorite-pulse');
+                    setTimeout(() => icon.classList.remove('favorite-pulse'), 300);
+                } else {
+                    icon.classList.add('opacity-50');
+                    icon.classList.remove('text-red-500');
+                }
             }
             
-            // Refresh current view
-            if (currentTab === 'home') {
-                renderHomePage();
-            } else if (currentTab === 'favorites') {
-                renderFavoritesPage();
+            // If we're on the favorites tab, re-render it
+            if (currentTab === 'favorites') {
+                renderContent();
             }
         }
 
-        function openProduct(id) {
-            const product = products.find(p => p.id === id);
+        // Open a product in the app view
+        function openProduct(productId) {
+            const product = products.find(p => p.id === productId);
             if (!product) return;
-
+            
             appTitle.textContent = product.name;
             appContent.innerHTML = `
-                <div class="text-center p-8 animate-fade-in">
-                    <div class="w-24 h-24 ${product.color} rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <img src="${product.logoUrl}" alt="${product.name} Logo" class="w-12 h-12 object-contain" onerror="this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
+                <div class="h-full w-full flex items-center justify-center">
+                    <div class="text-center p-6">
+                        <div class="spinner mb-4"></div>
+                        <p>Loading ${product.name}...</p>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to ${product.name}!</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">${product.description}</p>
-                    <button class="m3-button px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors font-medium ripple launch-app-btn" data-url="${product.url}">
-                        Launch ${product.name}
-                    </button>
                 </div>
             `;
             
-            // Add event listener to the launch button
-            document.querySelector('.launch-app-btn').addEventListener('click', function() {
-                window.open(this.dataset.url, '_blank');
-            });
-            
             appView.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeProduct() {
-            appView.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            
+            // Simulate loading delay for demo purposes
+            setTimeout(() => {
+                appContent.innerHTML = `
+                    <iframe src="${product.url}" class="w-full h-full border-0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+                `;
+            }, 1500);
         }
 
+        // Show toast notification
         function showToast(message) {
-            toastElement.textContent = message;
-            toastElement.classList.add('show');
+            toast.textContent = message;
+            toast.classList.add('show');
             
             setTimeout(() => {
-                toastElement.classList.remove('show');
+                toast.classList.remove('show');
             }, 3000);
         }
 
-        function updateCurrentTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            currentTimeElement.textContent = timeString;
-        }
-
-        // Event Listeners
-        document.getElementById('search-btn').addEventListener('click', () => {
-            searchOverlay.classList.remove('hidden');
-            setTimeout(() => {
-                searchModal.classList.add('scale-100', 'opacity-100');
-                searchInput.focus();
-            }, 10);
-        });
-
-        document.getElementById('close-search-btn').addEventListener('click', () => {
-            searchModal.classList.remove('scale-100', 'opacity-100');
-            setTimeout(() => {
-                searchOverlay.classList.add('hidden');
-                searchInput.value = '';
-                searchResults.innerHTML = '';
-            }, 300);
-        });
-
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filteredProducts = products.filter(p => 
-                p.name.toLowerCase().includes(query) || 
-                p.description.toLowerCase().includes(query)
-            );
+        // Set up event listeners
+        function setupEventListeners() {
+            // Theme buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyTheme(btn.dataset.theme);
+                });
+            });
             
-            if (query.length > 0) {
-                searchResults.innerHTML = filteredProducts.map(p => `
-                    <div class="flex items-center space-x-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors ripple" data-id="${p.id}">
-                        <div class="w-12 h-12 ${p.color} rounded-2xl flex-shrink-0 flex items-center justify-center">
-                            <img src="${p.logoUrl}" alt="${p.name} Logo" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=${p.name.charAt(0)}'">
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-900 dark:text-white">${p.name}</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">${p.description}</p>
+            // Settings button
+            document.getElementById('settings-btn').addEventListener('click', () => {
+                settingsModal.classList.remove('hidden');
+                setTimeout(() => {
+                    settingsModal.classList.add('opacity-100');
+                }, 10);
+            });
+            
+            // Close settings button
+            document.getElementById('close-settings-btn').addEventListener('click', () => {
+                settingsModal.classList.remove('opacity-100');
+                setTimeout(() => {
+                    settingsModal.classList.add('hidden');
+                }, 300);
+            });
+            
+            // Search button
+            document.getElementById('search-btn').addEventListener('click', () => {
+                searchOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    searchModal.classList.add('opacity-100');
+                    searchModal.classList.remove('scale-95');
+                    searchInput.focus();
+                }, 10);
+            });
+            
+            // Close search button
+            document.getElementById('close-search-btn').addEventListener('click', closeSearch);
+            
+            // Search input
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                
+                if (query.length === 0) {
+                    searchResults.innerHTML = '<p class="text-center py-4 opacity-75">Type to search Exonova products</p>';
+                    return;
+                }
+                
+                const results = products.filter(product => 
+                    product.name.toLowerCase().includes(query) || 
+                    product.description.toLowerCase().includes(query)
+                );
+                
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<p class="text-center py-4 opacity-75">No products found</p>';
+                    return;
+                }
+                
+                searchResults.innerHTML = results.map(product => `
+                    <div class="p-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors ripple" data-product-id="${product.id}">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center ${product.color}">
+                                <img src="${product.logoUrl}" alt="${product.name}" class="w-6 h-6" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
+                            </div>
+                            <div>
+                                <h3 class="font-medium">${product.name}</h3>
+                                <p class="text-sm opacity-75">${product.description}</p>
+                            </div>
                         </div>
                     </div>
                 `).join('');
                 
-                // Add click event to search results
-                document.querySelectorAll('#search-results > div').forEach(item => {
+                // Add event listeners to search results
+                searchResults.querySelectorAll('[data-product-id]').forEach(item => {
                     item.addEventListener('click', () => {
-                        const id = item.dataset.id;
-                        openProduct(id);
-                        searchModal.classList.remove('scale-100', 'opacity-100');
-                        setTimeout(() => {
-                            searchOverlay.classList.add('hidden');
-                            searchInput.value = '';
-                            searchResults.innerHTML = '';
-                        }, 300);
+                        const productId = item.dataset.productId;
+                        closeSearch();
+                        openProduct(productId);
                     });
                 });
-            } else {
-                searchResults.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 py-4">Type to search Exonova apps</p>';
-            }
-        });
-
-        document.getElementById('settings-btn').addEventListener('click', () => {
-            settingsModal.classList.remove('hidden');
-        });
-
-        document.getElementById('close-settings-btn').addEventListener('click', () => {
-            settingsModal.classList.add('hidden');
-        });
-
-        document.getElementById('back-to-home-btn').addEventListener('click', () => {
-            closeProduct();
-        });
-
-        // Theme buttons event listeners
-        themeButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const theme = btn.dataset.theme;
-                applyTheme(theme);
             });
-        });
-        
-        // Navigation items event listeners
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const tab = item.dataset.tab;
-                switchTab(tab);
-            });
-        });
-
-        // Close modals when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === settingsModal) {
-                settingsModal.classList.add('hidden');
-            }
-            if (e.target === searchOverlay) {
-                searchModal.classList.remove('scale-100', 'opacity-100');
-                setTimeout(() => {
-                    searchOverlay.classList.add('hidden');
-                    searchInput.value = '';
-                    searchResults.innerHTML = '';
-                }, 300);
-            }
-        });
-        
-        // Initial rendering on load
-        window.onload = function() {
-            applyTheme(currentTheme);
-            renderHomePage();
-            updateCurrentTime();
-            setInterval(updateCurrentTime, 60000);
             
-            // Add subtle animation to logo
-            const logo = document.querySelector('header img');
-            if (logo) {
-                setInterval(() => {
-                    logo.classList.toggle('animate-bounce-subtle');
-                }, 4000);
-            }
+            // Navigation tabs
+            document.querySelectorAll('[data-tab]').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentTab = tab.dataset.tab;
+                    renderContent();
+                });
+            });
+            
+            // Back to home button
+            document.getElementById('back-to-home-btn').addEventListener('click', () => {
+                appView.classList.remove('active');
+            });
+            
+            // Close search when clicking outside
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) {
+                    closeSearch();
+                }
+            });
         }
 
+        // Close search overlay
+        function closeSearch() {
+            searchModal.classList.remove('opacity-100');
+            searchModal.classList.add('scale-95');
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+            
+            setTimeout(() => {
+                searchOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        // Hide splash screen after 2 seconds
+        setTimeout(() => {
+            splashScreen.style.opacity = '0';
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+            }, 600);
+        }, 2000);
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
     </script>
-
-<script>
-    // Auto hide splash after 3.5s
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("splash").style.display = "none";
-        document.getElementById("main").style.display = "block";
-      }, 3500);
-    });
-</script>
-
-</body> 
+</body>
 </html>
