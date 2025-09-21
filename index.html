@@ -706,8 +706,18 @@
         .product-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 12px;
             padding: 16px;
+        }
+
+        /* Thank you section */
+        .thank-you-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            text-align: center;
         }
 
         /* Hide splash on desktop */
@@ -720,6 +730,34 @@
                 border-radius: 12px;
                 margin: 12px 0;
                 min-height: calc(100vh - 24px);
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .product-card {
+                padding: 14px;
+            }
+            
+            .product-card h3 {
+                font-size: 16px;
+            }
+            
+            .product-card p {
+                font-size: 13px;
+            }
+            
+            .product-grid {
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .app-header {
+                padding: 12px 16px;
+            }
+            
+            .bottom-nav {
+                padding: 6px 0;
             }
         }
     </style>
@@ -783,8 +821,8 @@
             </div>
 
             <!-- Settings Modal -->
-            <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-4 backdrop-blur-sm">
-                <div class="rounded-2xl p-6 w-full max-w-sm">
+            <div id="settings-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+                <div class="rounded-2xl p-6 w-full max-w-sm transform transition-all duration-300 scale-95 opacity-0" id="settings-modal-content">
                     <div class="flex justify-between items-center mb-5">
                         <h2 class="text-xl font-semibold">Appearance</h2>
                         <button id="close-settings-btn" class="p-2 rounded-full ripple">
@@ -802,7 +840,7 @@
                         </button>
                         <button data-theme="gradient-bg" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
-                            <span class="text-sm font-medium">Dark/ Glassmorphism</span>
+                            <span class="text-sm font-medium">Gradient</span>
                         </button>
                         <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
@@ -930,6 +968,7 @@
         const appContent = document.getElementById('app-content');
         const splashScreen = document.getElementById('splash');
         const toast = document.getElementById('toast');
+        const settingsModalContent = document.getElementById('settings-modal-content');
 
         // Initialize the app
         function initApp() {
@@ -1021,7 +1060,10 @@
                             </div>
                         `).join('')}
                     </div>
-                    <div class="mt-8 text-center py-4 border-t border-gray-200 dark:border-gray-800">
+                    <div class="thank-you-section border-t border-gray-200 dark:border-gray-800 mt-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-blue-500 mb-2">
+                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                        </svg>
                         <p class="text-gray-600 dark:text-gray-400">Thank you for using Exonova Axis</p>
                     </div>
                 </div>
@@ -1174,6 +1216,28 @@
             }, 3000);
         }
 
+        // Close search overlay
+        function closeSearch() {
+            searchModal.classList.remove('opacity-100');
+            searchModal.classList.add('scale-95');
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+            
+            setTimeout(() => {
+                searchOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close settings modal
+        function closeSettings() {
+            settingsModalContent.classList.remove('opacity-100');
+            settingsModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                settingsModal.classList.add('hidden');
+            }, 300);
+        }
+
         // Set up event listeners
         function setupEventListeners() {
             // Theme buttons
@@ -1189,17 +1253,13 @@
             document.getElementById('settings-btn').addEventListener('click', () => {
                 settingsModal.classList.remove('hidden');
                 setTimeout(() => {
-                    settingsModal.classList.add('opacity-100');
+                    settingsModalContent.classList.add('opacity-100');
+                    settingsModalContent.classList.remove('scale-95');
                 }, 10);
             });
             
             // Close settings button
-            document.getElementById('close-settings-btn').addEventListener('click', () => {
-                settingsModal.classList.remove('opacity-100');
-                setTimeout(() => {
-                    settingsModal.classList.add('hidden');
-                }, 300);
-            });
+            document.getElementById('close-settings-btn').addEventListener('click', closeSettings);
             
             // Search button
             document.getElementById('search-btn').addEventListener('click', () => {
@@ -1279,18 +1339,13 @@
                     closeSearch();
                 }
             });
-        }
-
-        // Close search overlay
-        function closeSearch() {
-            searchModal.classList.remove('opacity-100');
-            searchModal.classList.add('scale-95');
-            searchInput.value = '';
-            searchResults.innerHTML = '';
             
-            setTimeout(() => {
-                searchOverlay.classList.add('hidden');
-            }, 300);
+            // Close settings when clicking outside
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    closeSettings();
+                }
+            });
         }
 
         // Hide splash screen after 2 seconds
