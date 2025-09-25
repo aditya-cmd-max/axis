@@ -11,7 +11,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-     <link rel="icon" type="image/x-icon" href="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png">
+    <link rel="icon" type="image/x-icon" href="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -59,10 +59,73 @@
     </script>
     <style>
         :root {
+            --md-sys-color-primary: #0ea5e9;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #e0f2fe;
+            --md-sys-color-on-primary-container: #001e2b;
+            --md-sys-color-secondary: #4f6268;
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: #d1e6f0;
+            --md-sys-color-on-secondary-container: #0a1e27;
+            --md-sys-color-tertiary: #5c5b7e;
+            --md-sys-color-on-tertiary: #ffffff;
+            --md-sys-color-tertiary-container: #e2dfff;
+            --md-sys-color-on-tertiary-container: #191a2c;
+            --md-sys-color-error: #ba1a1a;
+            --md-sys-color-on-error: #ffffff;
+            --md-sys-color-error-container: #ffdad6;
+            --md-sys-color-on-error-container: #410002;
+            --md-sys-color-background: #fafcff;
+            --md-sys-color-on-background: #001f2a;
+            --md-sys-color-surface: #fafcff;
+            --md-sys-color-on-surface: #001f2a;
+            --md-sys-color-surface-variant: #dbe4e9;
+            --md-sys-color-on-surface-variant: #3f484d;
+            --md-sys-color-outline: #6f797e;
+            --md-sys-color-shadow: #000000;
+            --md-sys-color-inverse-surface: #2d3133;
+            --md-sys-color-inverse-on-surface: #f1f1f1;
+            --md-sys-color-inverse-primary: #9ac9f7;
+            
+            /* Dark theme variables */
+            --md-sys-color-primary-dark: #9ac9f7;
+            --md-sys-color-on-primary-dark: #00344a;
+            --md-sys-color-primary-container-dark: #004c6a;
+            --md-sys-color-on-primary-container-dark: #c8e6ff;
+            --md-sys-color-secondary-dark: #b5cad5;
+            --md-sys-color-on-secondary-dark: #20333c;
+            --md-sys-color-secondary-container-dark: #364a53;
+            --md-sys-color-on-secondary-container-dark: #d1e6f0;
+            --md-sys-color-tertiary-dark: #c6c3eb;
+            --md-sys-color-on-tertiary-dark: #2e2f42;
+            --md-sys-color-tertiary-container-dark: #444559;
+            --md-sys-color-on-tertiary-container-dark: #e2dfff;
+            --md-sys-color-error-dark: #ffb4ab;
+            --md-sys-color-on-error-dark: #690005;
+            --md-sys-color-error-container-dark: #93000a;
+            --md-sys-color-on-error-container-dark: #ffdad6;
+            --md-sys-color-background-dark: #001f2a;
+            --md-sys-color-on-background-dark: #bfe9ff;
+            --md-sys-color-surface-dark: #001f2a;
+            --md-sys-color-on-surface-dark: #bfe9ff;
+            --md-sys-color-surface-variant-dark: #3f484d;
+            --md-sys-color-on-surface-variant-dark: #bfc8cd;
+            --md-sys-color-outline-dark: #899296;
+            --md-sys-color-shadow-dark: #000000;
+            --md-sys-color-inverse-surface-dark: #e1e2e5;
+            --md-sys-color-inverse-on-surface-dark: #2d3133;
+            --md-sys-color-inverse-primary-dark: #006492;
+            
+            /* Elevation shadows */
+            --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+            --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+            --md-elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+            --md-elevation-4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px rgba(0, 0, 0, 0.3);
+            --md-elevation-5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
+            
+            /* Gradient themes */
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --primary-gradient-dark: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-            --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            --card-shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -80,131 +143,126 @@
             overflow-x: hidden;
         }
 
-        /* Status bar */
-        .status-bar {
-            height: 24px;
-            padding: 0 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
         /* Light theme */
         .light {
-            color: #000000;
-            background-color: #ffffff;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
         }
 
         .light .status-bar {
-            color: #000000;
-            background-color: #ffffff;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
         }
 
         .light #main-container {
-            background-color: #ffffff;
-            color: #000000;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
         }
 
         .light .app-header {
-            background: #ffffff;
-            color: #000000;
-            border-bottom: 1px solid #f0f0f0;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
         }
 
         .light .product-card {
-            background: #ffffff;
-            color: #000000;
-            box-shadow: var(--card-shadow);
-            border: 1px solid #f0f0f0;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
         }
 
         .light .m3-surface {
-            background-color: #f8f9fa;
-            color: #000000;
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
         }
 
         .light .bottom-nav {
-            background: #ffffff;
-            color: #000000;
-            border-top: 1px solid #f0f0f0;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .light .nav-item {
-            color: #666666;
+            color: var(--md-sys-color-on-surface-variant);
         }
 
         .light .nav-item.active {
-            color: #0ea5e9;
+            color: var(--md-sys-color-primary);
         }
 
         .light #search-modal {
-            background: #ffffff;
-            color: #000000;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
         }
 
         .light #settings-modal > div {
-            background: #ffffff;
-            color: #000000;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .light .ripple:after {
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, transparent 10.01%);
         }
 
         /* Dark theme */
         .dark {
-            color: #ffffff;
-            background-color: #000000;
+            background-color: var(--md-sys-color-background-dark);
+            color: var(--md-sys-color-on-background-dark);
         }
 
         .dark .status-bar {
-            color: #ffffff;
-            background-color: #000000;
+            background-color: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
         }
 
         .dark #main-container {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: var(--md-sys-color-background-dark);
+            color: var(--md-sys-color-on-background-dark);
         }
 
         .dark .app-header {
-            background: #000000;
-            color: #ffffff;
-            border-bottom: 1px solid #222222;
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+            box-shadow: var(--md-elevation-1);
         }
 
         .dark .product-card {
-            background: #111111;
-            color: #ffffff;
-            box-shadow: var(--card-shadow-dark);
-            border: 1px solid #222222;
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+            box-shadow: var(--md-elevation-1);
         }
 
         .dark .m3-surface {
-            background-color: #111111;
-            color: #ffffff;
+            background-color: var(--md-sys-color-surface-variant-dark);
+            color: var(--md-sys-color-on-surface-variant-dark);
         }
 
         .dark .bottom-nav {
-            background: #000000;
-            color: #ffffff;
-            border-top: 1px solid #222222;
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .dark .nav-item {
-            color: #888888;
+            color: var(--md-sys-color-on-surface-variant-dark);
         }
 
         .dark .nav-item.active {
-            color: #0ea5e9;
+            color: var(--md-sys-color-primary-dark);
         }
 
         .dark #search-modal {
-            background: #111111;
-            color: #ffffff;
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
         }
 
         .dark #settings-modal > div {
-            background: #111111;
-            color: #ffffff;
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .dark .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10.01%);
         }
 
         /* Gradient theme */
@@ -230,6 +288,7 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -238,6 +297,7 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -253,6 +313,7 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.3);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -278,6 +339,10 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
+        .gradient-bg .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.01%);
+        }
+
         /* Gradient Dark theme */
         .gradient-dark {
             color: #ffffff;
@@ -301,6 +366,7 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -309,6 +375,7 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -324,6 +391,7 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.3);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -349,6 +417,10 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
+        .gradient-dark .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.01%);
+        }
+
         /* App view container */
         .app-view-container {
             position: fixed;
@@ -359,11 +431,11 @@
             transform: translateY(100%);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
-            background: #ffffff;
+            background: var(--md-sys-color-background);
         }
 
         .dark .app-view-container {
-            background-color: #000000;
+            background-color: var(--md-sys-color-background-dark);
         }
 
         .gradient-bg .app-view-container {
@@ -388,12 +460,8 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
+            background: var(--md-sys-color-outline);
             border-radius: 2px;
-        }
-
-        .dark ::-webkit-scrollbar-thumb {
-            background: #4b5563;
         }
 
         /* Main container styling */
@@ -418,6 +486,9 @@
         .app-header {
             padding: 16px;
             border-radius: 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         /* Product card styling */
@@ -427,24 +498,82 @@
             border-radius: 16px;
             overflow: hidden;
             position: relative;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
         .product-card:active {
             transform: scale(0.98);
         }
 
+        .product-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .product-logo img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .product-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-info h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-info p {
+            font-size: 14px;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .favorite-btn {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
         /* Theme buttons */
         .theme-btn {
             transition: all 0.2s ease;
-            border: 2px solid #e5e7eb;
-        }
-
-        .dark .theme-btn {
-            border: 2px solid #4b5563;
+            border: 2px solid transparent;
         }
 
         .theme-btn.active {
-            border-color: #0ea5e9;
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .dark .theme-btn.active {
+            border-color: var(--md-sys-color-primary-dark);
+        }
+
+        .gradient-bg .theme-btn.active,
+        .gradient-dark .theme-btn.active {
+            border-color: rgba(255, 255, 255, 0.7);
         }
 
         /* Search overlay */
@@ -456,24 +585,33 @@
 
         /* Settings modal */
         #settings-modal > div {
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .dark #settings-modal > div {
-            box-shadow: var(--card-shadow-dark);
+            border-radius: 28px;
+            box-shadow: var(--md-elevation-4);
         }
 
         /* Bottom navigation for mobile app feel */
         .bottom-nav {
             border-radius: 0;
             padding: 8px 0;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
         }
 
         .nav-item {
             transition: all 0.2s ease;
             border-radius: 16px;
             padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .nav-item .material-icons {
+            font-size: 24px;
         }
 
         /* Tab content */
@@ -495,14 +633,7 @@
         .empty-state .material-icons {
             font-size: 48px;
             margin-bottom: 16px;
-        }
-
-        .light .empty-state .material-icons {
-            color: #cbd5e0;
-        }
-
-        .dark .empty-state .material-icons {
-            color: #4b5563;
+            opacity: 0.5;
         }
 
         /* Material 3 button styles */
@@ -558,7 +689,6 @@
             top: 0;
             left: 0;
             pointer-events: none;
-            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
             background-repeat: no-repeat;
             background-position: 50%;
             transform: scale(10, 10);
@@ -578,14 +708,21 @@
             bottom: 80px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background-color: #323232;
-            color: white;
+            background-color: var(--md-sys-color-inverse-surface);
+            color: var(--md-sys-color-inverse-on-surface);
             padding: 12px 24px;
             border-radius: 24px;
             z-index: 1000;
             opacity: 0;
             transition: transform 0.3s, opacity 0.3s;
             font-size: 14px;
+            box-shadow: var(--md-elevation-2);
+        }
+
+        .gradient-bg .toast,
+        .gradient-dark .toast {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
         }
 
         .toast.show {
@@ -604,7 +741,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: #000000;
+            background: var(--md-sys-color-background-dark);
             z-index: 9999;
         }
 
@@ -618,7 +755,7 @@
         #splash h1 {
             margin-top: 16px;
             font-size: 24px;
-            color: #fff;
+            color: var(--md-sys-color-on-background-dark);
             font-weight: 500;
             opacity: 0;
             animation: fadeInText 0.5s ease forwards 0.3s;
@@ -630,19 +767,7 @@
             text-align: center;
             font-size: 14px;
             margin-top: auto;
-        }
-
-        .light .app-footer {
-            color: #666666;
-        }
-
-        .dark .app-footer {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .gradient-bg .app-footer,
-        .gradient-dark .app-footer {
-            color: rgba(255, 255, 255, 0.8);
+            opacity: 0.7;
         }
 
         /* Spinner loader */
@@ -654,6 +779,17 @@
             border-radius: 50%;
             border-top: 3px solid #fff;
             animation: spin 1s linear infinite;
+        }
+
+        .light .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid var(--md-sys-color-primary);
+        }
+
+        .gradient-bg .spinner,
+        .gradient-dark .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #fff;
         }
 
         /* Animations */
@@ -688,20 +824,34 @@
             transition: background-color 0.2s;
         }
 
-        .back-button:active {
-            background-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .dark .back-button:active {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
         /* Improved app bar */
         .app-bar {
             height: 56px;
             display: flex;
             align-items: center;
             padding: 0 16px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .dark .app-bar {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .gradient-bg .app-bar {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .app-bar {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         /* Improved product grid */
@@ -720,6 +870,28 @@
             justify-content: center;
             padding: 24px 16px;
             text-align: center;
+            margin-top: 16px;
+            border-top: 1px solid var(--md-sys-color-outline);
+            opacity: 0.7;
+        }
+
+        .gradient-bg .thank-you-section,
+        .gradient-dark .thank-you-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Search input styling */
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            padding: 8px 0;
+        }
+
+        .search-input::placeholder {
+            opacity: 0.7;
         }
 
         /* Hide splash on desktop */
@@ -741,11 +913,21 @@
                 padding: 14px;
             }
             
-            .product-card h3 {
-                font-size: 16px;
+            .product-logo {
+                width: 48px;
+                height: 48px;
             }
             
-            .product-card p {
+            .product-logo img {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .product-info h3 {
+                font-size: 15px;
+            }
+            
+            .product-info p {
                 font-size: 13px;
             }
             
@@ -781,7 +963,7 @@
         <div id="main-container" class="min-h-screen flex flex-col">
 
             <!-- Status Bar (for mobile app feel) -->
-            <div class="status-bar">
+            <div class="status-bar w-full text-center py-1">
                 <div id="current-time" class="font-medium">12:00 PM</div>
             </div>
 
@@ -808,10 +990,10 @@
 
             <!-- Search Bar Overlay -->
             <div id="search-overlay" class="hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
-                <div id="search-modal" class="w-full max-w-md rounded-2xl shadow-2xl p-5 transform transition-all duration-300 scale-95 opacity-0">
+                <div id="search-modal" class="w-full max-w-md rounded-2xl p-5 transform transition-all duration-300 scale-95 opacity-0" style="box-shadow: var(--md-elevation-4);">
                     <div class="flex items-center space-x-3 mb-4">
                         <span class="material-icons opacity-75">search</span>
-                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="input-field flex-grow bg-transparent border-none focus:outline-none placeholder-opacity-75">
+                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="search-input flex-grow bg-transparent border-none focus:outline-none">
                         <button id="close-search-btn" class="p-2 rounded-full ripple">
                             <span class="material-icons">close</span>
                         </button>
@@ -842,14 +1024,14 @@
                         </button>
                         <button data-theme="gradient-bg" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
-                            <span class="text-sm font-medium">Black-Glassmorphism</span>
+                            <span class="text-sm font-medium">Gradient</span>
                         </button>
                         <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
                             <span class="text-sm font-medium">Night</span>
                         </button>
                     </div>
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                    <div class="border-t border-opacity-20 pt-4">
                         <h3 class="font-medium mb-3">Other Settings</h3>
                         <div class="flex items-center justify-between py-2">
                             <span class="opacity-75">Notifications</span>
@@ -866,7 +1048,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 text-center">
+                    <div class="border-t border-opacity-20 pt-4 mt-4 text-center">
                         <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
                     </div>
                 </div>
@@ -879,22 +1061,22 @@
 
             <!-- Bottom Navigation (for mobile app feel) -->
             <nav class="bottom-nav flex justify-around items-center">
-                <a href="#" data-tab="home" class="nav-item active flex flex-col items-center text-xs ripple">
+                <a href="#" data-tab="home" class="nav-item active flex flex-col items-center ripple">
                     <span class="material-icons">home</span>
-                    <span class="mt-1">Home</span>
+                    <span>Home</span>
                 </a>
-                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center text-xs ripple">
+                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center ripple">
                     <span class="material-icons">favorite</span>
-                    <span class="mt-1">Favorites</span>
+                    <span>Favorites</span>
                 </a>
-                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center text-xs ripple">
+                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center ripple">
                     <span class="material-icons">update</span>
-                    <span class="mt-1">Updates</span>
+                    <span>Updates</span>
                 </a>
             </nav>
 
             <!-- Footer -->
-            <footer class="app-footer py-4 text-center text-sm">
+            <footer class="app-footer py-4 text-center">
                 Made with ❤️ by Aditya Jha
             </footer>
 
@@ -935,7 +1117,7 @@
             id: 'popout-pro',
             name: 'PopOut Pro',
             description: 'AI-powered visual learning tool for creating engaging educational content.',
-            logoUrl: 'https://aditya-cmd-max.github.io/popout/ChatGPT Image Aug 15, 2025, 08_26_20 PM.png',
+            logoUrl: 'https://aditya-cmd-max.github.io/popout/ChatGPT%20Image%20Aug%2015,%202025,%2008_26_20%20PM.png',
             color: 'bg-black',
             url: 'https://aditya-cmd-max.github.io/popout/app.html'
         }, {
@@ -952,15 +1134,14 @@
             logoUrl: 'https://aditya-cmd-max.github.io/Peo/tts.png',
             color: 'bg-yellow-500',
             url: 'https://aditya-cmd-max.github.io/Peo/app.html'
-        },
-          {
+        }, {
             id: 'securepass',
             name: 'Securepass',
-            description: 'Natural sounding text-to-speech for accessible learning materials.',
+            description: 'Your perfect password advisor for secure and strong passwords.',
             logoUrl: 'https://aditya-cmd-max.github.io/securepass/logo-dark.png',
-            color: 'bg-white-600',
+            color: 'bg-indigo-500',
             url: 'https://aditya-cmd-max.github.io/securepass'
-           }];
+        }];
 
         let currentTheme = localStorage.getItem('theme') || 'dark';
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -1053,28 +1234,28 @@
             return `
                 <div class="p-4">
                     <h2 class="text-2xl font-bold mb-2">Welcome to Exonova</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">Explore all our products in one place to increase your productivity.</p>
+                    <p class="opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
                     <div class="product-grid">
                         ${products.map(product => `
-                            <div class="product-card p-4 flex items-center space-x-4 ripple" data-product-id="${product.id}">
-                                <div class="w-12 h-12 rounded-xl flex items-center justify-center ${product.color}">
-                                    <img src="${product.logoUrl}" alt="${product.name}" class="w-8 h-8" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                            <div class="product-card ripple" data-product-id="${product.id}">
+                                <div class="product-logo ${product.color}">
+                                    <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
                                 </div>
-                                <div class="flex-grow">
-                                    <h3 class="font-medium">${product.name}</h3>
-                                    <p class="text-sm opacity-75">${product.description}</p>
+                                <div class="product-info">
+                                    <h3>${product.name}</h3>
+                                    <p>${product.description}</p>
                                 </div>
-                                <button class="favorite-btn p-2 rounded-full ripple" data-product-id="${product.id}">
+                                <button class="favorite-btn ripple" data-product-id="${product.id}">
                                     <span class="material-icons ${favorites.includes(product.id) ? 'text-red-500' : 'opacity-50'}">favorite</span>
                                 </button>
                             </div>
                         `).join('')}
                     </div>
-                    <div class="thank-you-section border-t border-gray-200 dark:border-gray-800 mt-6">
+                    <div class="thank-you-section">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-blue-500 mb-2">
                             <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                         </svg>
-                        <p class="text-gray-600 dark:text-gray-400">Thank you for using Exonova Axis</p>
+                        <p>Thank you for using Exonova Axis</p>
                     </div>
                 </div>
             `;
@@ -1099,15 +1280,15 @@
                     <h2 class="text-2xl font-bold mb-6">Your Favorites</h2>
                     <div class="product-grid">
                         ${favoriteProducts.map(product => `
-                            <div class="product-card p-4 flex items-center space-x-4 ripple" data-product-id="${product.id}">
-                                <div class="w-12 h-12 rounded-xl flex items-center justify-center ${product.color}">
-                                    <img src="${product.logoUrl}" alt="${product.name}" class="w-8 h-8" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                            <div class="product-card ripple" data-product-id="${product.id}">
+                                <div class="product-logo ${product.color}">
+                                    <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
                                 </div>
-                                <div class="flex-grow">
-                                    <h3 class="font-medium">${product.name}</h3>
-                                    <p class="text-sm opacity-75">${product.description}</p>
+                                <div class="product-info">
+                                    <h3>${product.name}</h3>
+                                    <p>${product.description}</p>
                                 </div>
-                                <button class="favorite-btn p-2 rounded-full ripple" data-product-id="${product.id}">
+                                <button class="favorite-btn ripple" data-product-id="${product.id}">
                                     <span class="material-icons text-red-500">favorite</span>
                                 </button>
                             </div>
@@ -1127,7 +1308,7 @@
                             <span class="material-icons text-blue-500">update</span>
                             <div>
                                 <h3 class="font-medium">Launched 'Securepass'</h3>
-                                <p class="text-sm opacity-75">Securepass is your perfect Password advisor launched at the web app and at the <strong>Exonova Axis</strong> mobile app.</p>
+                                <p class="opacity-75">Securepass is your perfect Password advisor launched at the web app and at the <strong>Exonova Axis</strong> mobile app.</p>
                                 <p class="text-xs opacity-50 mt-1">23/09/25             9:17 PM</p>
                             </div>
                         </div>
@@ -1137,7 +1318,7 @@
                             <span class="material-icons text-green-500">update</span>
                             <div>
                                 <h3 class="font-medium">Exonova Axis Improvement</h3>
-                                <p class="text-sm opacity-75">Completely redesigned UI with Android app feel</p>
+                                <p class="opacity-75">Completely redesigned UI with Android app feel</p>
                                 <p class="text-xs opacity-50 mt-1">17/09/25            5:44 PM</p>
                             </div>
                         </div>
@@ -1147,7 +1328,7 @@
                             <span class="material-icons text-purple-500">update</span>
                             <div>
                                 <h3 class="font-medium">El Futuro AI Enhancements</h3>
-                                <p class="text-sm opacity-75">Improved the backing for better responses</p>
+                                <p class="opacity-75">Improved the backing for better responses</p>
                                 <p class="text-xs opacity-50 mt-1">12/09/25            7:48 PM</p>
                             </div>
                         </div>
@@ -1304,7 +1485,7 @@
                 }
                 
                 searchResults.innerHTML = results.map(product => `
-                    <div class="p-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors ripple" data-product-id="${product.id}">
+                    <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ripple" data-product-id="${product.id}">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-lg flex items-center justify-center ${product.color}">
                                 <img src="${product.logoUrl}" alt="${product.name}" class="w-6 h-6" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
