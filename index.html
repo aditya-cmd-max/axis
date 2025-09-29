@@ -970,7 +970,7 @@
 /* container to isolate styles */
 .tagline-container {
   position: relative;
-  background: #000;
+  background: var(--md-sys-color-background-dark);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -982,8 +982,7 @@
 .tagline-container .mesh {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(white 1px, transparent 1px),
-    linear-gradient(90deg, white 1px, transparent 1px);
+  background: var(--md-sys-color-background-dark);
   background-size: 40px 40px;
   opacity: 0.05;
   z-index: -1;
@@ -991,7 +990,7 @@
 
 /* hero text */
 .tagline-container .hero {
-  color: #fff;
+  color: var(--md-sys-color-on-background-dark);
   font-family: "Product Sans", Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(2rem, 8vw, 7rem);
