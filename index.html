@@ -953,11 +953,82 @@
         <img src="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png" alt="Exonova Logo">
         <h1>Exonova Axis</h1>
 <br><br><br><br><br><br><br> <svg xmlns="http://www.w3.org/2000/svg" width="600" height="120" style="margin-top:30px;">
-    <rect width="100%" height="100%" fill="var(--md-sys-color-background-dark"/>
-    <text x="50%" y="90%" font-family="'Product Sans', Arial, sans-serif" font-size="25" fill="var(--md-sys-color-on-background-dark)" text-anchor="middle" dominant-baseline="middle">
-      Powered by Exonova
-    </text>
-  </svg>
+   <!-- tagline section -->
+<div class="tagline-container">
+  <div class="mesh"></div>
+
+  <section class="hero">
+    <span data-text="Exonova">
+      <img src="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png" alt="Exonova Logo">
+    </span> is for the curious.
+  </section>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@700&display=swap');
+
+/* container to isolate styles */
+.tagline-container {
+  position: relative;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px; /* space so it doesn’t stick */
+  overflow: hidden;
+}
+
+/* square mesh overlay */
+.tagline-container .mesh {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(white 1px, transparent 1px),
+    linear-gradient(90deg, white 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.05;
+  z-index: -1;
+}
+
+/* hero text */
+.tagline-container .hero {
+  color: #fff;
+  font-family: "Product Sans", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 8vw, 7rem);
+  text-align: center;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  width: 90%;
+  z-index: 1;
+}
+
+.tagline-container .hero img {
+  height: 1em;
+  vertical-align: -0.15em;
+  filter: brightness(-1) invert(6);
+  margin: 0;
+  padding: 0;
+}
+
+/* subtle glow effect */
+.tagline-container .hero span {
+  position: relative;
+  display: inline-block;
+}
+
+.tagline-container .hero span::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: #fff;
+  filter: blur(15px);
+  opacity: 0.2;
+  z-index: -1;
+}
+</style>
+    
    </div> 
     
     <!-- Toast notification -->
