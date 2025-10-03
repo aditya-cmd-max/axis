@@ -8,6 +8,7 @@ const urlsToCache = [
     'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
     'https://aditya-cmd-max.github.io/axis/Untitled%20design.gif',
     'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+    'https://aditya-cmd-max.github.io/axis/axislogo.png',
     'https://fonts.googleapis.com/css2?family=Product+Sans:wght@300;400;500;700&display=swap',
     'https://fonts.googleapis.com/icon?family=Material+Icons',
     'https://cdn.tailwindcss.com'
@@ -94,9 +95,9 @@ self.addEventListener('push', event => {
     let data = {
         title: 'Exonova Axis',
         body: '🚀 Welcome to Exonova Axis! Explore all tools in one place.',
-        icon: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+        icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
         badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-        image: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+        image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
         tag: 'exonova-welcome'
     };
     
