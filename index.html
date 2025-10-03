@@ -1033,6 +1033,23 @@
                 padding: 6px 0;
             }
         }
+
+        /* Notification badge */
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 1.5s infinite;
+        }
     </style>
 </head>
 
@@ -1189,6 +1206,12 @@
                     <button id="settings-btn" class="p-2 rounded-full ripple">
                         <span class="material-icons">settings</span>
                     </button>
+                    <div class="relative">
+                        <button id="notifications-btn" class="p-2 rounded-full ripple">
+                            <span class="material-icons">notifications</span>
+                        </button>
+                        <div id="notification-badge" class="notification-badge hidden">3</div>
+                    </div>
                 </div>
             </header>
 
@@ -1240,7 +1263,7 @@
                         <div class="flex items-center justify-between py-2">
                             <span class="opacity-75">Notifications</span>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer" checked>
+                                <input type="checkbox" id="notifications-toggle" class="sr-only peer" checked>
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             </label>
                         </div>
@@ -1254,6 +1277,26 @@
                     </div>
                     <div class="border-t border-opacity-20 pt-4 mt-4 text-center">
                         <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Modal -->
+            <div id="notifications-modal" class="hidden bg-black fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
+                <div id="notifications-modal-content" class="w-full max-w-md rounded-2xl p-5 transform transition-all duration-300 scale-95 opacity-0" style="box-shadow: var(--md-elevation-4);">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold">Notifications</h2>
+                        <button id="close-notifications-btn" class="p-2 rounded-full ripple">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div id="notifications-list" class="max-h-72 overflow-y-auto">
+                        <!-- Notifications will be rendered here -->
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button id="clear-notifications-btn" class="m3-button bg-opacity-20 hover:bg-opacity-30 transition-all">
+                            Clear All
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1351,6 +1394,8 @@
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let currentTab = 'home';
         let hasSeenLogoHint = localStorage.getItem('hasSeenLogoHint') === 'true';
+        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+        let notificationsEnabled = localStorage.getItem('notificationsEnabled') !== 'false';
 
         // DOM Elements
         const mainContent = document.getElementById('main-content');
@@ -1369,6 +1414,12 @@
         const logoModalContent = document.getElementById('logo-modal-content');
         const logoBtn = document.getElementById('logo-btn');
         const firstTimeHint = document.getElementById('first-time-hint');
+        const notificationsBtn = document.getElementById('notifications-btn');
+        const notificationBadge = document.getElementById('notification-badge');
+        const notificationsModal = document.getElementById('notifications-modal');
+        const notificationsModalContent = document.getElementById('notifications-modal-content');
+        const notificationsList = document.getElementById('notifications-list');
+        const notificationsToggle = document.getElementById('notifications-toggle');
 
         // Initialize the app
         function initApp() {
@@ -1391,6 +1442,9 @@
                 }
             });
             
+            // Initialize notifications
+            initNotifications();
+            
             // Show first-time hint if needed
             if (!hasSeenLogoHint) {
                 setTimeout(() => {
@@ -1403,6 +1457,207 @@
                     }, 5000);
                 }, 2000);
             }
+        }
+
+        // Initialize notifications
+        function initNotifications() {
+            // Set notifications toggle state
+            notificationsToggle.checked = notificationsEnabled;
+            
+            // Update notification badge
+            updateNotificationBadge();
+            
+            // Request notification permission
+            if (notificationsEnabled && 'Notification' in window) {
+                if (Notification.permission === 'default') {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            showToast('Notifications enabled!');
+                        }
+                    });
+                }
+            }
+            
+            // Schedule demo notifications
+            scheduleDemoNotifications();
+        }
+
+        // Schedule demo notifications
+        function scheduleDemoNotifications() {
+            if (!notificationsEnabled) return;
+            
+            // Clear existing notifications
+            notifications = [];
+            
+            // Add some demo notifications
+            addNotification({
+                id: Date.now(),
+                title: 'Welcome to Exonova Axis!',
+                message: 'Explore all our tools in one place.',
+                type: 'info',
+                timestamp: Date.now(),
+                read: false
+            });
+            
+            // Schedule more notifications
+            setTimeout(() => {
+                addNotification({
+                    id: Date.now(),
+                    title: 'New Feature Available',
+                    message: 'Check out the latest updates in Securepass.',
+                    type: 'update',
+                    timestamp: Date.now(),
+                    read: false
+                });
+            }, 10000);
+            
+            setTimeout(() => {
+                addNotification({
+                    id: Date.now(),
+                    title: 'Productivity Tip',
+                    message: 'Use El Futuro AI to boost your daily productivity.',
+                    type: 'tip',
+                    timestamp: Date.now(),
+                    read: false
+                });
+            }, 20000);
+        }
+
+        // Add a notification
+        function addNotification(notification) {
+            notifications.unshift(notification);
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            updateNotificationBadge();
+            
+            // Show browser notification if enabled
+            if (notificationsEnabled && 'Notification' in window && Notification.permission === 'granted') {
+                new Notification(notification.title, {
+                    body: notification.message,
+                    icon: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif'
+                });
+            }
+        }
+
+        // Update notification badge
+        function updateNotificationBadge() {
+            const unreadCount = notifications.filter(n => !n.read).length;
+            if (unreadCount > 0) {
+                notificationBadge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                notificationBadge.classList.remove('hidden');
+            } else {
+                notificationBadge.classList.add('hidden');
+            }
+        }
+
+        // Mark notification as read
+        function markNotificationAsRead(notificationId) {
+            const notification = notifications.find(n => n.id === notificationId);
+            if (notification && !notification.read) {
+                notification.read = true;
+                localStorage.setItem('notifications', JSON.stringify(notifications));
+                updateNotificationBadge();
+                renderNotifications();
+            }
+        }
+
+        // Clear all notifications
+        function clearNotifications() {
+            notifications = [];
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            updateNotificationBadge();
+            renderNotifications();
+            showToast('Notifications cleared');
+        }
+
+        // Render notifications
+        function renderNotifications() {
+            if (notifications.length === 0) {
+                notificationsList.innerHTML = `
+                    <div class="text-center py-8 opacity-75">
+                        <span class="material-icons text-4xl mb-2">notifications_off</span>
+                        <p>No notifications</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            notificationsList.innerHTML = notifications.map(notification => `
+                <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ${!notification.read ? 'bg-opacity-10' : ''}" data-notification-id="${notification.id}">
+                    <div class="flex items-start space-x-3">
+                        <span class="material-icons text-${getNotificationColor(notification.type)}">${getNotificationIcon(notification.type)}</span>
+                        <div class="flex-1">
+                            <h3 class="font-medium">${notification.title}</h3>
+                            <p class="text-sm opacity-75">${notification.message}</p>
+                            <p class="text-xs opacity-50 mt-1">${formatTime(notification.timestamp)}</p>
+                        </div>
+                        ${!notification.read ? '<div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>' : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add event listeners to notifications
+            notificationsList.querySelectorAll('[data-notification-id]').forEach(item => {
+                item.addEventListener('click', () => {
+                    const notificationId = parseInt(item.dataset.notificationId);
+                    markNotificationAsRead(notificationId);
+                });
+            });
+        }
+
+        // Get notification icon
+        function getNotificationIcon(type) {
+            switch(type) {
+                case 'info': return 'info';
+                case 'update': return 'update';
+                case 'tip': return 'lightbulb';
+                case 'warning': return 'warning';
+                default: return 'notifications';
+            }
+        }
+
+        // Get notification color
+        function getNotificationColor(type) {
+            switch(type) {
+                case 'info': return 'blue-500';
+                case 'update': return 'green-500';
+                case 'tip': return 'yellow-500';
+                case 'warning': return 'red-500';
+                default: return 'gray-500';
+            }
+        }
+
+        // Format time for notifications
+        function formatTime(timestamp) {
+            const now = Date.now();
+            const diff = now - timestamp;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            return `${days}d ago`;
+        }
+
+        // Open notifications modal
+        function openNotificationsModal() {
+            renderNotifications();
+            notificationsModal.classList.remove('hidden');
+            setTimeout(() => {
+                notificationsModalContent.classList.add('opacity-100');
+                notificationsModalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        // Close notifications modal
+        function closeNotificationsModal() {
+            notificationsModalContent.classList.remove('opacity-100');
+            notificationsModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                notificationsModal.classList.add('hidden');
+            }, 300);
         }
 
         // Update current time
@@ -1475,7 +1730,7 @@
                     </div>
                     <div class="thank-you-section">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-blue-500 mb-2">
-                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                             <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                         </svg>
                         <p>Thank you for using Exonova Axis</p>
                     </div>
@@ -1566,6 +1821,19 @@
             if (index === -1) {
                 favorites.push(productId);
                 showToast('Added to favorites');
+                
+                // Send notification for favorite
+                if (notificationsEnabled) {
+                    const product = products.find(p => p.id === productId);
+                    addNotification({
+                        id: Date.now(),
+                        title: 'Added to Favorites',
+                        message: `${product.name} has been added to your favorites.`,
+                        type: 'info',
+                        timestamp: Date.now(),
+                        read: false
+                    });
+                }
             } else {
                 favorites.splice(index, 1);
                 showToast('Removed from favorites');
@@ -1715,6 +1983,37 @@
             // Close logo modal button
             document.getElementById('close-logo-modal-btn').addEventListener('click', closeLogoModal);
             
+            // Notifications button
+            notificationsBtn.addEventListener('click', openNotificationsModal);
+            
+            // Close notifications button
+            document.getElementById('close-notifications-btn').addEventListener('click', closeNotificationsModal);
+            
+            // Clear notifications button
+            document.getElementById('clear-notifications-btn').addEventListener('click', clearNotifications);
+            
+            // Notifications toggle
+            notificationsToggle.addEventListener('change', (e) => {
+                notificationsEnabled = e.target.checked;
+                localStorage.setItem('notificationsEnabled', notificationsEnabled);
+                
+                if (notificationsEnabled) {
+                    if ('Notification' in window && Notification.permission === 'default') {
+                        Notification.requestPermission().then(permission => {
+                            if (permission === 'granted') {
+                                showToast('Notifications enabled!');
+                                scheduleDemoNotifications();
+                            }
+                        });
+                    } else {
+                        showToast('Notifications enabled!');
+                        scheduleDemoNotifications();
+                    }
+                } else {
+                    showToast('Notifications disabled');
+                }
+            });
+            
             // Search input
             searchInput.addEventListener('input', () => {
                 const query = searchInput.value.toLowerCase();
@@ -1792,6 +2091,13 @@
             logoModal.addEventListener('click', (e) => {
                 if (e.target === logoModal) {
                     closeLogoModal();
+                }
+            });
+            
+            // Close notifications modal when clicking outside
+            notificationsModal.addEventListener('click', (e) => {
+                if (e.target === notificationsModal) {
+                    closeNotificationsModal();
                 }
             });
         }
