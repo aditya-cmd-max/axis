@@ -88,37 +88,72 @@ self.addEventListener('fetch', event => {
     );
 });
 
-// Push notification event - THIS IS WHAT TRIGGERS NOTIFICATIONS
+// Enhanced Push Notification Handler
 self.addEventListener('push', event => {
     console.log('🔔 Push notification received!', event);
     
-    let data = {
+    // Default notification data
+    let notificationData = {
         title: 'Exonova Axis',
         body: '🚀 Welcome to Exonova Axis! Explore all tools in one place.',
         icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
         badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-        image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-        tag: 'exonova-welcome'
+        tag: 'exonova-general',
+        type: 'info',
+        timestamp: Date.now()
     };
     
-    // If we have push data, use it
+    // Extract data from push payload
     if (event.data) {
         try {
-            data = { ...data, ...JSON.parse(event.data.text()) };
+            const payload = event.data.json();
+            notificationData = { ...notificationData, ...payload };
+            console.log('📦 Notification payload:', payload);
         } catch (e) {
-            console.log('No JSON data in push event');
+            console.log('📝 Plain text notification:', event.data.text());
+            notificationData.body = event.data.text() || notificationData.body;
         }
     }
     
+    // Customize based on notification type
+    const notificationConfig = getNotificationConfig(notificationData.type);
+    
     const options = {
-        body: data.body,
-        icon: data.icon,
-        badge: data.badge,
-        image: data.image,
-        tag: data.tag,
-        requireInteraction: true, // Notification stays until clicked
-        silent: false, // Play sound
-        vibrate: [200, 100, 200], // Vibration pattern for mobile
+        body: notificationData.body,
+        icon: notificationConfig.icon,
+        badge: notificationConfig.badge,
+        image: notificationConfig.image,
+        tag: notificationData.tag || `exonova-${Date.now()}`,
+        requireInteraction: notificationConfig.requireInteraction,
+        silent: notificationConfig.silent,
+        vibrate: notificationConfig.vibrate,
+        actions: notificationConfig.actions,
+        data: {
+            url: '/axis/',
+            timestamp: notificationData.timestamp,
+            notificationId: notificationData.id,
+            type: notificationData.type
+        }
+    };
+    
+    console.log('🎯 Showing notification with options:', options);
+    
+    event.waitUntil(
+        self.registration.showNotification(notificationData.title, options)
+            .then(() => console.log('✅ Notification shown successfully'))
+            .catch(err => console.log('❌ Notification failed:', err))
+    );
+});
+
+// Notification type configuration
+function getNotificationConfig(type) {
+    const baseConfig = {
+        icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+        badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+        image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+        requireInteraction: false,
+        silent: false,
+        vibrate: [200, 100, 200],
         actions: [
             {
                 action: 'open',
@@ -128,65 +163,177 @@ self.addEventListener('push', event => {
                 action: 'dismiss',
                 title: '❌ Dismiss'
             }
-        ],
-        data: {
-            url: '/axis/', // URL to open when notification clicked
-            timestamp: Date.now()
-        }
+        ]
     };
     
-    event.waitUntil(
-        self.registration.showNotification(data.title, options)
-            .then(() => console.log('✅ Notification shown successfully'))
-            .catch(err => console.log('❌ Notification failed:', err))
-    );
-});
+    switch(type) {
+        case 'welcome':
+            return {
+                ...baseConfig,
+                icon: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+                requireInteraction: true,
+                vibrate: [300, 100, 300, 100, 300],
+                actions: [
+                    {
+                        action: 'explore',
+                        title: '🚀 Explore'
+                    },
+                    {
+                        action: 'open',
+                        title: '📱 Open App'
+                    }
+                ]
+            };
+            
+        case 'tip':
+            return {
+                ...baseConfig,
+                icon: 'https://aditya-cmd-max.github.io/exonovaai/logo.png',
+                vibrate: [200, 100, 200],
+                silent: false
+            };
+            
+        case 'update':
+            return {
+                ...baseConfig,
+                icon: 'https://aditya-cmd-max.github.io/mindscribe/logo.png',
+                requireInteraction: true,
+                vibrate: [200, 100, 200, 100, 200]
+            };
+            
+        case 'info':
+            return {
+                ...baseConfig,
+                icon: 'https://aditya-cmd-max.github.io/skycast-pro/logo.png',
+                silent: false
+            };
+            
+        default:
+            return baseConfig;
+    }
+}
 
-// Notification click event
+// Enhanced Notification Click Handler
 self.addEventListener('notificationclick', event => {
-    console.log('👆 Notification clicked:', event);
+    console.log('👆 Notification clicked - Action:', event.action, 'Data:', event.notification.data);
     
     event.notification.close();
     
-    if (event.action === 'open' || event.action === '') {
-        const urlToOpen = event.notification.data?.url || '/axis/';
-        
-        event.waitUntil(
-            clients.matchAll({ 
-                type: 'window',
-                includeUncontrolled: true 
-            }).then(windowClients => {
-                // Check if app is already open
-                for (let client of windowClients) {
-                    if (client.url.includes(self.location.origin) && 'focus' in client) {
-                        console.log('🔍 Found existing client, focusing:', client.url);
-                        return client.focus();
+    const notificationData = event.notification.data || {};
+    const urlToOpen = notificationData.url || '/axis/';
+    
+    // Handle different actions
+    switch(event.action) {
+        case 'open':
+        case 'explore':
+        case '':
+            // Default click action
+            event.waitUntil(
+                clients.matchAll({ 
+                    type: 'window',
+                    includeUncontrolled: true 
+                }).then(windowClients => {
+                    // Try to find and focus existing window
+                    for (let client of windowClients) {
+                        if (client.url.includes(self.location.origin)) {
+                            console.log('🔍 Found existing client, focusing:', client.url);
+                            // Navigate to specific section based on notification type
+                            if (event.action === 'explore' || notificationData.type === 'welcome') {
+                                client.postMessage({
+                                    type: 'NAVIGATE',
+                                    section: 'home'
+                                });
+                            }
+                            return client.focus();
+                        }
                     }
-                }
-                
-                // Open new window if app isn't open
-                if (clients.openWindow) {
-                    console.log('🆕 Opening new window:', urlToOpen);
-                    return clients.openWindow(urlToOpen);
-                }
-            })
-        );
-    } else if (event.action === 'dismiss') {
-        console.log('Notification dismissed');
-        event.notification.close();
+                    
+                    // Open new window
+                    if (clients.openWindow) {
+                        console.log('🆕 Opening new window:', urlToOpen);
+                        return clients.openWindow(urlToOpen).then(newClient => {
+                            if (newClient) {
+                                console.log('✅ New window opened successfully');
+                            }
+                        });
+                    }
+                })
+            );
+            break;
+            
+        case 'dismiss':
+            console.log('❌ Notification dismissed by user');
+            // You could send analytics here
+            break;
+            
+        default:
+            console.log('🔍 Unknown action:', event.action);
+            // Fallback to opening the app
+            event.waitUntil(clients.openWindow(urlToOpen));
     }
 });
 
-// Background sync example (for future use)
+// Handle messages from the main app
+self.addEventListener('message', event => {
+    console.log('📨 Message received in service worker:', event.data);
+    
+    const { type, payload } = event.data || {};
+    
+    switch(type) {
+        case 'SKIP_WAITING':
+            self.skipWaiting();
+            console.log('🔄 Service Worker skipWaiting called');
+            break;
+            
+        case 'GET_VERSION':
+            event.ports[0].postMessage({
+                version: '2.0.0',
+                cacheName: CACHE_NAME
+            });
+            break;
+            
+        case 'CLEAR_NOTIFICATIONS':
+            // Clear all notifications
+            self.registration.getNotifications().then(notifications => {
+                notifications.forEach(notification => notification.close());
+                console.log('🗑️ Cleared all notifications');
+            });
+            break;
+            
+        default:
+            console.log('📨 Unknown message type:', type);
+    }
+});
+
+// Enhanced Background Sync
 self.addEventListener('sync', event => {
-    console.log('🔄 Background sync:', event.tag);
-    if (event.tag === 'background-sync') {
-        event.waitUntil(doBackgroundSync());
+    console.log('🔄 Background sync event:', event.tag);
+    
+    switch(event.tag) {
+        case 'notification-sync':
+            event.waitUntil(syncNotificationSettings());
+            break;
+            
+        case 'content-update':
+            event.waitUntil(checkForContentUpdates());
+            break;
+            
+        default:
+            console.log('🔄 Unknown sync tag:', event.tag);
     }
 });
 
-function doBackgroundSync() {
-    console.log('🔄 Performing background sync...');
+// Sync notification settings with server
+function syncNotificationSettings() {
+    console.log('🔄 Syncing notification settings...');
+    // In a real app, you would sync user preferences here
+    return Promise.resolve();
+}
+
+// Check for content updates
+function checkForContentUpdates() {
+    console.log('🔄 Checking for content updates...');
+    // In a real app, you would check for new content here
     return Promise.resolve();
 }
 
