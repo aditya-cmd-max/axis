@@ -1343,7 +1343,7 @@
                     </div>
                     <div class="border-t border-opacity-20 pt-4 mt-4 text-center">
                         <button id="install-app-btn" class="m3-button bg-blue-500 text-white hover:bg-blue-600 transition-colors mb-2">
-                            Install App
+                           Update App
                         </button>
                         <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
                     </div>
@@ -1586,7 +1586,7 @@
                     deferredPrompt = null;
                 });
             } else {
-                showToast('App installation not available');
+                showToast('App Update not available');
             }
         }
 
@@ -1653,7 +1653,7 @@
                 navigator.serviceWorker.ready.then(registration => {
                     registration.showNotification(notification.title, {
                         body: notification.message,
-                        icon: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+                        icon: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
                         badge: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
                         tag: notification.id,
                         requireInteraction: true,
@@ -2039,7 +2039,7 @@
                 const product = products.find(p => p.id === productId);
                 addNotification({
                     id: Date.now(),
-                    title: 'Added to Favorites ⭐',
+                    title: 'Added to Favorites',
                     message: `${product.name} has been added to your favorites.`,
                     type: 'info',
                     timestamp: Date.now(),
