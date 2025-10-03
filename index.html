@@ -1261,8 +1261,8 @@
                         </div>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold">Exonova Axis</h1>
-                        <p class="text-xs opacity-75">All of Exonova • At one place</p>
+                      <center> <h1 class="text-xl font-bold">Exonova Axis</h1></center>
+                         <center><p class="text-xs opacity-75">All of Exonova • At one place</p></center>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
@@ -1590,28 +1590,28 @@
             }
         }
 
-      function initNotifications() {
-    // Update notification badge
-    updateNotificationBadge();
-    
-    // Request notification permission for push notifications
-    if (pushNotificationsEnabled && 'Notification' in window) {
-        if (Notification.permission === 'default') {
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    showToast('Push notifications enabled!');
-                    // Subscribe to push notifications
+        function initNotifications() {
+            // Update notification badge
+            updateNotificationBadge();
+            
+            // Request notification permission for push notifications
+            if (pushNotificationsEnabled && 'Notification' in window) {
+                if (Notification.permission === 'default') {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            showToast('Push notifications enabled!');
+                            // Subscribe to push notifications
+                            subscribeToPushNotifications();
+                        }
+                    });
+                } else if (Notification.permission === 'granted') {
                     subscribeToPushNotifications();
                 }
-            });
-        } else if (Notification.permission === 'granted') {
-            subscribeToPushNotifications();
+            }
+            
+            // Schedule notifications with improved timing
+            scheduleEnhancedNotifications();
         }
-    }
-    
-    // Schedule notifications with improved timing
-    scheduleEnhancedNotifications();
-}
 
         // Subscribe to push notifications
         function subscribeToPushNotifications() {
@@ -1671,143 +1671,132 @@
             }
         }
 
-       // Schedule notifications with proper timing
-function scheduleEnhancedNotifications() {
-    if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
-    
-    // Clear existing notifications
-    notifications = [];
-    
-    // Add welcome notification (only once per day)
-    const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
-    const today = new Date().toDateString();
-    
-    if (lastWelcomeDate !== today) {
-        addNotification({
-            id: 'welcome-' + Date.now(),
-            title: 'Welcome to Exonova Axis! 🚀',
-            message: 'Your productivity hub is ready. Explore all tools in one place.',
-            type: 'welcome',
-            timestamp: Date.now(),
-            read: false
-        });
-        localStorage.setItem('lastWelcomeDate', today);
-    }
-    
-    // Notification pools for different intervals
-    const oneHourNotifications = [
-        {
-            title: 'Productivity Tip 💡',
-            message: 'Use El Futuro AI to automate your daily tasks and save time.',
-            type: 'tip'
-        },
-        {
-            title: 'Did You Know? 🤔',
-            message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
-            type: 'info'
-        },
-        {
-            title: 'Quick Tip ✨',
-            message: 'Boost your learning with PopOut Pro\'s visual study tools.',
-            type: 'tip'
-        }
-    ];
-    
-    const twoHourNotifications = [
-        {
-            title: 'Feature Spotlight 🔦',
-            message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
-            type: 'update'
-        },
-        {
-            title: 'Try This 👇',
-            message: 'Peo-TTS for natural sounding text-to-speech conversion.',
-            type: 'tip'
-        },
-        {
-            title: 'Security Reminder 🔒',
-            message: 'Securepass ensures your passwords are always strong and secure.',
-            type: 'info'
-        }
-    ];
-    
-    // Track which notification to show next
-    let oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
-    let twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
-    
-    // Schedule 1.5-hour notifications (alternating)
-    setInterval(() => {
-        if (oneHourNotifications.length > 0) {
-            const notification = oneHourNotifications[oneHourIndex];
-            addNotification({
-                id: '1.5h-' + Date.now(),
-                title: notification.title,
-                message: notification.message,
-                type: notification.type,
-                timestamp: Date.now(),
-                read: false
-            });
+        // Schedule notifications with proper timing
+        function scheduleEnhancedNotifications() {
+            if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
             
-            // Move to next notification in pool
-            oneHourIndex = (oneHourIndex + 1) % oneHourNotifications.length;
-            localStorage.setItem('oneHourIndex', oneHourIndex.toString());
-        }
-    }, 1.5 * 60 * 60 * 1000); // 1.5 hours
-    
-    // Schedule 2-hour notifications (alternating)
-    setInterval(() => {
-        if (twoHourNotifications.length > 0) {
-            const notification = twoHourNotifications[twoHourIndex];
-            addNotification({
-                id: '2h-' + Date.now(),
-                title: notification.title,
-                message: notification.message,
-                type: notification.type,
-                timestamp: Date.now(),
-                read: false
-            });
+            // Add welcome notification (only once per day) - FIXED LOGIC
+            const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
+            const today = new Date().toDateString();
             
-            // Move to next notification in pool
-            twoHourIndex = (twoHourIndex + 1) % twoHourNotifications.length;
-            localStorage.setItem('twoHourIndex', twoHourIndex.toString());
-        }
-    }, 2 * 60 * 60 * 1000); // 2 hours
-    
-    // Send initial notifications after a short delay
-    setTimeout(() => {
-        if (oneHourNotifications.length > 0) {
-            const notification = oneHourNotifications[oneHourIndex];
-            addNotification({
-                id: 'initial-1.5h-' + Date.now(),
-                title: notification.title,
-                message: notification.message,
-                type: notification.type,
-                timestamp: Date.now(),
-                read: false
-            });
+            console.log('Last welcome date:', lastWelcomeDate, 'Today:', today);
             
-            oneHourIndex = (oneHourIndex + 1) % oneHourNotifications.length;
-            localStorage.setItem('oneHourIndex', oneHourIndex.toString());
-        }
-    }, 30000); // 30 seconds
-    
-    setTimeout(() => {
-        if (twoHourNotifications.length > 0) {
-            const notification = twoHourNotifications[twoHourIndex];
-            addNotification({
-                id: 'initial-2h-' + Date.now(),
-                title: notification.title,
-                message: notification.message,
-                type: notification.type,
-                timestamp: Date.now(),
-                read: false
-            });
+            if (lastWelcomeDate !== today) {
+                addNotification({
+                    id: 'welcome-' + Date.now(),
+                    title: 'Welcome to Exonova Axis! 🚀',
+                    message: 'Your productivity hub is ready. Explore all tools in one place.',
+                    type: 'welcome',
+                    timestamp: Date.now(),
+                    read: false
+                });
+                localStorage.setItem('lastWelcomeDate', today);
+                console.log('✅ Welcome notification added for today');
+                
+                // Schedule background sync for periodic notifications
+                scheduleBackgroundSync();
+            } else {
+                console.log('ℹ️ Welcome notification already shown today');
+            }
             
-            twoHourIndex = (twoHourIndex + 1) % twoHourNotifications.length;
-            localStorage.setItem('twoHourIndex', twoHourIndex.toString());
+            // In-app notifications (only work when app is open)
+            scheduleInAppNotifications();
         }
-    }, 60000); // 60 seconds
-}
+
+        // Schedule notifications that work only when app is open
+        function scheduleInAppNotifications() {
+            // Clear any existing intervals
+            if (window.notificationIntervals) {
+                window.notificationIntervals.forEach(interval => clearInterval(interval));
+            }
+            
+            window.notificationIntervals = [];
+            
+            const oneHourNotifications = [
+                {
+                    title: 'Productivity Tip 💡',
+                    message: 'Use El Futuro AI to automate your daily tasks and save time.',
+                    type: 'tip'
+                },
+                {
+                    title: 'Did You Know? 🤔',
+                    message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
+                    type: 'info'
+                }
+            ];
+            
+            const twoHourNotifications = [
+                {
+                    title: 'Feature Spotlight 🔦',
+                    message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
+                    type: 'update'
+                },
+                {
+                    title: 'Try This 👇',
+                    message: 'Peo-TTS for natural sounding text-to-speech conversion.',
+                    type: 'tip'
+                }
+            ];
+            
+            // Schedule in-app notifications (only work when app is open)
+            const oneHourInterval = setInterval(() => {
+                if (oneHourNotifications.length > 0) {
+                    const oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
+                    const notification = oneHourNotifications[oneHourIndex];
+                    
+                    addNotification({
+                        id: 'inapp-1.5h-' + Date.now(),
+                        title: notification.title,
+                        message: notification.message,
+                        type: notification.type,
+                        timestamp: Date.now(),
+                        read: false
+                    });
+                    
+                    localStorage.setItem('oneHourIndex', ((oneHourIndex + 1) % oneHourNotifications.length).toString());
+                }
+            }, 1.5 * 60 * 60 * 1000);
+            
+            const twoHourInterval = setInterval(() => {
+                if (twoHourNotifications.length > 0) {
+                    const twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
+                    const notification = twoHourNotifications[twoHourIndex];
+                    
+                    addNotification({
+                        id: 'inapp-2h-' + Date.now(),
+                        title: notification.title,
+                        message: notification.message,
+                        type: notification.type,
+                        timestamp: Date.now(),
+                        read: false
+                    });
+                    
+                    localStorage.setItem('twoHourIndex', ((twoHourIndex + 1) % twoHourNotifications.length).toString());
+                }
+            }, 2 * 60 * 60 * 1000);
+            
+            window.notificationIntervals.push(oneHourInterval, twoHourInterval);
+        }
+
+        // Schedule background sync for offline notifications
+        function scheduleBackgroundSync() {
+            if ('serviceWorker' in navigator && 'SyncManager' in window) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.sync.register('daily-notifications')
+                        .then(() => {
+                            console.log('✅ Background sync registered for daily notifications');
+                        })
+                        .catch(err => {
+                            console.log('❌ Background sync registration failed:', err);
+                            // Fallback to in-app only
+                            scheduleInAppNotifications();
+                        });
+                });
+            } else {
+                console.log('ℹ️ Background sync not supported, using in-app notifications only');
+                scheduleInAppNotifications();
+            }
+        }
 
         // Add a notification
         function addNotification(notification) {
@@ -1858,117 +1847,115 @@ function scheduleEnhancedNotifications() {
         }
 
         // Enhanced notification display with better styling
-function renderNotifications() {
-    if (notifications.length === 0) {
-        notificationsList.innerHTML = `
-            <div class="text-center py-8 opacity-75">
-                <span class="material-icons text-4xl mb-2">notifications_off</span>
-                <p>No notifications</p>
-                <p class="text-xs mt-2">You'll receive notifications about updates and tips</p>
-            </div>
-        `;
-        return;
-    }
-    
-    // Group notifications by date
-    const today = new Date().toDateString();
-    const yesterday = new Date(Date.now() - 86400000).toDateString();
-    
-    const todayNotifications = notifications.filter(n => 
-        new Date(n.timestamp).toDateString() === today
-    );
-    
-    const yesterdayNotifications = notifications.filter(n => 
-        new Date(n.timestamp).toDateString() === yesterday
-    );
-    
-    const olderNotifications = notifications.filter(n => {
-        const date = new Date(n.timestamp).toDateString();
-        return date !== today && date !== yesterday;
-    });
-    
-    let html = '';
-    
-    // Today's notifications
-    if (todayNotifications.length > 0) {
-        html += `<div class="mb-4">
-            <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Today</h3>
-            ${todayNotifications.map(notification => renderNotificationItem(notification)).join('')}
-        </div>`;
-    }
-    
-    // Yesterday's notifications
-    if (yesterdayNotifications.length > 0) {
-        html += `<div class="mb-4">
-            <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Yesterday</h3>
-            ${yesterdayNotifications.map(notification => renderNotificationItem(notification)).join('')}
-        </div>`;
-    }
-    
-    // Older notifications
-    if (olderNotifications.length > 0) {
-        html += `<div class="mb-4">
-            <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Older</h3>
-            ${olderNotifications.map(notification => renderNotificationItem(notification)).join('')}
-        </div>`;
-    }
-    
-    notificationsList.innerHTML = html;
-    
-    // Add event listeners to notifications
-    notificationsList.querySelectorAll('[data-notification-id]').forEach(item => {
-        item.addEventListener('click', () => {
-            const notificationId = item.dataset.notificationId;
-            markNotificationAsRead(notificationId);
-        });
-    });
-}
-
-// Helper function to render individual notification items
-function renderNotificationItem(notification) {
-    return `
-        <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ${!notification.read ? 'bg-opacity-5' : ''}" data-notification-id="${notification.id}">
-            <div class="flex items-start space-x-3">
-                <span class="material-icons text-${getNotificationColor(notification.type)} ${!notification.read ? 'animate-pulse' : ''}">${getNotificationIcon(notification.type)}</span>
-                <div class="flex-1">
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-medium ${!notification.read ? 'font-semibold' : ''}">${notification.title}</h3>
-                        <span class="text-xs opacity-50 whitespace-nowrap">${formatTime(notification.timestamp)}</span>
+        function renderNotifications() {
+            if (notifications.length === 0) {
+                notificationsList.innerHTML = `
+                    <div class="text-center py-8 opacity-75">
+                        <span class="material-icons text-4xl mb-2">notifications_off</span>
+                        <p>No notifications</p>
+                        <p class="text-xs mt-2">You'll receive notifications about updates and tips</p>
                     </div>
-                    <p class="text-sm opacity-75 mt-1">${notification.message}</p>
-                    ${notification.type === 'welcome' ? '<div class="mt-2 text-xs bg-blue-500 bg-opacity-20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full inline-block">Daily Welcome</div>' : ''}
-                </div>
-                ${!notification.read ? '<div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>' : ''}
-            </div>
-        </div>
-    `;
-}
+                `;
+                return;
+            }
             
-         
+            // Group notifications by date
+            const today = new Date().toDateString();
+            const yesterday = new Date(Date.now() - 86400000).toDateString();
+            
+            const todayNotifications = notifications.filter(n => 
+                new Date(n.timestamp).toDateString() === today
+            );
+            
+            const yesterdayNotifications = notifications.filter(n => 
+                new Date(n.timestamp).toDateString() === yesterday
+            );
+            
+            const olderNotifications = notifications.filter(n => {
+                const date = new Date(n.timestamp).toDateString();
+                return date !== today && date !== yesterday;
+            });
+            
+            let html = '';
+            
+            // Today's notifications
+            if (todayNotifications.length > 0) {
+                html += `<div class="mb-4">
+                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Today</h3>
+                    ${todayNotifications.map(notification => renderNotificationItem(notification)).join('')}
+                </div>`;
+            }
+            
+            // Yesterday's notifications
+            if (yesterdayNotifications.length > 0) {
+                html += `<div class="mb-4">
+                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Yesterday</h3>
+                    ${yesterdayNotifications.map(notification => renderNotificationItem(notification)).join('')}
+                </div>`;
+            }
+            
+            // Older notifications
+            if (olderNotifications.length > 0) {
+                html += `<div class="mb-4">
+                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Older</h3>
+                    ${olderNotifications.map(notification => renderNotificationItem(notification)).join('')}
+                </div>`;
+            }
+            
+            notificationsList.innerHTML = html;
+            
+            // Add event listeners to notifications
+            notificationsList.querySelectorAll('[data-notification-id]').forEach(item => {
+                item.addEventListener('click', () => {
+                    const notificationId = item.dataset.notificationId;
+                    markNotificationAsRead(notificationId);
+                });
+            });
+        }
 
-       // Enhanced notification icon mapping
-function getNotificationIcon(type) {
-    switch(type) {
-        case 'welcome': return 'rocket_launch';
-        case 'info': return 'info';
-        case 'update': return 'update';
-        case 'tip': return 'lightbulb';
-        case 'warning': return 'warning';
-        default: return 'notifications';
-    }
-}
+        // Helper function to render individual notification items
+        function renderNotificationItem(notification) {
+            return `
+                <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ${!notification.read ? 'bg-opacity-5' : ''}" data-notification-id="${notification.id}">
+                    <div class="flex items-start space-x-3">
+                        <span class="material-icons text-${getNotificationColor(notification.type)} ${!notification.read ? 'animate-pulse' : ''}">${getNotificationIcon(notification.type)}</span>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <h3 class="font-medium ${!notification.read ? 'font-semibold' : ''}">${notification.title}</h3>
+                                <span class="text-xs opacity-50 whitespace-nowrap">${formatTime(notification.timestamp)}</span>
+                            </div>
+                            <p class="text-sm opacity-75 mt-1">${notification.message}</p>
+                            ${notification.type === 'welcome' ? '<div class="mt-2 text-xs bg-blue-500 bg-opacity-20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full inline-block">Daily Welcome</div>' : ''}
+                        </div>
+                        ${!notification.read ? '<div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>' : ''}
+                    </div>
+                </div>
+            `;
+        }
 
-// Enhanced notification color mapping
-function getNotificationColor(type) {
-    switch(type) {
-        case 'welcome': return 'purple-500';
-        case 'info': return 'blue-500';
-        case 'update': return 'green-500';
-        case 'tip': return 'yellow-500';
-        case 'warning': return 'red-500';
-        default: return 'gray-500';
-    }
-}
+        // Enhanced notification icon mapping
+        function getNotificationIcon(type) {
+            switch(type) {
+                case 'welcome': return 'rocket_launch';
+                case 'info': return 'info';
+                case 'update': return 'update';
+                case 'tip': return 'lightbulb';
+                case 'warning': return 'warning';
+                default: return 'notifications';
+            }
+        }
+
+        // Enhanced notification color mapping
+        function getNotificationColor(type) {
+            switch(type) {
+                case 'welcome': return 'purple-500';
+                case 'info': return 'blue-500';
+                case 'update': return 'green-500';
+                case 'tip': return 'yellow-500';
+                case 'warning': return 'red-500';
+                default: return 'gray-500';
+            }
+        }
 
         // Format time for notifications
         function formatTime(timestamp) {
@@ -2128,8 +2115,8 @@ function getNotificationColor(type) {
                         <div class="flex items-start space-x-3">
                             <span class="material-icons text-blue-500">update</span>
                             <div>
-                                <h3 class="font-medium">Push Notifications Added</h3>
-                                <p class="opacity-75">Now get notifications even when the app is closed. Install the app for best experience.</p>
+                                <h3 class="font-medium">Background Notifications</h3>
+                                <p class="opacity-75">Notifications now work even when the app is closed using Background Sync API.</p>
                                 <p class="text-xs opacity-50 mt-1">Just now</p>
                             </div>
                         </div>
@@ -2346,7 +2333,7 @@ function getNotificationColor(type) {
                                 if (permission === 'granted') {
                                     showToast('Push notifications enabled!');
                                     subscribeToPushNotifications();
-                                    scheduleDemoNotifications();
+                                    scheduleEnhancedNotifications();
                                 } else {
                                     pushNotificationsToggle.checked = false;
                                     localStorage.setItem('pushNotificationsEnabled', 'false');
@@ -2355,7 +2342,7 @@ function getNotificationColor(type) {
                         } else if (Notification.permission === 'granted') {
                             showToast('Push notifications enabled!');
                             subscribeToPushNotifications();
-                            scheduleDemoNotifications();
+                            scheduleEnhancedNotifications();
                         } else {
                             pushNotificationsToggle.checked = false;
                             localStorage.setItem('pushNotificationsEnabled', 'false');
