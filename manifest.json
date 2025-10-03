@@ -2,12 +2,12 @@
     "name": "Exonova Axis",
     "short_name": "Exonova",
     "description": "All of Exonova • At one place",
-    "start_url": "/axis/",
+    "start_url": "https://aditya-cmd-max.github.io/axis/",
     "display": "standalone",
     "background_color": "#001f2a",
     "theme_color": "#0ea5e9",
     "orientation": "portrait",
-    "scope": "/axis/",
+    "scope": "https://aditya-cmd-max.github.io/axis/",
     "icons": [
         {
             "src": "https://aditya-cmd-max.github.io/exonova-/logo-nobg.png",
