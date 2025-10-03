@@ -95,8 +95,8 @@ self.addEventListener('push', event => {
         title: 'Exonova Axis',
         body: '🚀 Welcome to Exonova Axis! Explore all tools in one place.',
         icon: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-        badge: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
-        image: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+        badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+        image: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
         tag: 'exonova-welcome'
     };
     
