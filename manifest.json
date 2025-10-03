@@ -10,12 +10,12 @@
     "scope": "https://aditya-cmd-max.github.io/axis/",
     "icons": [
         {
-            "src": "https://aditya-cmd-max.github.io/exonova-/logo-nobg.png",
+            "src": "https://aditya-cmd-max.github.io/axis/axislogo.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "https://aditya-cmd-max.github.io/exonova-/logo-nobg.png",
+            "src": "https://aditya-cmd-max.github.io/axis/axislogo.png",
             "sizes": "512x512",
             "type": "image/png"
         }
