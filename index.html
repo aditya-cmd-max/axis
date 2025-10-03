@@ -789,7 +789,7 @@
         .gradient-bg .spinner,
         .gradient-dark .spinner {
             border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid #fff;
+            border-top: 3px solid #f345fe;
         }
 
         /* Animations */
@@ -973,7 +973,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 80px 20px; /* space so it doesn’t stick */
+  padding: 80px 20px; /* space so it doesn't stick */
   overflow: hidden;
 }
 
@@ -1032,6 +1032,41 @@
     <!-- Toast notification -->
     <div id="toast" class="toast"></div>
 
+   <!-- Exonova Logo Modal -->
+<div id="logo-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black backdrop-blur-sm">
+    <div class="rounded-2xl p-4 sm:p-6 w-full max-w-xs sm:max-w-sm md:max-w-md transform transition-all duration-300 scale-95 opacity-0 max-h-[85vh] overflow-y-auto" id="logo-modal-content" style="box-shadow: var(--md-elevation-4);">
+        <div class="flex justify-between items-center mb-4 sm:mb-5">
+            <h2 class="text-lg sm:text-xl font-semibold">About Exonova</h2>
+            <button id="close-logo-modal-btn" class="p-1 sm:p-2 rounded-full ripple">
+                <span class="material-icons text-lg sm:text-xl">close</span>
+            </button>
+        </div>
+        <div class="flex flex-col items-center mb-3 sm:mb-4">
+            <img src="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png" alt="Exonova Logo" class="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-xl mb-3 sm:mb-4">
+            <h3 class="text-base sm:text-lg font-medium mb-1 sm:mb-2">Exonova Axis</h3>
+            <p class="text-center opacity-75 text-sm sm:text-base mb-3 sm:mb-4">All of Exonova • At one place</p>
+        </div>
+        <div class="space-y-2 sm:space-y-3 text-sm sm:text-base">
+            <p class="opacity-75">Exonova is a collection of innovative tools and applications designed to enhance productivity and creativity.</p>
+            <p class="opacity-75">Our mission is to create intuitive, powerful applications that solve real-world problems and make technology more accessible.</p>
+            <div class="border-t border-opacity-20 pt-2 sm:pt-3 mt-2 sm:mt-3">
+                <h4 class="font-medium mb-1 sm:mb-2 text-sm sm:text-base">Our Products Include:</h4>
+                <ul class="list-disc pl-4 sm:pl-5 space-y-1 opacity-75 text-sm">
+                    <li>El Futuro - Intelligent AI Assistant</li>
+                    <li>SkyCast Pro - Weather & Environmental Platform</li>
+                    <li>PopOut Pro - Visual Learning Tool</li>
+                    <li>Mindscribe - AI-Powered Digital Notebook</li>
+                    <li>Peo-TTS - Text-to-Speech Engine</li>
+                    <li>Securepass - Password Security Advisor</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-opacity-20 pt-3 sm:pt-4 mt-3 sm:mt-4 text-center">
+            <p class="text-xs sm:text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
+        </div>
+    </div>
+</div>
+
     <!-- Wrapper to simulate mobile screen on desktop -->
     <div id="main-container-wrapper">
         <!-- Main Container -->
@@ -1046,7 +1081,7 @@
             <header class="app-header flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="relative">
-                        <img src="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png" alt="Exonova Logo" class="h-10 w-10 rounded-xl" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
+                        <img src="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png" alt="Exonova Logo" class="h-10 w-10 rounded-xl cursor-pointer ripple" id="logo-btn" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
                     </div>
                     <div>
                         <h1 class="text-xl font-bold">Exonova Axis</h1>
@@ -1235,6 +1270,9 @@
         const splashScreen = document.getElementById('splash');
         const toast = document.getElementById('toast');
         const settingsModalContent = document.getElementById('settings-modal-content');
+        const logoModal = document.getElementById('logo-modal');
+        const logoModalContent = document.getElementById('logo-modal-content');
+        const logoBtn = document.getElementById('logo-btn');
 
         // Initialize the app
         function initApp() {
@@ -1504,6 +1542,25 @@
             }, 300);
         }
 
+        // Open logo modal
+        function openLogoModal() {
+            logoModal.classList.remove('hidden');
+            setTimeout(() => {
+                logoModalContent.classList.add('opacity-100');
+                logoModalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        // Close logo modal
+        function closeLogoModal() {
+            logoModalContent.classList.remove('opacity-100');
+            logoModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                logoModal.classList.add('hidden');
+            }, 300);
+        }
+
         // Set up event listeners
         function setupEventListeners() {
             // Theme buttons
@@ -1539,6 +1596,12 @@
             
             // Close search button
             document.getElementById('close-search-btn').addEventListener('click', closeSearch);
+            
+            // Logo button
+            logoBtn.addEventListener('click', openLogoModal);
+            
+            // Close logo modal button
+            document.getElementById('close-logo-modal-btn').addEventListener('click', closeLogoModal);
             
             // Search input
             searchInput.addEventListener('input', () => {
@@ -1610,6 +1673,13 @@
             settingsModal.addEventListener('click', (e) => {
                 if (e.target === settingsModal) {
                     closeSettings();
+                }
+            });
+            
+            // Close logo modal when clicking outside
+            logoModal.addEventListener('click', (e) => {
+                if (e.target === logoModal) {
+                    closeLogoModal();
                 }
             });
         }
