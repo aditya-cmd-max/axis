@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="icon" type="image/x-icon" href="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -57,19 +59,80 @@
     </script>
     <style>
         :root {
+            --md-sys-color-primary: #0ea5e9;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #e0f2fe;
+            --md-sys-color-on-primary-container: #001e2b;
+            --md-sys-color-secondary: #4f6268;
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: #d1e6f0;
+            --md-sys-color-on-secondary-container: #0a1e27;
+            --md-sys-color-tertiary: #5c5b7e;
+            --md-sys-color-on-tertiary: #ffffff;
+            --md-sys-color-tertiary-container: #e2dfff;
+            --md-sys-color-on-tertiary-container: #191a2c;
+            --md-sys-color-error: #ba1a1a;
+            --md-sys-color-on-error: #ffffff;
+            --md-sys-color-error-container: #ffdad6;
+            --md-sys-color-on-error-container: #410002;
+            --md-sys-color-background: #fafcff;
+            --md-sys-color-on-background: #001f2a;
+            --md-sys-color-surface: #fafcff;
+            --md-sys-color-on-surface: #001f2a;
+            --md-sys-color-surface-variant: #dbe4e9;
+            --md-sys-color-on-surface-variant: #3f484d;
+            --md-sys-color-outline: #6f797e;
+            --md-sys-color-shadow: #000000;
+            --md-sys-color-inverse-surface: #2d3133;
+            --md-sys-color-inverse-on-surface: #f1f1f1;
+            --md-sys-color-inverse-primary: #9ac9f7;
+            
+            /* Dark theme variables */
+            --md-sys-color-primary-dark: #9ac9f7;
+            --md-sys-color-on-primary-dark: #00344a;
+            --md-sys-color-primary-container-dark: #004c6a;
+            --md-sys-color-on-primary-container-dark: #c8e6ff;
+            --md-sys-color-secondary-dark: #b5cad5;
+            --md-sys-color-on-secondary-dark: #20333c;
+            --md-sys-color-secondary-container-dark: #364a53;
+            --md-sys-color-on-secondary-container-dark: #d1e6f0;
+            --md-sys-color-tertiary-dark: #c6c3eb;
+            --md-sys-color-on-tertiary-dark: #2e2f42;
+            --md-sys-color-tertiary-container-dark: #444559;
+            --md-sys-color-on-tertiary-container-dark: #e2dfff;
+            --md-sys-color-error-dark: #ffb4ab;
+            --md-sys-color-on-error-dark: #690005;
+            --md-sys-color-error-container-dark: #93000a;
+            --md-sys-color-on-error-container-dark: #ffdad6;
+            --md-sys-color-background-dark: #001f2a;
+            --md-sys-color-on-background-dark: #bfe9ff;
+            --md-sys-color-surface-dark: #001f2a;
+            --md-sys-color-on-surface-dark: #bfe9ff;
+            --md-sys-color-surface-variant-dark: #3f484d;
+            --md-sys-color-on-surface-variant-dark: #bfc8cd;
+            --md-sys-color-outline-dark: #899296;
+            --md-sys-color-shadow-dark: #000000;
+            --md-sys-color-inverse-surface-dark: #e1e2e5;
+            --md-sys-color-inverse-on-surface-dark: #2d3133;
+            --md-sys-color-inverse-primary-dark: #006492;
+            
+            /* Elevation shadows */
+            --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+            --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+            --md-elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+            --md-elevation-4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px rgba(0, 0, 0, 0.3);
+            --md-elevation-5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
+            
+            /* Gradient themes */
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --primary-gradient-dark: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            --card-shadow-dark: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
-            --m3-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
-            --m3-elevation-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
-            --m3-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -80,133 +143,153 @@
             overflow-x: hidden;
         }
 
-        /* Light theme (default) */
-        .light body {
-            color: #2d3748;
-            background-color: #ffffff;
+        /* Light theme */
+        .light {
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+        }
+
+        .light .status-bar {
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
         }
 
         .light #main-container {
-            background-color: #ffffff;
-            color: #2d3748;
-            box-shadow: var(--card-shadow);
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
         }
 
         .light .app-header {
-            background: #ffffff;
-            color: #2d3748;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
         }
 
         .light .product-card {
-            background: #ffffff;
-            color: #2d3748;
-            box-shadow: var(--m3-elevation-1);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
         }
 
         .light .m3-surface {
-            background-color: #f8fafc;
-            color: #2d3748;
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
         }
 
         .light .bottom-nav {
-            background: #ffffff;
-            color: #2d3748;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .light .nav-item {
-            color: #64748b;
+            color: var(--md-sys-color-on-surface-variant);
         }
 
         .light .nav-item.active {
-            color: #0ea5e9;
-            background: rgba(14, 165, 233, 0.1);
+            color: var(--md-sys-color-primary);
         }
 
         .light #search-modal {
-            background: #ffffff;
-            color: #2d3748;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
         }
 
         .light #settings-modal > div {
-            background: #ffffff;
-            color: #2d3748;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .light .ripple:after {
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, transparent 10.01%);
         }
 
         /* Dark theme */
-        .dark body {
-            color: #ffffff;
-            background-color: #111827;
+        .dark {
+            background-color: var(--md-sys-color-background-dark);
+            color: var(--md-sys-color-on-background-dark);
+        }
+
+        .dark .status-bar {
+            background-color: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
         }
 
         .dark #main-container {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            box-shadow: var(--card-shadow-dark);
+            background-color: var(--md-sys-color-background-dark);
+            color: var(--md-sys-color-on-background-dark);
         }
 
         .dark .app-header {
-            background: #1a1a1a;
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+            box-shadow: var(--md-elevation-1);
         }
 
         .dark .product-card {
-            background: #1a1a1a;
-            color: #ffffff;
-            box-shadow: var(--m3-elevation-1);
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+            box-shadow: var(--md-elevation-1);
         }
 
         .dark .m3-surface {
-            background-color: #1a1a1a;
-            color: #ffffff;
+            background-color: var(--md-sys-color-surface-variant-dark);
+            color: var(--md-sys-color-on-surface-variant-dark);
         }
 
         .dark .bottom-nav {
-            background: #1a1a1a;
-            color: #ffffff;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .dark .nav-item {
-            color: #9ca3af;
+            color: var(--md-sys-color-on-surface-variant-dark);
         }
 
         .dark .nav-item.active {
-            color: #0ea5e9;
-            background: rgba(14, 165, 233, 0.1);
+            color: var(--md-sys-color-primary-dark);
         }
 
         .dark #search-modal {
-            background: #1a1a1a;
-            color: #ffffff;
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
         }
 
         .dark #settings-modal > div {
-            background: #1a1a1a;
-            color: #ffffff;
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .dark .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10.01%);
         }
 
         /* Gradient theme */
-        .gradient-bg body {
+        .gradient-bg {
+            color: #ffffff;
+            background: var(--primary-gradient);
+        }
+
+        .gradient-bg .status-bar {
             color: #ffffff;
             background: var(--primary-gradient);
         }
 
         .gradient-bg #main-container {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.1);
             color: #ffffff;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
 
         .gradient-bg .app-header {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .gradient-bg .product-card {
@@ -214,6 +297,8 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .gradient-bg .m3-surface {
@@ -224,10 +309,12 @@
         }
 
         .gradient-bg .bottom-nav {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .gradient-bg .nav-item {
@@ -236,7 +323,6 @@
 
         .gradient-bg .nav-item.active {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.2);
         }
 
         .gradient-bg #search-modal {
@@ -253,8 +339,17 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
+        .gradient-bg .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.01%);
+        }
+
         /* Gradient Dark theme */
-        .gradient-dark body {
+        .gradient-dark {
+            color: #ffffff;
+            background: var(--primary-gradient-dark);
+        }
+
+        .gradient-dark .status-bar {
             color: #ffffff;
             background: var(--primary-gradient-dark);
         }
@@ -262,7 +357,6 @@
         .gradient-dark #main-container {
             background-color: rgba(0, 0, 0, 0.2);
             color: #ffffff;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -272,17 +366,21 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .gradient-dark .product-card {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .gradient-dark .m3-surface {
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.25);
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -293,6 +391,8 @@
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .gradient-dark .nav-item {
@@ -301,21 +401,24 @@
 
         .gradient-dark .nav-item.active {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.2);
         }
 
         .gradient-dark #search-modal {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
 
         .gradient-dark #settings-modal > div {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             color: #ffffff;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.01%);
         }
 
         /* App view container */
@@ -326,28 +429,21 @@
             width: 100%;
             height: 100%;
             transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
-        }
-
-        .light .app-view-container {
-            background-color: #f7fafc;
-            color: #2d3748;
+            background: var(--md-sys-color-background);
         }
 
         .dark .app-view-container {
-            background-color: #111827;
-            color: #ffffff;
+            background-color: var(--md-sys-color-background-dark);
         }
 
         .gradient-bg .app-view-container {
             background: var(--primary-gradient);
-            color: #ffffff;
         }
 
         .gradient-dark .app-view-container {
             background: var(--primary-gradient-dark);
-            color: #ffffff;
         }
 
         .app-view-container.active {
@@ -356,7 +452,7 @@
 
         /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
 
         ::-webkit-scrollbar-track {
@@ -364,12 +460,8 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
-            border-radius: 3px;
-        }
-
-        .dark ::-webkit-scrollbar-thumb {
-            background: #4b5563;
+            background: var(--md-sys-color-outline);
+            border-radius: 2px;
         }
 
         /* Main container styling */
@@ -378,84 +470,148 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            padding: 0.5rem;
+            padding: 0;
         }
 
         #main-container {
             width: 100%;
             max-width: 480px;
             position: relative;
-            border-radius: 20px;
+            border-radius: 0;
             overflow: hidden;
-            min-height: 90vh;
+            min-height: 100vh;
         }
 
         /* Header styling */
         .app-header {
-            padding: 1rem 1.2rem;
-            border-radius: 0 0 20px 20px;
+            padding: 16px;
+            border-radius: 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         /* Product card styling */
         .product-card {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
             border-radius: 16px;
             overflow: hidden;
             position: relative;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--m3-elevation-3);
+        .product-card:active {
+            transform: scale(0.98);
+        }
+
+        .product-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .product-logo img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .product-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-info h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-info p {
+            font-size: 14px;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .favorite-btn {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
         }
 
         /* Theme buttons */
         .theme-btn {
-            transition: all 0.3s ease;
-            border: 2px solid #e5e7eb;
-        }
-
-        .dark .theme-btn {
-            border: 2px solid #4b5563;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
         }
 
         .theme-btn.active {
-            border-color: #0ea5e9;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .dark .theme-btn.active {
+            border-color: var(--md-sys-color-primary-dark);
+        }
+
+        .gradient-bg .theme-btn.active,
+        .gradient-dark .theme-btn.active {
+            border-color: rgba(255, 255, 255, 0.7);
         }
 
         /* Search overlay */
         #search-overlay {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
         }
 
         /* Settings modal */
         #settings-modal > div {
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .dark #settings-modal > div {
-            box-shadow: var(--card-shadow-dark);
+            border-radius: 28px;
+            box-shadow: var(--md-elevation-4);
         }
 
         /* Bottom navigation for mobile app feel */
         .bottom-nav {
-            border-radius: 20px 20px 0 0;
-            padding: 0.75rem 0;
+            border-radius: 0;
+            padding: 8px 0;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
         }
 
         .nav-item {
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            padding: 0.5rem;
+            transition: all 0.2s ease;
+            border-radius: 16px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
         }
 
-        .nav-item:hover {
-            transform: translateY(-3px);
+        .nav-item .material-icons {
+            font-size: 24px;
         }
 
         /* Tab content */
@@ -465,26 +621,19 @@
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.3s ease-out;
         }
 
         /* Empty state */
         .empty-state {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 48px 16px;
         }
 
         .empty-state .material-icons {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .light .empty-state .material-icons {
-            color: #cbd5e0;
-        }
-
-        .dark .empty-state .material-icons {
-            color: #4b5563;
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
         }
 
         /* Material 3 button styles */
@@ -494,63 +643,17 @@
             font-weight: 500;
             text-transform: none;
             transition: all 0.2s ease;
-            box-shadow: var(--m3-elevation-1);
-        }
-
-        .m3-button:hover {
-            box-shadow: var(--m3-elevation-2);
-        }
-
-        .m3-button:active {
-            box-shadow: var(--m3-elevation-1);
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 480px) {
-            #main-container-wrapper {
-                padding: 0;
-            }
-            
-            #main-container {
-                border-radius: 0;
-                min-height: 100vh;
-            }
-            
-            .app-header {
-                border-radius: 0;
-            }
-            
-            .bottom-nav {
-                border-radius: 0;
-            }
-            
-            .product-card {
-                padding: 1rem;
-            }
-            
-            .product-card h3 {
-                font-size: 0.9rem;
-            }
-            
-            .product-card p {
-                font-size: 0.75rem;
-            }
         }
 
         /* Animation for favorite button */
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
         
         .favorite-pulse {
-            animation: pulse 0.5s ease;
-        }
-
-        /* Status bar styling */
-        .status-bar {
-            height: 44px;
+            animation: pulse 0.3s ease;
         }
 
         /* Loading animation */
@@ -586,7 +689,6 @@
             top: 0;
             left: 0;
             pointer-events: none;
-            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
             background-repeat: no-repeat;
             background-position: 50%;
             transform: scale(10, 10);
@@ -603,17 +705,24 @@
         /* Toast notification */
         .toast {
             position: fixed;
-            bottom: 100px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background-color: #323232;
-            color: white;
+            background-color: var(--md-sys-color-inverse-surface);
+            color: var(--md-sys-color-inverse-on-surface);
             padding: 12px 24px;
-            border-radius: 4px;
+            border-radius: 24px;
             z-index: 1000;
             opacity: 0;
             transition: transform 0.3s, opacity 0.3s;
-            box-shadow: var(--m3-elevation-3);
+            font-size: 14px;
+            box-shadow: var(--md-elevation-2);
+        }
+
+        .gradient-bg .toast,
+        .gradient-dark .toast {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
         }
 
         .toast.show {
@@ -621,7 +730,7 @@
             opacity: 1;
         }
 
-        /* Splash screen */
+        /* Splash screen - Simplified Android style */
         #splash {
             display: flex;
             justify-content: center;
@@ -632,129 +741,70 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: linear-gradient(135deg, #ff004c, #a600ff, #007bff);
-            background-size: 400% 400%;
-            animation: gradientMove 6s infinite alternate;
+            background: var(--md-sys-color-background-dark);
             z-index: 9999;
         }
 
         #splash img {
-            width: 130px;
-            height: 130px;
-            border-radius: 28px;
-            animation: logoPop 1.6s ease-in-out forwards;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            animation: logoPop 0.6s ease-in-out forwards;
         }
 
         #splash h1 {
-            margin-top: 20px;
-            font-size: 30px;
-            color: #fff;
-            letter-spacing: 2px;
-            font-weight: 700;
+            margin-top: 16px;
+            font-size: 24px;
+            color: var(--md-sys-color-on-background-dark);
+            font-weight: 500;
             opacity: 0;
-            animation: fadeInText 1.8s ease forwards 1.2s;
-        }
-
-        #splash p {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #f0f0f0;
-            opacity: 0;
-            font-weight: 400;
-            letter-spacing: 1px;
-            animation: slideUp 1.8s ease forwards 2.2s;
+            animation: fadeInText 0.5s ease forwards 0.3s;
         }
 
         /* Footer styling */
         .app-footer {
-            padding: 1rem;
+            padding: 16px;
             text-align: center;
-            font-size: 0.875rem;
+            font-size: 14px;
             margin-top: auto;
-        }
-
-        .light .app-footer {
-            color: #64748b;
-        }
-
-        .dark .app-footer {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .gradient-bg .app-footer,
-        .gradient-dark .app-footer {
-            color: rgba(255, 255, 255, 0.8);
+            opacity: 0.7;
         }
 
         /* Spinner loader */
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             margin: 20px auto;
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top: 4px solid #fff;
+            border-top: 3px solid #fff;
             animation: spin 1s linear infinite;
         }
 
-        /* Thank you banner */
-        .thank-banner {
-            position: relative;
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #0ea5e9, #6366f1);
-            color: white;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 1.5rem;
-            margin: 20px 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        .light .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid var(--md-sys-color-primary);
         }
 
-        .burst {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #ffde59;
-            border-radius: 50%;
-        }
-
-        .burst.left {
-            top: -5px;
-            left: -5px;
-        }
-
-        .burst.right {
-            top: -5px;
-            right: -5px;
-        }
-
-        .burst.top {
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
+        .gradient-bg .spinner,
+        .gradient-dark .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #f345fe;
         }
 
         /* Animations */
-        @keyframes gradientMove {
-            0% { background-position: left top; }
-            100% { background-position: right bottom; }
-        }
-
         @keyframes logoPop {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         @keyframes fadeInText {
-            0% { opacity: 0; transform: translateY(20px) scale(0.9); letter-spacing: 6px; }
-            100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 2px; }
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slideUp {
-            0% { opacity: 0; transform: translateY(40px); }
+            0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
@@ -763,13 +813,137 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Android-style back button */
+        .back-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        /* Improved app bar */
+        .app-bar {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .dark .app-bar {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .gradient-bg .app-bar {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .app-bar {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Improved product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            padding: 16px;
+        }
+
+        /* Thank you section */
+        .thank-you-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            text-align: center;
+            margin-top: 16px;
+            border-top: 1px solid var(--md-sys-color-outline);
+            opacity: 0.7;
+        }
+
+        .gradient-bg .thank-you-section,
+        .gradient-dark .thank-you-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Search input styling */
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            padding: 8px 0;
+        }
+
+        .search-input::placeholder {
+            opacity: 0.7;
+        }
+
         /* Hide splash on desktop */
         @media (min-width: 768px) {
             #splash {
                 display: none;
             }
-        }
             
+            #main-container {
+                border-radius: 12px;
+                margin: 12px 0;
+                min-height: calc(100vh - 24px);
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .product-card {
+                padding: 14px;
+            }
+            
+            .product-logo {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .product-logo img {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .product-info h3 {
+                font-size: 15px;
+            }
+            
+            .product-info p {
+                font-size: 13px;
+            }
+            
+            .product-grid {
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .app-header {
+                padding: 12px 16px;
+            }
+            
+            .bottom-nav {
+                padding: 6px 0;
+            }
+        }
     </style>
 </head>
 
@@ -778,13 +952,131 @@
    <div id="splash">
         <img src="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png" alt="Exonova Logo">
         <h1>Exonova Axis</h1>
-        <p>All of Exonova • In one place</p>
-        <div class="spinner"></div>
-        <div class="app-footer">Made with ❤️ by Aditya Jha</div>
+<br><br><br><br><br>
+   <!-- tagline section -->
+<div class="tagline-container">
+  <div class="mesh"></div>
+
+  <section class="hero">
+    <span data-text="Exonova">
+    </span> Exonova is for the curious.
+  </section>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@700&display=swap');
+
+/* container to isolate styles */
+.tagline-container {
+  position: relative;
+  background: var(--md-sys-color-background-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px; /* space so it doesn't stick */
+  overflow: hidden;
+}
+
+/* square mesh overlay */
+.tagline-container .mesh {
+  position: absolute;
+  inset: 0;
+  background: var(--md-sys-color-background-dark);
+  background-size: 40px 40px;
+  opacity: 0.05;
+  z-index: -1;
+}
+
+/* hero text */
+.tagline-container .hero {
+  color: var(--md-sys-color-on-background-dark);
+  font-family: "Product Sans", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 8vw, 7rem);
+  text-align: center;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  width: 90%;
+  z-index: 1;
+}
+
+.tagline-container .hero img {
+  height: 1em;
+  vertical-align: -0.15em;
+  filter: brightness(-1) invert(6);
+  margin: 0;
+  padding: 0;
+}
+
+/* subtle glow effect */
+.tagline-container .hero span {
+  position: relative;
+  display: inline-block;
+}
+
+.tagline-container .hero span::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: #fff;
+  filter: blur(15px);
+  opacity: 0.2;
+  z-index: -1;
+}
+</style>
+    
    </div> 
     
     <!-- Toast notification -->
     <div id="toast" class="toast"></div>
+
+    <!-- Exonova Logo Modal -->
+<div id="logo-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90">
+    <div class="rounded-2xl p-6 w-full max-w-md transform transition-all duration-300 scale-60 opacity-100 bg-[#0b0b0b] text-white shadow-2xl" id="logo-modal-content">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-5">
+            <h2 class="text-xl font-semibold">About Exonova</h2>
+            <button id="close-logo-modal-btn" class="p-2 rounded-full hover:bg-white/10">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        
+        <!-- Logo + Title -->
+        <div class="flex flex-col items-center mb-4">
+            <img src="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png" 
+                 alt="Exonova Logo" 
+                 class="h-20 w-20 rounded-xl mb-4">
+            <h3 class="text-lg font-medium mb-2">Exonova Axis</h3>
+            <p class="text-center opacity-75 mb-4">All of Exonova • At one place</p>
+        </div>
+        
+        <!-- Body -->
+        <div class="space-y-3">
+            <p class="opacity-75">Exonova is a collection of innovative tools and applications designed to enhance productivity and creativity.</p>
+            <p class="opacity-75">Our mission is to create intuitive, powerful applications that solve real-world problems and make technology more accessible.</p>
+            <div class="border-t border-white/20 pt-3 mt-3">
+                <h4 class="font-medium mb-2">Our Products Include:</h4>
+                <ul class="list-disc pl-5 space-y-1 opacity-75">
+                    <li>El Futuro - Intelligent AI Assistant</li>
+                    <li>SkyCast Pro - Weather & Environmental Platform</li>
+                    <li>PopOut Pro - Visual Learning Tool</li>
+                    <li>Mindscribe - AI-Powered Digital Notebook</li>
+                    <li>Peo-TTS - Text-to-Speech Engine</li>
+                    <li>Securepass - Password Security Advisor</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="border-t border-white/20 pt-4 mt-4 text-center">
+            <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
+        </div>
+    </div>
+</div>
+
 
     <!-- Wrapper to simulate mobile screen on desktop -->
     <div id="main-container-wrapper">
@@ -792,27 +1084,26 @@
         <div id="main-container" class="min-h-screen flex flex-col">
 
             <!-- Status Bar (for mobile app feel) -->
-            <div class="status-bar flex justify-between items-center px-5 py-3 text-xs">
+            <div class="status-bar w-full text-center py-1">
                 <div id="current-time" class="font-medium">12:00 PM</div>
             </div>
 
             <!-- Header -->
-            <header class="app-header flex items-center justify-between py-4 mb-2 px-6">
+            <header class="app-header flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="relative">
-                        <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="h-10 w-10 rounded-xl shadow-lg animate-pulse-slow" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
-                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></div>
+                        <img src="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png" alt="Exonova Logo" class="h-10 w-10 rounded-xl cursor-pointer ripple" id="logo-btn" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Exonova Axis</h1>
+                        <h1 class="text-xl font-bold">Exonova Axis</h1>
                         <p class="text-xs opacity-75">All of Exonova • At one place</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <button id="search-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 ripple">
+                    <button id="search-btn" class="p-2 rounded-full ripple">
                         <span class="material-icons">search</span>
                     </button>
-                    <button id="settings-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:rotate-12 ripple">
+                    <button id="settings-btn" class="p-2 rounded-full ripple">
                         <span class="material-icons">settings</span>
                     </button>
                 </div>
@@ -820,11 +1111,11 @@
 
             <!-- Search Bar Overlay -->
             <div id="search-overlay" class="hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
-                <div id="search-modal" class="w-full max-w-md rounded-2xl shadow-2xl p-5 transform transition-all duration-300 scale-95 opacity-0">
+                <div id="search-modal" class="w-full max-w-md rounded-2xl p-5 transform transition-all duration-300 scale-95 opacity-0" style="box-shadow: var(--md-elevation-4);">
                     <div class="flex items-center space-x-3 mb-4">
                         <span class="material-icons opacity-75">search</span>
-                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="input-field flex-grow bg-transparent border-none focus:outline-none placeholder-opacity-75">
-                        <button id="close-search-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ripple">
+                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="search-input flex-grow bg-transparent border-none focus:outline-none">
+                        <button id="close-search-btn" class="p-2 rounded-full ripple">
                             <span class="material-icons">close</span>
                         </button>
                     </div>
@@ -835,33 +1126,33 @@
             </div>
 
             <!-- Settings Modal -->
-            <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-4 backdrop-blur-sm">
-                <div class="rounded-2xl p-6 w-full max-w-sm">
+            <div id="settings-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+                <div class="rounded-2xl p-6 w-full max-w-sm transform transition-all duration-300 scale-95 opacity-0" id="settings-modal-content">
                     <div class="flex justify-between items-center mb-5">
                         <h2 class="text-xl font-semibold">Appearance</h2>
-                        <button id="close-settings-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ripple">
+                        <button id="close-settings-btn" class="p-2 rounded-full ripple">
                             <span class="material-icons">close</span>
                         </button>
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-6">
-                        <button data-theme="light" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                        <button data-theme="light" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-white w-full h-8 rounded-lg mb-2 border border-gray-200"></div>
                             <span class="text-sm font-medium">Light</span>
                         </button>
-                        <button data-theme="dark" class="theme-btn active p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
-                            <div class="bg-gray-800 w-full h-8 rounded-lg mb-2 border border-gray-700"></div>
+                        <button data-theme="dark" class="theme-btn active p-4 rounded-xl flex flex-col items-center transition-all ripple">
+                            <div class="bg-gray-900 w-full h-8 rounded-lg mb-2 border border-gray-800"></div>
                             <span class="text-sm font-medium">Dark</span>
                         </button>
-                        <button data-theme="gradient-bg" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                        <button data-theme="gradient-bg" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
                             <span class="text-sm font-medium">Gradient</span>
                         </button>
-                        <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all hover:scale-105 ripple">
+                        <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
                             <span class="text-sm font-medium">Night</span>
                         </button>
                     </div>
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                    <div class="border-t border-opacity-20 pt-4">
                         <h3 class="font-medium mb-3">Other Settings</h3>
                         <div class="flex items-center justify-between py-2">
                             <span class="opacity-75">Notifications</span>
@@ -878,46 +1169,46 @@
                             </label>
                         </div>
                     </div>
-                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 text-center">
+                    <div class="border-t border-opacity-20 pt-4 mt-4 text-center">
                         <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
                     </div>
                 </div>
             </div>
 
             <!-- Main Content Area -->
-            <main id="main-content" class="flex-grow px-5 pb-20 overflow-y-auto">
+            <main id="main-content" class="flex-grow overflow-y-auto">
                 <!-- Tab content will be rendered here -->
             </main>
 
             <!-- Bottom Navigation (for mobile app feel) -->
             <nav class="bottom-nav flex justify-around items-center">
-                <a href="#" data-tab="home" class="nav-item active flex flex-col items-center text-xs ripple">
-                    <span class="material-icons text-blue-500">home</span>
-                    <span class="mt-1 text-blue-500">Home</span>
+                <a href="#" data-tab="home" class="nav-item active flex flex-col items-center ripple">
+                    <span class="material-icons">home</span>
+                    <span>Home</span>
                 </a>
-                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center text-xs ripple">
+                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center ripple">
                     <span class="material-icons">favorite</span>
-                    <span class="mt-1">Favorites</span>
+                    <span>Favorites</span>
                 </a>
-                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center text-xs ripple">
+                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center ripple">
                     <span class="material-icons">update</span>
-                    <span class="mt-1">Updates</span>
+                    <span>Updates</span>
                 </a>
             </nav>
 
             <!-- Footer -->
-            <footer class="app-footer py-4 text-center text-sm">
+            <footer class="app-footer py-4 text-center">
                 Made with ❤️ by Aditya Jha
             </footer>
 
             <!-- Dynamic View Container (for opening apps) -->
             <div id="app-view" class="app-view-container">
-                <div class="p-4 flex items-center justify-between mb-2">
-                    <button id="back-to-home-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 ripple">
+                <div class="app-bar">
+                    <button id="back-to-home-btn" class="back-button ripple">
                         <span class="material-icons">arrow_back</span>
                     </button>
                     <h2 id="app-title" class="text-xl font-semibold flex-grow text-center"></h2>
-                    <div class="w-8"></div> <!-- Spacer to center title -->
+                    <div class="w-48px"></div> <!-- Spacer to center title -->
                 </div>
                 <div id="app-content" class="h-full">
                     <!-- App content will be loaded here -->
@@ -947,7 +1238,7 @@
             id: 'popout-pro',
             name: 'PopOut Pro',
             description: 'AI-powered visual learning tool for creating engaging educational content.',
-            logoUrl: 'https://aditya-cmd-max.github.io/popout/ChatGPT Image Aug 15, 2025, 08_26_20 PM.png',
+            logoUrl: 'https://aditya-cmd-max.github.io/popout/ChatGPT%20Image%20Aug%2015,%202025,%2008_26_20%20PM.png',
             color: 'bg-black',
             url: 'https://aditya-cmd-max.github.io/popout/app.html'
         }, {
@@ -964,6 +1255,13 @@
             logoUrl: 'https://aditya-cmd-max.github.io/Peo/tts.png',
             color: 'bg-yellow-500',
             url: 'https://aditya-cmd-max.github.io/Peo/app.html'
+        }, {
+            id: 'securepass',
+            name: 'Securepass',
+            description: 'Your perfect password advisor for secure and strong passwords.',
+            logoUrl: 'https://aditya-cmd-max.github.io/securepass/logo-dark.png',
+            color: 'bg-indigo-500',
+            url: 'https://aditya-cmd-max.github.io/securepass'
         }];
 
         let currentTheme = localStorage.getItem('theme') || 'dark';
@@ -982,6 +1280,10 @@
         const appContent = document.getElementById('app-content');
         const splashScreen = document.getElementById('splash');
         const toast = document.getElementById('toast');
+        const settingsModalContent = document.getElementById('settings-modal-content');
+        const logoModal = document.getElementById('logo-modal');
+        const logoModalContent = document.getElementById('logo-modal-content');
+        const logoBtn = document.getElementById('logo-btn');
 
         // Initialize the app
         function initApp() {
@@ -1032,255 +1334,16 @@
             }
             
             mainContent.innerHTML = html;
-            setupProductCardListeners();
-        }
-
-        // Render Home Tab
-        function renderHomeTab() {
-            let html = `
-                <div class="mb-6 animate-fade-in">
-                    <h2 class="text-2xl font-bold mb-2">Welcome to Exonova</h2>
-                    <p class="opacity-75">All of Exonova's tools in one place</p>
-                </div>
-                <div class="grid grid-cols-1 gap-4 mb-8">
-            `;
             
-            products.forEach(product => {
-                const isFavorite = favorites.includes(product.id);
-                html += `
-                    <div class="product-card p-4 flex items-center space-x-4 ripple animate-slide-up" data-product-id="${product.id}">
-                        <div class="flex-shrink-0">
-                            <img src="${product.logoUrl}" alt="${product.name}" class="w-12 h-12 rounded-xl" onerror="this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
-                        </div>
-                        <div class="flex-grow">
-                            <h3 class="font-semibold">${product.name}</h3>
-                            <p class="text-sm opacity-75">${product.description}</p>
-                        </div>
-                        <button class="favorite-btn p-2 rounded-full ${isFavorite ? 'text-red-500' : 'text-gray-400'} hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-product-id="${product.id}">
-                            <span class="material-icons">${isFavorite ? 'favorite' : 'favorite_border'}</span>
-                        </button>
-                    </div>
-                `;
-            });
-            
-            html += `</div>
-                <div class="text-center py-6 border-t border-gray-200 dark:border-gray-800 animate-fade-in">
-                    <div class="home-section">
-                        <div class="thank-banner">
-                            <span>THANK YOU</span>
-                            <div class="burst left"></div>
-                            <div class="burst right"></div>
-                            <div class="burst top"></div>
-                        </div>
-                    </div>
-                    <p class="text-xl font-medium mt-4">Thanks for using Exonova!</p>
-                </div>
-            `;
-            return html;
-        }
-
-        // Render Favorites Tab
-        function renderFavoritesTab() {
-            const favoriteProducts = products.filter(product => favorites.includes(product.id));
-            
-            if (favoriteProducts.length === 0) {
-                return `
-                    <div class="empty-state animate-fade-in">
-                        <span class="material-icons">favorite</span>
-                        <h3 class="text-lg font-semibold mb-2">No favorites yet</h3>
-                        <p class="opacity-75">Add some products to your favorites to see them here</p>
-                    </div>
-                `;
-            }
-            
-            let html = `
-                <div class="mb-6 animate-fade-in">
-                    <h2 class="text-2xl font-bold mb-2">Your Favorites</h2>
-                    <p class="opacity-75">Your most used tools</p>
-                </div>
-                <div class="grid grid-cols-1 gap-4">
-            `;
-            
-            favoriteProducts.forEach(product => {
-                html += `
-                    <div class="product-card p-4 flex items-center space-x-4 ripple animate-slide-up" data-product-id="${product.id}">
-                        <div class="flex-shrink-0">
-                            <img src="${product.logoUrl}" alt="${product.name}" class="w-12 h-12 rounded-xl" onerror="this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
-                        </div>
-                        <div class="flex-grow">
-                            <h3 class="font-semibold">${product.name}</h3>
-                            <p class="text-sm opacity-75">${product.description}</p>
-                        </div>
-                        <button class="favorite-btn p-2 rounded-full text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-product-id="${product.id}">
-                            <span class="material-icons">favorite</span>
-                        </button>
-                    </div>
-                `;
-            });
-            
-            html += `</div>`;
-            return html;
-        }
-
-        // Render Updates Tab
-        function renderUpdatesTab() {
-            return `
-                <div class="mb-6 animate-fade-in">
-                    <h2 class="text-2xl font-bold mb-2">Recent Updates</h2>
-                    <p class="opacity-75">What's new in Exonova</p>
-                </div>
-                <div class="space-y-4 animate-fade-in">
-                    <div class="m3-surface p-4">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
-                                <span class="material-icons text-blue-600 dark:text-blue-300">update</span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold">New UI Design</h3>
-                                <p class="text-xs opacity-75">2 days ago</p>
-                            </div>
-                        </div>
-                        <p class="opacity-75">We've completely redesigned the Exonova Axis interface for a better user experience.</p>
-                    </div>
-                    <div class="m3-surface p-4">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
-                                <span class="material-icons text-green-600 dark:text-green-300">add</span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold">New Apps Added</h3>
-                                <p class="text-xs opacity-75">1 week ago</p>
-                            </div>
-                        </div>
-                        <p class="opacity-75">Added support for Mindscribe and Peo-TTS to the Exonova Axis platform.</p>
-                    </div>
-                    <div class="m3-surface p-4">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
-                                <span class="material-icons text-purple-600 dark:text-purple-300">bug_report</span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold">Bug Fixes</h3>
-                                <p class="text-xs opacity-75">2 weeks ago</p>
-                            </div>
-                        </div>
-                        <p class="opacity-75">Fixed several issues with theme switching and app loading performance.</p>
-                    </div>
-                    <div class="m3-surface p-4">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <div class="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
-                                <span class="material-icons text-yellow-600 dark:text-yellow-300">public</span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold">Official Website</h3>
-                                <p class="text-xs opacity-75">Visit our website</p>
-                            </div>
-                        </div>
-                        <p class="opacity-75">Check out our official website for more information about Exonova products.</p>
-                        <a href="https://exonova-phi.vercel.app/" target="_blank" class="text-blue-500 text-sm font-medium flex items-center mt-2">
-                            Visit Exonova Website
-                            <span class="material-icons text-sm ml-1">open_in_new</span>
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Set up event listeners
-        function setupEventListeners() {
-            // Theme buttons
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const theme = btn.dataset.theme;
-                    applyTheme(theme);
-                    
-                    // Update active state
-                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                });
-            });
-            
-            // Settings button
-            document.getElementById('settings-btn').addEventListener('click', () => {
-                settingsModal.classList.remove('hidden');
-            });
-            
-            // Close settings button
-            document.getElementById('close-settings-btn').addEventListener('click', () => {
-                settingsModal.classList.add('hidden');
-            });
-            
-            // Search button
-            document.getElementById('search-btn').addEventListener('click', () => {
-                searchOverlay.classList.remove('hidden');
-                setTimeout(() => {
-                    searchModal.classList.add('opacity-100', 'scale-100');
-                    searchInput.focus();
-                }, 10);
-            });
-            
-            // Close search button
-            document.getElementById('close-search-btn').addEventListener('click', closeSearch);
-            
-            // Search input
-            searchInput.addEventListener('input', handleSearch);
-            
-            // Navigation items
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const tab = item.dataset.tab;
-                    
-                    // Update active nav item
-                    document.querySelectorAll('.nav-item').forEach(i => {
-                        i.classList.remove('active');
-                        i.querySelector('span:first-child').classList.remove('text-blue-500');
-                        i.querySelector('span:last-child').classList.remove('text-blue-500');
-                    });
-                    
-                    item.classList.add('active');
-                    item.querySelector('span:first-child').classList.add('text-blue-500');
-                    item.querySelector('span:last-child').classList.add('text-blue-500');
-                    
-                    // Update content
-                    currentTab = tab;
-                    renderContent();
-                });
-            });
-            
-            // Back to home button
-            document.getElementById('back-to-home-btn').addEventListener('click', () => {
-                appView.classList.remove('active');
-            });
-            
-            // Close search on overlay click
-            searchOverlay.addEventListener('click', (e) => {
-                if (e.target === searchOverlay) {
-                    closeSearch();
-                }
-            });
-            
-            // Close settings on overlay click
-            settingsModal.addEventListener('click', (e) => {
-                if (e.target === settingsModal) {
-                    settingsModal.classList.add('hidden');
-                }
-            });
-        }
-
-        // Set up product card event listeners
-        function setupProductCardListeners() {
-            // Product card clicks
+            // Add event listeners to product cards
             document.querySelectorAll('.product-card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    if (!e.target.closest('.favorite-btn')) {
-                        const productId = card.dataset.productId;
-                        openApp(productId);
-                    }
+                card.addEventListener('click', () => {
+                    const productId = card.dataset.productId;
+                    openProduct(productId);
                 });
             });
             
-            // Favorite button clicks
+            // Add event listeners to favorite buttons
             document.querySelectorAll('.favorite-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1290,127 +1353,172 @@
             });
         }
 
-        // Toggle favorite status
+        // Render Home Tab
+        function renderHomeTab() {
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-2">Welcome to Exonova</h2>
+                    <p class="opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
+                    <div class="product-grid">
+                        ${products.map(product => `
+                            <div class="product-card ripple" data-product-id="${product.id}">
+                                <div class="product-logo ${product.color}">
+                                    <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                                </div>
+                                <div class="product-info">
+                                    <h3>${product.name}</h3>
+                                    <p>${product.description}</p>
+                                </div>
+                                <button class="favorite-btn ripple" data-product-id="${product.id}">
+                                    <span class="material-icons ${favorites.includes(product.id) ? 'text-red-500' : 'opacity-50'}">favorite</span>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="thank-you-section">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-blue-500 mb-2">
+                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                        </svg>
+                        <p>Thank you for using Exonova Axis</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Favorites Tab
+        function renderFavoritesTab() {
+            const favoriteProducts = products.filter(product => favorites.includes(product.id));
+            
+            if (favoriteProducts.length === 0) {
+                return `
+                    <div class="empty-state">
+                        <span class="material-icons">favorite_border</span>
+                        <h3 class="font-medium mb-2">No favorites yet</h3>
+                        <p class="opacity-75">Add products to favorites to see them here</p>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-6">Your Favorites</h2>
+                    <div class="product-grid">
+                        ${favoriteProducts.map(product => `
+                            <div class="product-card ripple" data-product-id="${product.id}">
+                                <div class="product-logo ${product.color}">
+                                    <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                                </div>
+                                <div class="product-info">
+                                    <h3>${product.name}</h3>
+                                    <p>${product.description}</p>
+                                </div>
+                                <button class="favorite-btn ripple" data-product-id="${product.id}">
+                                    <span class="material-icons text-red-500">favorite</span>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Updates Tab
+        function renderUpdatesTab() {
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-6">Recent Updates</h2>
+                    <div class="m3-surface rounded-xl p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-blue-500">update</span>
+                            <div>
+                                <h3 class="font-medium">Launched 'Securepass'</h3>
+                                <p class="opacity-75">Securepass is your perfect Password advisor launched at the web app and at the <strong>Exonova Axis</strong> mobile app.</p>
+                                <p class="text-xs opacity-50 mt-1">23/09/25             9:17 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m3-surface rounded-xl p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-green-500">update</span>
+                            <div>
+                                <h3 class="font-medium">Exonova Axis Improvement</h3>
+                                <p class="opacity-75">Completely redesigned UI with Android app feel</p>
+                                <p class="text-xs opacity-50 mt-1">17/09/25            5:44 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m3-surface rounded-xl p-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-purple-500">update</span>
+                            <div>
+                                <h3 class="font-medium">El Futuro AI Enhancements</h3>
+                                <p class="opacity-75">Improved the backing for better responses</p>
+                                <p class="text-xs opacity-50 mt-1">12/09/25            7:48 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle favorite status for a product
         function toggleFavorite(productId) {
             const index = favorites.indexOf(productId);
             
             if (index === -1) {
-                // Add to favorites
                 favorites.push(productId);
                 showToast('Added to favorites');
             } else {
-                // Remove from favorites
                 favorites.splice(index, 1);
                 showToast('Removed from favorites');
             }
             
-            // Save to localStorage
             localStorage.setItem('favorites', JSON.stringify(favorites));
             
             // Update UI
-            if (currentTab === 'favorites') {
-                renderContent();
-            } else {
-                // Just update the favorite buttons
-                document.querySelectorAll('.favorite-btn').forEach(btn => {
-                    if (btn.dataset.productId === productId) {
-                        const isFavorite = favorites.includes(productId);
-                        btn.innerHTML = `<span class="material-icons">${isFavorite ? 'favorite' : 'favorite_border'}</span>`;
-                        btn.classList.toggle('text-red-500', isFavorite);
-                        btn.classList.toggle('text-gray-400', !isFavorite);
-                    }
-                });
+            const favoriteBtn = document.querySelector(`.favorite-btn[data-product-id="${productId}"]`);
+            if (favoriteBtn) {
+                const icon = favoriteBtn.querySelector('.material-icons');
+                if (favorites.includes(productId)) {
+                    icon.classList.remove('opacity-50');
+                    icon.classList.add('text-red-500');
+                    icon.classList.add('favorite-pulse');
+                    setTimeout(() => icon.classList.remove('favorite-pulse'), 300);
+                } else {
+                    icon.classList.add('opacity-50');
+                    icon.classList.remove('text-red-500');
+                }
             }
             
-            // Add animation to the button
-            const btn = document.querySelector(`.favorite-btn[data-product-id="${productId}"]`);
-            btn.classList.add('favorite-pulse');
-            setTimeout(() => {
-                btn.classList.remove('favorite-pulse');
-            }, 500);
+            // If we're on the favorites tab, re-render it
+            if (currentTab === 'favorites') {
+                renderContent();
+            }
         }
 
-        // Open app view
-        function openApp(productId) {
+        // Open a product in the app view
+        function openProduct(productId) {
             const product = products.find(p => p.id === productId);
-            
             if (!product) return;
             
             appTitle.textContent = product.name;
-            
-            // Show loading state
             appContent.innerHTML = `
-                <div class="flex flex-col items-center justify-center h-full">
-                    <div class="spinner"></div>
-                    <p class="mt-4 opacity-75">Loading ${product.name}...</p>
+                <div class="h-full w-full flex items-center justify-center">
+                    <div class="text-center p-6">
+                        <div class="spinner mb-4"></div>
+                        <p>Loading ${product.name}...</p>
+                    </div>
                 </div>
             `;
             
-            // Show app view
             appView.classList.add('active');
             
-            // Load the app content in an iframe (full screen)
+            // Simulate loading delay for demo purposes
             setTimeout(() => {
                 appContent.innerHTML = `
-                    <iframe src="${product.url}" class="w-full h-full border-0" frameborder="0" loading="lazy"></iframe>
+                    <iframe src="${product.url}" class="w-full h-full border-0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
                 `;
-            }, 1000);
-        }
-
-        // Handle search input
-        function handleSearch() {
-            const query = searchInput.value.toLowerCase();
-            
-            if (query.length === 0) {
-                searchResults.innerHTML = '<p class="text-center opacity-75 py-4">Type to search across Exonova tools</p>';
-                return;
-            }
-            
-            const results = products.filter(product => 
-                product.name.toLowerCase().includes(query) || 
-                product.description.toLowerCase().includes(query)
-            );
-            
-            if (results.length === 0) {
-                searchResults.innerHTML = '<p class="text-center opacity-75 py-4">No results found</p>';
-                return;
-            }
-            
-            let html = '';
-            results.forEach(product => {
-                html += `
-                    <div class="p-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg cursor-pointer" data-product-id="${product.id}">
-                        <div class="flex items-center space-x-3">
-                            <img src="${product.logoUrl}" alt="${product.name}" class="w-8 h-8 rounded-lg" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=${product.name.charAt(0)}'">
-                            <div>
-                                <h4 class="font-medium">${product.name}</h4>
-                                <p class="text-sm opacity-75">${product.description}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            searchResults.innerHTML = html;
-            
-            // Add click listeners to search results
-            searchResults.querySelectorAll('div[data-product-id]').forEach(item => {
-                item.addEventListener('click', () => {
-                    const productId = item.dataset.productId;
-                    closeSearch();
-                    openApp(productId);
-                });
-            });
-        }
-
-        // Close search overlay
-        function closeSearch() {
-            searchModal.classList.remove('opacity-100', 'scale-100');
-            setTimeout(() => {
-                searchOverlay.classList.add('hidden');
-                searchInput.value = '';
-                searchResults.innerHTML = '';
-            }, 300);
+            }, 1500);
         }
 
         // Show toast notification
@@ -1423,31 +1531,180 @@
             }, 3000);
         }
 
-        // Initialize the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // Hide splash screen after 2 seconds
+        // Close search overlay
+        function closeSearch() {
+            searchModal.classList.remove('opacity-100');
+            searchModal.classList.add('scale-95');
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+            
             setTimeout(() => {
-                splashScreen.style.opacity = '0';
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                }, 500);
-            }, 2000);
-            
-            initApp();
-        });
+                searchOverlay.classList.add('hidden');
+            }, 300);
+        }
 
-        // Handle keyboard events
-        document.addEventListener('keydown', (e) => {
-            // Close search on Escape key
-            if (e.key === 'Escape' && !searchOverlay.classList.contains('hidden')) {
-                closeSearch();
-            }
+        // Close settings modal
+        function closeSettings() {
+            settingsModalContent.classList.remove('opacity-100');
+            settingsModalContent.classList.add('scale-95');
             
-            // Close settings on Escape key
-            if (e.key === 'Escape' && !settingsModal.classList.contains('hidden')) {
+            setTimeout(() => {
                 settingsModal.classList.add('hidden');
-            }
-        });
+            }, 300);
+        }
+
+        // Open logo modal
+        function openLogoModal() {
+            logoModal.classList.remove('hidden');
+            setTimeout(() => {
+                logoModalContent.classList.add('opacity-100');
+                logoModalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        // Close logo modal
+        function closeLogoModal() {
+            logoModalContent.classList.remove('opacity-100');
+            logoModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                logoModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Theme buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyTheme(btn.dataset.theme);
+                });
+            });
+            
+            // Settings button
+            document.getElementById('settings-btn').addEventListener('click', () => {
+                settingsModal.classList.remove('hidden');
+                setTimeout(() => {
+                    settingsModalContent.classList.add('opacity-100');
+                    settingsModalContent.classList.remove('scale-95');
+                }, 10);
+            });
+            
+            // Close settings button
+            document.getElementById('close-settings-btn').addEventListener('click', closeSettings);
+            
+            // Search button
+            document.getElementById('search-btn').addEventListener('click', () => {
+                searchOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    searchModal.classList.add('opacity-100');
+                    searchModal.classList.remove('scale-95');
+                    searchInput.focus();
+                }, 10);
+            });
+            
+            // Close search button
+            document.getElementById('close-search-btn').addEventListener('click', closeSearch);
+            
+            // Logo button
+            logoBtn.addEventListener('click', openLogoModal);
+            
+            // Close logo modal button
+            document.getElementById('close-logo-modal-btn').addEventListener('click', closeLogoModal);
+            
+            // Search input
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                
+                if (query.length === 0) {
+                    searchResults.innerHTML = '<p class="text-center py-4 opacity-75">Type to search Exonova products</p>';
+                    return;
+                }
+                
+                const results = products.filter(product => 
+                    product.name.toLowerCase().includes(query) || 
+                    product.description.toLowerCase().includes(query)
+                );
+                
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<p class="text-center py-4 opacity-75">No products found</p>';
+                    return;
+                }
+                
+                searchResults.innerHTML = results.map(product => `
+                    <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ripple" data-product-id="${product.id}">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center ${product.color}">
+                                <img src="${product.logoUrl}" alt="${product.name}" class="w-6 h-6" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
+                            </div>
+                            <div>
+                                <h3 class="font-medium">${product.name}</h3>
+                                <p class="text-sm opacity-75">${product.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Add event listeners to search results
+                searchResults.querySelectorAll('[data-product-id]').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const productId = item.dataset.productId;
+                        closeSearch();
+                        openProduct(productId);
+                    });
+                });
+            });
+            
+            // Navigation tabs
+            document.querySelectorAll('[data-tab]').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentTab = tab.dataset.tab;
+                    renderContent();
+                });
+            });
+            
+            // Back to home button
+            document.getElementById('back-to-home-btn').addEventListener('click', () => {
+                appView.classList.remove('active');
+            });
+            
+            // Close search when clicking outside
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) {
+                    closeSearch();
+                }
+            });
+            
+            // Close settings when clicking outside
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    closeSettings();
+                }
+            });
+            
+            // Close logo modal when clicking outside
+            logoModal.addEventListener('click', (e) => {
+                if (e.target === logoModal) {
+                    closeLogoModal();
+                }
+            });
+        }
+
+        // Hide splash screen after 2 seconds
+        setTimeout(() => {
+            splashScreen.style.opacity = '0';
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+            }, 600);
+        }, 2000);
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
