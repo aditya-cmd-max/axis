@@ -1,5 +1,7 @@
 // Service Worker for Exonova Axis PWA
-const CACHE_NAME = 'exonova-axis-v2.0.0';
+const CACHE_NAME = 'exonova-axis-v2.1.0';
+const NOTIFICATION_CACHE = 'exonova-notifications-v1';
+
 const urlsToCache = [
     '/axis/',
     '/axis/index.html',
@@ -18,13 +20,15 @@ const urlsToCache = [
 self.addEventListener('install', event => {
     console.log('🚀 Service Worker installing...');
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                console.log('📦 Opened cache, adding files:', urlsToCache);
-                return cache.addAll(urlsToCache).catch(err => {
-                    console.log('❌ Cache addAll failed:', err);
-                });
-            })
+        Promise.all([
+            caches.open(CACHE_NAME),
+            caches.open(NOTIFICATION_CACHE)
+        ]).then(([appCache, notificationCache]) => {
+            console.log('📦 Opened caches for app and notifications');
+            return appCache.addAll(urlsToCache).catch(err => {
+                console.log('❌ Cache addAll failed:', err);
+            });
+        })
     );
     self.skipWaiting();
     console.log('✅ Service Worker installed successfully');
@@ -37,7 +41,7 @@ self.addEventListener('activate', event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME) {
+                    if (cacheName !== CACHE_NAME && cacheName !== NOTIFICATION_CACHE) {
                         console.log('🗑️ Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }
@@ -273,6 +277,182 @@ self.addEventListener('notificationclick', event => {
     }
 });
 
+// Background sync for notifications
+self.addEventListener('sync', event => {
+    console.log('🔄 Background sync event:', event.tag);
+    
+    if (event.tag === 'daily-notifications') {
+        console.log('🎯 Processing daily notifications sync');
+        event.waitUntil(triggerScheduledNotifications());
+    }
+    
+    if (event.tag === 'periodic-notifications') {
+        console.log('🎯 Processing periodic notifications sync');
+        event.waitUntil(triggerPeriodicNotifications());
+    }
+});
+
+// Trigger scheduled notifications from service worker
+async function triggerScheduledNotifications() {
+    console.log('🔔 Triggering scheduled notifications from background');
+    
+    const now = Date.now();
+    const today = new Date().toDateString();
+    
+    try {
+        // Get stored notification state
+        const cache = await caches.open(NOTIFICATION_CACHE);
+        const lastWelcomeResponse = await cache.match('last-welcome');
+        
+        // Check if welcome should be sent today
+        let lastWelcomeDate = null;
+        if (lastWelcomeResponse) {
+            lastWelcomeDate = await lastWelcomeResponse.text();
+        }
+        
+        console.log('📅 Welcome check - Last:', lastWelcomeDate, 'Today:', today);
+        
+        if (lastWelcomeDate !== today) {
+            // Send welcome notification
+            await self.registration.showNotification('Welcome to Exonova Axis! 🚀', {
+                body: 'Your productivity hub is ready. Explore all tools in one place.',
+                icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                tag: 'welcome-' + today,
+                requireInteraction: true,
+                vibrate: [300, 100, 300],
+                actions: [
+                    { action: 'explore', title: '🚀 Explore' },
+                    { action: 'open', title: '📱 Open' }
+                ],
+                data: { 
+                    url: '/axis/', 
+                    type: 'welcome',
+                    timestamp: now
+                }
+            });
+            
+            console.log('✅ Welcome notification sent');
+            
+            // Store that welcome was sent today
+            await cache.put('last-welcome', new Response(today));
+            console.log('💾 Saved welcome date:', today);
+        } else {
+            console.log('ℹ️ Welcome already sent today');
+        }
+        
+        // Send periodic notifications
+        await triggerPeriodicNotifications();
+        
+    } catch (error) {
+        console.log('❌ Error in scheduled notifications:', error);
+    }
+}
+
+// Trigger periodic notifications (1.5h and 2h intervals)
+async function triggerPeriodicNotifications() {
+    console.log('🕒 Triggering periodic notifications from background');
+    
+    const notificationPools = {
+        '1.5h': [
+            {
+                title: 'Productivity Tip 💡',
+                message: 'Use El Futuro AI to automate your daily tasks and save time.',
+                type: 'tip'
+            },
+            {
+                title: 'Did You Know? 🤔', 
+                message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
+                type: 'info'
+            },
+            {
+                title: 'Quick Tip ✨',
+                message: 'Boost your learning with PopOut Pro\'s visual study tools.',
+                type: 'tip'
+            }
+        ],
+        '2h': [
+            {
+                title: 'Feature Spotlight 🔦',
+                message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
+                type: 'update'
+            },
+            {
+                title: 'Try This 👇',
+                message: 'Peo-TTS for natural sounding text-to-speech conversion.',
+                type: 'tip'
+            },
+            {
+                title: 'Security Reminder 🔒',
+                message: 'Securepass ensures your passwords are always strong and secure.',
+                type: 'info'
+            }
+        ]
+    };
+    
+    try {
+        const cache = await caches.open(NOTIFICATION_CACHE);
+        
+        // Get or initialize indexes
+        let indexes = { '1.5h': 0, '2h': 0 };
+        const storedIndexes = await cache.match('notification-indexes');
+        if (storedIndexes) {
+            indexes = await storedIndexes.json();
+        }
+        
+        console.log('📊 Current notification indexes:', indexes);
+        
+        // Send 1.5h notification
+        const oneHourNotification = notificationPools['1.5h'][indexes['1.5h']];
+        if (oneHourNotification) {
+            await self.registration.showNotification(oneHourNotification.title, {
+                body: oneHourNotification.message,
+                icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                tag: 'periodic-1.5h-' + Date.now(),
+                vibrate: [200, 100, 200],
+                data: { 
+                    url: '/axis/', 
+                    type: oneHourNotification.type,
+                    timestamp: Date.now()
+                }
+            });
+            
+            console.log('✅ 1.5h notification sent:', oneHourNotification.title);
+            
+            indexes['1.5h'] = (indexes['1.5h'] + 1) % notificationPools['1.5h'].length;
+        }
+        
+        // Send 2h notification  
+        const twoHourNotification = notificationPools['2h'][indexes['2h']];
+        if (twoHourNotification) {
+            await self.registration.showNotification(twoHourNotification.title, {
+                body: twoHourNotification.message,
+                icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                tag: 'periodic-2h-' + Date.now(),
+                vibrate: [200, 100, 200],
+                data: { 
+                    url: '/axis/', 
+                    type: twoHourNotification.type,
+                    timestamp: Date.now()
+                }
+            });
+            
+            console.log('✅ 2h notification sent:', twoHourNotification.title);
+            
+            indexes['2h'] = (indexes['2h'] + 1) % notificationPools['2h'].length;
+        }
+        
+        // Store updated indexes
+        await cache.put('notification-indexes', new Response(JSON.stringify(indexes)));
+        console.log('💾 Updated notification indexes:', indexes);
+        
+    } catch (error) {
+        console.log('❌ Error in periodic notifications:', error);
+    }
+}
+
 // Handle messages from the main app
 self.addEventListener('message', event => {
     console.log('📨 Message received in service worker:', event.data);
@@ -287,7 +467,7 @@ self.addEventListener('message', event => {
             
         case 'GET_VERSION':
             event.ports[0].postMessage({
-                version: '2.0.0',
+                version: '2.1.0',
                 cacheName: CACHE_NAME
             });
             break;
@@ -297,6 +477,22 @@ self.addEventListener('message', event => {
             self.registration.getNotifications().then(notifications => {
                 notifications.forEach(notification => notification.close());
                 console.log('🗑️ Cleared all notifications');
+            });
+            break;
+            
+        case 'TRIGGER_SYNC':
+            // Manually trigger background sync
+            if (payload && payload.syncType === 'daily') {
+                triggerScheduledNotifications();
+            }
+            break;
+            
+        case 'RESET_NOTIFICATIONS':
+            // Reset notification state (for testing)
+            caches.open(NOTIFICATION_CACHE).then(cache => {
+                cache.delete('last-welcome');
+                cache.delete('notification-indexes');
+                console.log('🔄 Notification state reset');
             });
             break;
             
@@ -343,9 +539,24 @@ self.addEventListener('periodicsync', event => {
         console.log('🔄 Periodic sync for content updates');
         event.waitUntil(updateContent());
     }
+    
+    if (event.tag === 'notification-check') {
+        console.log('🔄 Periodic sync for notifications');
+        event.waitUntil(triggerScheduledNotifications());
+    }
 });
 
 function updateContent() {
     console.log('📰 Checking for content updates...');
     return Promise.resolve();
 }
+
+// Handle service worker updates
+self.addEventListener('updatefound', () => {
+    console.log('🔄 New service worker found, updating...');
+});
+
+// Handle service worker controller change
+self.addEventListener('controllerchange', () => {
+    console.log('🎮 Service worker controller changed');
+});
