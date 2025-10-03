@@ -1590,29 +1590,28 @@
             }
         }
 
-        // Initialize notifications
-        function initNotifications() {
-            // Update notification badge
-            updateNotificationBadge();
-            
-            // Request notification permission for push notifications
-            if (pushNotificationsEnabled && 'Notification' in window) {
-                if (Notification.permission === 'default') {
-                    Notification.requestPermission().then(permission => {
-                        if (permission === 'granted') {
-                            showToast('Push notifications enabled!');
-                            // Subscribe to push notifications
-                            subscribeToPushNotifications();
-                        }
-                    });
-                } else if (Notification.permission === 'granted') {
+      function initNotifications() {
+    // Update notification badge
+    updateNotificationBadge();
+    
+    // Request notification permission for push notifications
+    if (pushNotificationsEnabled && 'Notification' in window) {
+        if (Notification.permission === 'default') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    showToast('Push notifications enabled!');
+                    // Subscribe to push notifications
                     subscribeToPushNotifications();
                 }
-            }
-            
-            // Schedule demo notifications
-            scheduleDemoNotifications();
+            });
+        } else if (Notification.permission === 'granted') {
+            subscribeToPushNotifications();
         }
+    }
+    
+    // Schedule notifications with improved timing
+    scheduleEnhancedNotifications();
+}
 
         // Subscribe to push notifications
         function subscribeToPushNotifications() {
@@ -1672,67 +1671,143 @@
             }
         }
 
-        // Schedule demo notifications
-        function scheduleDemoNotifications() {
-            if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
-            
-            // Clear existing notifications
-            notifications = [];
-            
-            // Add welcome notification
+       // Schedule notifications with proper timing
+function scheduleEnhancedNotifications() {
+    if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
+    
+    // Clear existing notifications
+    notifications = [];
+    
+    // Add welcome notification (only once per day)
+    const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
+    const today = new Date().toDateString();
+    
+    if (lastWelcomeDate !== today) {
+        addNotification({
+            id: 'welcome-' + Date.now(),
+            title: 'Welcome to Exonova Axis! 🚀',
+            message: 'Your productivity hub is ready. Explore all tools in one place.',
+            type: 'welcome',
+            timestamp: Date.now(),
+            read: false
+        });
+        localStorage.setItem('lastWelcomeDate', today);
+    }
+    
+    // Notification pools for different intervals
+    const oneHourNotifications = [
+        {
+            title: 'Productivity Tip 💡',
+            message: 'Use El Futuro AI to automate your daily tasks and save time.',
+            type: 'tip'
+        },
+        {
+            title: 'Did You Know? 🤔',
+            message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
+            type: 'info'
+        },
+        {
+            title: 'Quick Tip ✨',
+            message: 'Boost your learning with PopOut Pro\'s visual study tools.',
+            type: 'tip'
+        }
+    ];
+    
+    const twoHourNotifications = [
+        {
+            title: 'Feature Spotlight 🔦',
+            message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
+            type: 'update'
+        },
+        {
+            title: 'Try This 👇',
+            message: 'Peo-TTS for natural sounding text-to-speech conversion.',
+            type: 'tip'
+        },
+        {
+            title: 'Security Reminder 🔒',
+            message: 'Securepass ensures your passwords are always strong and secure.',
+            type: 'info'
+        }
+    ];
+    
+    // Track which notification to show next
+    let oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
+    let twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
+    
+    // Schedule 1.5-hour notifications (alternating)
+    setInterval(() => {
+        if (oneHourNotifications.length > 0) {
+            const notification = oneHourNotifications[oneHourIndex];
             addNotification({
-                id: Date.now(),
-                title: 'Welcome to Exonova Axis! 🚀',
-                message: 'Your productivity hub is ready. Explore all tools in one place.',
-                type: 'info',
+                id: '1.5h-' + Date.now(),
+                title: notification.title,
+                message: notification.message,
+                type: notification.type,
                 timestamp: Date.now(),
                 read: false
             });
             
-            // Schedule more notifications
-            setTimeout(() => {
-                addNotification({
-                    id: Date.now(),
-                    title: 'New Feature Available ✨',
-                    message: 'Check out the latest updates in Securepass with enhanced security features.',
-                    type: 'update',
-                    timestamp: Date.now(),
-                    read: false
-                });
-            }, 15000);
-            
-            setTimeout(() => {
-                addNotification({
-                    id: Date.now(),
-                    title: 'Productivity Tip 💡',
-                    message: 'Use El Futuro AI to automate your daily tasks and save time.',
-                    type: 'tip',
-                    timestamp: Date.now(),
-                    read: false
-                });
-            }, 30000);
-            
-            // Schedule periodic notifications (every 2 hours)
-            setInterval(() => {
-                const tips = [
-                    "Did you know? SkyCast Pro can predict weather patterns 7 days in advance!",
-                    "Boost your learning with PopOut Pro's visual study tools.",
-                    "Mindscribe can help organize your thoughts and ideas efficiently.",
-                    "Try Peo-TTS for natural sounding text-to-speech conversion.",
-                    "Securepass ensures your passwords are always strong and secure."
-                ];
-                const randomTip = tips[Math.floor(Math.random() * tips.length)];
-                
-                addNotification({
-                    id: Date.now(),
-                    title: 'Pro Tip 💫',
-                    message: randomTip,
-                    type: 'tip',
-                    timestamp: Date.now(),
-                    read: false
-                });
-            }, 2 * 60 * 60 * 1000); // 2 hours
+            // Move to next notification in pool
+            oneHourIndex = (oneHourIndex + 1) % oneHourNotifications.length;
+            localStorage.setItem('oneHourIndex', oneHourIndex.toString());
         }
+    }, 1.5 * 60 * 60 * 1000); // 1.5 hours
+    
+    // Schedule 2-hour notifications (alternating)
+    setInterval(() => {
+        if (twoHourNotifications.length > 0) {
+            const notification = twoHourNotifications[twoHourIndex];
+            addNotification({
+                id: '2h-' + Date.now(),
+                title: notification.title,
+                message: notification.message,
+                type: notification.type,
+                timestamp: Date.now(),
+                read: false
+            });
+            
+            // Move to next notification in pool
+            twoHourIndex = (twoHourIndex + 1) % twoHourNotifications.length;
+            localStorage.setItem('twoHourIndex', twoHourIndex.toString());
+        }
+    }, 2 * 60 * 60 * 1000); // 2 hours
+    
+    // Send initial notifications after a short delay
+    setTimeout(() => {
+        if (oneHourNotifications.length > 0) {
+            const notification = oneHourNotifications[oneHourIndex];
+            addNotification({
+                id: 'initial-1.5h-' + Date.now(),
+                title: notification.title,
+                message: notification.message,
+                type: notification.type,
+                timestamp: Date.now(),
+                read: false
+            });
+            
+            oneHourIndex = (oneHourIndex + 1) % oneHourNotifications.length;
+            localStorage.setItem('oneHourIndex', oneHourIndex.toString());
+        }
+    }, 30000); // 30 seconds
+    
+    setTimeout(() => {
+        if (twoHourNotifications.length > 0) {
+            const notification = twoHourNotifications[twoHourIndex];
+            addNotification({
+                id: 'initial-2h-' + Date.now(),
+                title: notification.title,
+                message: notification.message,
+                type: notification.type,
+                timestamp: Date.now(),
+                read: false
+            });
+            
+            twoHourIndex = (twoHourIndex + 1) % twoHourNotifications.length;
+            localStorage.setItem('twoHourIndex', twoHourIndex.toString());
+        }
+    }, 60000); // 60 seconds
+}
 
         // Add a notification
         function addNotification(notification) {
@@ -1782,62 +1857,118 @@
             showToast('Notifications cleared');
         }
 
-        // Render notifications
-        function renderNotifications() {
-            if (notifications.length === 0) {
-                notificationsList.innerHTML = `
-                    <div class="text-center py-8 opacity-75">
-                        <span class="material-icons text-4xl mb-2">notifications_off</span>
-                        <p>No notifications</p>
+        // Enhanced notification display with better styling
+function renderNotifications() {
+    if (notifications.length === 0) {
+        notificationsList.innerHTML = `
+            <div class="text-center py-8 opacity-75">
+                <span class="material-icons text-4xl mb-2">notifications_off</span>
+                <p>No notifications</p>
+                <p class="text-xs mt-2">You'll receive notifications about updates and tips</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Group notifications by date
+    const today = new Date().toDateString();
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    
+    const todayNotifications = notifications.filter(n => 
+        new Date(n.timestamp).toDateString() === today
+    );
+    
+    const yesterdayNotifications = notifications.filter(n => 
+        new Date(n.timestamp).toDateString() === yesterday
+    );
+    
+    const olderNotifications = notifications.filter(n => {
+        const date = new Date(n.timestamp).toDateString();
+        return date !== today && date !== yesterday;
+    });
+    
+    let html = '';
+    
+    // Today's notifications
+    if (todayNotifications.length > 0) {
+        html += `<div class="mb-4">
+            <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Today</h3>
+            ${todayNotifications.map(notification => renderNotificationItem(notification)).join('')}
+        </div>`;
+    }
+    
+    // Yesterday's notifications
+    if (yesterdayNotifications.length > 0) {
+        html += `<div class="mb-4">
+            <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Yesterday</h3>
+            ${yesterdayNotifications.map(notification => renderNotificationItem(notification)).join('')}
+        </div>`;
+    }
+    
+    // Older notifications
+    if (olderNotifications.length > 0) {
+        html += `<div class="mb-4">
+            <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Older</h3>
+            ${olderNotifications.map(notification => renderNotificationItem(notification)).join('')}
+        </div>`;
+    }
+    
+    notificationsList.innerHTML = html;
+    
+    // Add event listeners to notifications
+    notificationsList.querySelectorAll('[data-notification-id]').forEach(item => {
+        item.addEventListener('click', () => {
+            const notificationId = item.dataset.notificationId;
+            markNotificationAsRead(notificationId);
+        });
+    });
+}
+
+// Helper function to render individual notification items
+function renderNotificationItem(notification) {
+    return `
+        <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ${!notification.read ? 'bg-opacity-5' : ''}" data-notification-id="${notification.id}">
+            <div class="flex items-start space-x-3">
+                <span class="material-icons text-${getNotificationColor(notification.type)} ${!notification.read ? 'animate-pulse' : ''}">${getNotificationIcon(notification.type)}</span>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-medium ${!notification.read ? 'font-semibold' : ''}">${notification.title}</h3>
+                        <span class="text-xs opacity-50 whitespace-nowrap">${formatTime(notification.timestamp)}</span>
                     </div>
-                `;
-                return;
-            }
-            
-            notificationsList.innerHTML = notifications.map(notification => `
-                <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ${!notification.read ? 'bg-opacity-10' : ''}" data-notification-id="${notification.id}">
-                    <div class="flex items-start space-x-3">
-                        <span class="material-icons text-${getNotificationColor(notification.type)}">${getNotificationIcon(notification.type)}</span>
-                        <div class="flex-1">
-                            <h3 class="font-medium">${notification.title}</h3>
-                            <p class="text-sm opacity-75">${notification.message}</p>
-                            <p class="text-xs opacity-50 mt-1">${formatTime(notification.timestamp)}</p>
-                        </div>
-                        ${!notification.read ? '<div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>' : ''}
-                    </div>
+                    <p class="text-sm opacity-75 mt-1">${notification.message}</p>
+                    ${notification.type === 'welcome' ? '<div class="mt-2 text-xs bg-blue-500 bg-opacity-20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full inline-block">Daily Welcome</div>' : ''}
                 </div>
-            `).join('');
+                ${!notification.read ? '<div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>' : ''}
+            </div>
+        </div>
+    `;
+}
             
-            // Add event listeners to notifications
-            notificationsList.querySelectorAll('[data-notification-id]').forEach(item => {
-                item.addEventListener('click', () => {
-                    const notificationId = parseInt(item.dataset.notificationId);
-                    markNotificationAsRead(notificationId);
-                });
-            });
-        }
+         
 
-        // Get notification icon
-        function getNotificationIcon(type) {
-            switch(type) {
-                case 'info': return 'info';
-                case 'update': return 'update';
-                case 'tip': return 'lightbulb';
-                case 'warning': return 'warning';
-                default: return 'notifications';
-            }
-        }
+       // Enhanced notification icon mapping
+function getNotificationIcon(type) {
+    switch(type) {
+        case 'welcome': return 'rocket_launch';
+        case 'info': return 'info';
+        case 'update': return 'update';
+        case 'tip': return 'lightbulb';
+        case 'warning': return 'warning';
+        default: return 'notifications';
+    }
+}
 
-        // Get notification color
-        function getNotificationColor(type) {
-            switch(type) {
-                case 'info': return 'blue-500';
-                case 'update': return 'green-500';
-                case 'tip': return 'yellow-500';
-                case 'warning': return 'red-500';
-                default: return 'gray-500';
-            }
-        }
+// Enhanced notification color mapping
+function getNotificationColor(type) {
+    switch(type) {
+        case 'welcome': return 'purple-500';
+        case 'info': return 'blue-500';
+        case 'update': return 'green-500';
+        case 'tip': return 'yellow-500';
+        case 'warning': return 'red-500';
+        default: return 'gray-500';
+    }
+}
 
         // Format time for notifications
         function formatTime(timestamp) {
