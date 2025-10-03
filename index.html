@@ -1350,6 +1350,7 @@
         let currentTheme = localStorage.getItem('theme') || 'dark';
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let currentTab = 'home';
+        let hasSeenLogoHint = localStorage.getItem('hasSeenLogoHint') === 'true';
 
         // DOM Elements
         const mainContent = document.getElementById('main-content');
@@ -1367,6 +1368,7 @@
         const logoModal = document.getElementById('logo-modal');
         const logoModalContent = document.getElementById('logo-modal-content');
         const logoBtn = document.getElementById('logo-btn');
+        const firstTimeHint = document.getElementById('first-time-hint');
 
         // Initialize the app
         function initApp() {
@@ -1388,6 +1390,19 @@
                     btn.classList.add('active');
                 }
             });
+            
+            // Show first-time hint if needed
+            if (!hasSeenLogoHint) {
+                setTimeout(() => {
+                    firstTimeHint.classList.remove('hidden');
+                    // Remove hint after 5 seconds
+                    setTimeout(() => {
+                        firstTimeHint.classList.add('hidden');
+                        localStorage.setItem('hasSeenLogoHint', 'true');
+                        hasSeenLogoHint = true;
+                    }, 5000);
+                }, 2000);
+            }
         }
 
         // Update current time
@@ -1643,6 +1658,9 @@
                 logoModalContent.classList.add('opacity-100');
                 logoModalContent.classList.remove('scale-95');
             }, 10);
+            
+            // Stop the logo animation once the modal is opened
+            logoBtn.classList.remove('logo-pulse');
         }
 
         // Close logo modal
@@ -1789,44 +1807,5 @@
         // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
-  
-  <script>// Open logo modal
-        function openLogoModal() {
-            logoModal.classList.remove('hidden');
-            setTimeout(() => {
-                logoModalContent.classList.add('opacity-100');
-                logoModalContent.classList.remove('scale-95');
-            }, 10);
-            
-            // Stop the logo animation once the modal is opened
-            logoBtn.classList.remove('logo-pulse');
-        }
-
-        // Close logo modal
-        function closeLogoModal() {
-            logoModalContent.classList.remove('opacity-100');
-            logoModalContent.classList.add('scale-95');
-            
-            setTimeout(() => {
-                logoModal.classList.add('hidden');
-            }, 300);
-        }
-  </script>
-  
-  <script>
-   // Show first-time hint if needed
-            if (!hasSeenLogoHint) {
-                setTimeout(() => {
-                    firstTimeHint.classList.remove('hidden');
-                    // Remove hint after 5 seconds
-                    setTimeout(() => {
-                        firstTimeHint.classList.add('hidden');
-                        localStorage.setItem('hasSeenLogoHint', 'true');
-                        hasSeenLogoHint = true;
-                    }, 5000);
-                }, 2000);
-            }
-        }
-  </script>
 </body>
 </html>
