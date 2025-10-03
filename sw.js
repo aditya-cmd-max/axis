@@ -2,8 +2,8 @@
 const CACHE_NAME = 'exonova-axis-v1.0.0';
 const urlsToCache = [
     '/',
-    '/index.html',
-    'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+    'index.html',
+    'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
     'https://fonts.googleapis.com/css2?family=Product+Sans:wght@300;400;500;700&display=swap',
     'https://fonts.googleapis.com/icon?family=Material+Icons'
 ];
@@ -58,7 +58,7 @@ self.addEventListener('push', event => {
     let data = {
         title: 'Exonova Axis',
         body: 'You have a new notification!',
-        icon: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+        icon: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
         badge: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif'
     };
     
