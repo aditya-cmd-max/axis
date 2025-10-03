@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exonova Axis</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Exonova Axis">
+    <link rel="apple-touch-icon" href="https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif">
+    
     <!-- Product Sans Font -->
     <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Material Icons -->
@@ -11,7 +20,24 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="icon" type="image/x-icon" href="https://aditya-cmd-max.github.io/axis/Untitled design (2).gif">
+    <link rel="icon" type="image/x-icon" href="https://aditya-cmd-max.github.io/exonova-/logo-nobg.png">
+    
+    <!-- Service Worker Registration -->
+    <script>
+        // Register service worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -983,6 +1009,49 @@
             opacity: 0.7;
         }
 
+        /* Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: var(--md-elevation-3);
+            z-index: 1000;
+            max-width: 400px;
+            width: 90%;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .dark .install-prompt {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .install-prompt.hidden {
+            display: none;
+        }
+
+        /* Notification badge */
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 1.5s infinite;
+        }
+
         /* Hide splash on desktop */
         @media (min-width: 768px) {
             #splash {
@@ -1032,23 +1101,6 @@
             .bottom-nav {
                 padding: 6px 0;
             }
-        }
-
-        /* Notification badge */
-        .notification-badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background-color: #ff4444;
-            color: white;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse 1.5s infinite;
         }
     </style>
 </head>
@@ -1137,6 +1189,20 @@
     
     <!-- Toast notification -->
     <div id="toast" class="toast"></div>
+
+    <!-- Install Prompt -->
+    <div id="install-prompt" class="install-prompt hidden">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold">Install Exonova Axis</h3>
+            <button id="close-install-prompt" class="p-1 rounded-full ripple">
+                <span class="material-icons text-sm">close</span>
+            </button>
+        </div>
+        <p class="text-sm opacity-75 mb-3">Install for the best experience and offline notifications</p>
+        <button id="install-btn" class="w-full m3-button bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+            Install App
+        </button>
+    </div>
 
    <!-- Exonova Logo Modal -->
    <div id="logo-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black backdrop-blur-sm">
@@ -1259,30 +1325,33 @@
                         </button>
                     </div>
                     <div class="border-t border-opacity-20 pt-4">
-                        <h3 class="font-medium mb-3">Other Settings</h3>
+                        <h3 class="font-medium mb-3">Push Notifications</h3>
                         <div class="flex items-center justify-between py-2">
-                            <span class="opacity-75">Notifications</span>
+                            <span class="opacity-75">Push Notifications</span>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="notifications-toggle" class="sr-only peer" checked>
+                                <input type="checkbox" id="push-notifications-toggle" class="sr-only peer" checked>
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             </label>
                         </div>
                         <div class="flex items-center justify-between py-2">
-                            <span class="opacity-75">Auto-update</span>
+                            <span class="opacity-75">In-App Notifications</span>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer">
+                                <input type="checkbox" id="inapp-notifications-toggle" class="sr-only peer" checked>
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             </label>
                         </div>
                     </div>
                     <div class="border-t border-opacity-20 pt-4 mt-4 text-center">
+                        <button id="install-app-btn" class="m3-button bg-blue-500 text-white hover:bg-blue-600 transition-colors mb-2">
+                            Install App
+                        </button>
                         <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
                     </div>
                 </div>
             </div>
 
             <!-- Notifications Modal -->
-            <div id="notifications-modal" class="hidden bg-black fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
+            <div id="notifications-modal" class="hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
                 <div id="notifications-modal-content" class="w-full max-w-md rounded-2xl p-5 transform transition-all duration-300 scale-95 opacity-0" style="box-shadow: var(--md-elevation-4);">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-semibold">Notifications</h2>
@@ -1395,7 +1464,10 @@
         let currentTab = 'home';
         let hasSeenLogoHint = localStorage.getItem('hasSeenLogoHint') === 'true';
         let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
-        let notificationsEnabled = localStorage.getItem('notificationsEnabled') !== 'false';
+        let pushNotificationsEnabled = localStorage.getItem('pushNotificationsEnabled') !== 'false';
+        let inAppNotificationsEnabled = localStorage.getItem('inAppNotificationsEnabled') !== 'false';
+        let deferredPrompt = null;
+        let isAppInstalled = localStorage.getItem('isAppInstalled') === 'true';
 
         // DOM Elements
         const mainContent = document.getElementById('main-content');
@@ -1419,7 +1491,12 @@
         const notificationsModal = document.getElementById('notifications-modal');
         const notificationsModalContent = document.getElementById('notifications-modal-content');
         const notificationsList = document.getElementById('notifications-list');
-        const notificationsToggle = document.getElementById('notifications-toggle');
+        const pushNotificationsToggle = document.getElementById('push-notifications-toggle');
+        const inAppNotificationsToggle = document.getElementById('inapp-notifications-toggle');
+        const installPrompt = document.getElementById('install-prompt');
+        const installBtn = document.getElementById('install-btn');
+        const closeInstallPrompt = document.getElementById('close-install-prompt');
+        const installAppBtn = document.getElementById('install-app-btn');
 
         // Initialize the app
         function initApp() {
@@ -1445,6 +1522,9 @@
             // Initialize notifications
             initNotifications();
             
+            // Initialize PWA features
+            initPWA();
+            
             // Show first-time hint if needed
             if (!hasSeenLogoHint) {
                 setTimeout(() => {
@@ -1459,22 +1539,74 @@
             }
         }
 
+        // Initialize PWA features
+        function initPWA() {
+            // Set toggle states
+            pushNotificationsToggle.checked = pushNotificationsEnabled;
+            inAppNotificationsToggle.checked = inAppNotificationsEnabled;
+            
+            // Listen for before install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show install prompt if app isn't installed
+                if (!isAppInstalled) {
+                    setTimeout(() => {
+                        installPrompt.classList.remove('hidden');
+                    }, 5000);
+                }
+            });
+            
+            // Check if app is already installed
+            window.addEventListener('appinstalled', () => {
+                isAppInstalled = true;
+                localStorage.setItem('isAppInstalled', 'true');
+                installPrompt.classList.add('hidden');
+                showToast('App installed successfully!');
+            });
+            
+            // Check if running in standalone mode (installed)
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+                isAppInstalled = true;
+                localStorage.setItem('isAppInstalled', 'true');
+            }
+        }
+
+        // Install app
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                showToast('App installation not available');
+            }
+        }
+
         // Initialize notifications
         function initNotifications() {
-            // Set notifications toggle state
-            notificationsToggle.checked = notificationsEnabled;
-            
             // Update notification badge
             updateNotificationBadge();
             
-            // Request notification permission
-            if (notificationsEnabled && 'Notification' in window) {
+            // Request notification permission for push notifications
+            if (pushNotificationsEnabled && 'Notification' in window) {
                 if (Notification.permission === 'default') {
                     Notification.requestPermission().then(permission => {
                         if (permission === 'granted') {
-                            showToast('Notifications enabled!');
+                            showToast('Push notifications enabled!');
+                            // Subscribe to push notifications
+                            subscribeToPushNotifications();
                         }
                     });
+                } else if (Notification.permission === 'granted') {
+                    subscribeToPushNotifications();
                 }
             }
             
@@ -1482,18 +1614,76 @@
             scheduleDemoNotifications();
         }
 
+        // Subscribe to push notifications
+        function subscribeToPushNotifications() {
+            if ('serviceWorker' in navigator && 'PushManager' in window) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: urlBase64ToUint8Array('BLx1x6QKXe6y1L9g7wV8aT3rC5hM2nJ8zP4qW0sD7bR3tY6fG9vE1cA4kL5mH3jN8oX2pB7uI9dF0qC6wT1yV4rA8nJ3mH5lK2pB9uD7fI1cC4wX6qT0yV3rA8nJ5mH7lK9uD2fI4cC1wX6qT0yV3rA8')
+                    }).then(subscription => {
+                        console.log('Push subscription successful:', subscription);
+                        // Here you would send the subscription to your server
+                        // For demo purposes, we'll store it locally
+                        localStorage.setItem('pushSubscription', JSON.stringify(subscription));
+                    }).catch(err => {
+                        console.log('Push subscription failed: ', err);
+                    });
+                });
+            }
+        }
+
+        // Convert VAPID key to Uint8Array
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
+        // Send push notification (simulated for demo)
+        function sendPushNotification(notification) {
+            if (pushNotificationsEnabled && 'serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification(notification.title, {
+                        body: notification.message,
+                        icon: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+                        badge: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+                        tag: notification.id,
+                        requireInteraction: true,
+                        actions: [
+                            {
+                                action: 'open',
+                                title: 'Open App'
+                            },
+                            {
+                                action: 'dismiss',
+                                title: 'Dismiss'
+                            }
+                        ]
+                    });
+                });
+            }
+        }
+
         // Schedule demo notifications
         function scheduleDemoNotifications() {
-            if (!notificationsEnabled) return;
+            if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
             
             // Clear existing notifications
             notifications = [];
             
-            // Add some demo notifications
+            // Add welcome notification
             addNotification({
                 id: Date.now(),
-                title: 'Welcome to Exonova Axis!',
-                message: 'Explore all our tools in one place.',
+                title: 'Welcome to Exonova Axis! 🚀',
+                message: 'Your productivity hub is ready. Explore all tools in one place.',
                 type: 'info',
                 timestamp: Date.now(),
                 read: false
@@ -1503,24 +1693,45 @@
             setTimeout(() => {
                 addNotification({
                     id: Date.now(),
-                    title: 'New Feature Available',
-                    message: 'Check out the latest updates in Securepass.',
+                    title: 'New Feature Available ✨',
+                    message: 'Check out the latest updates in Securepass with enhanced security features.',
                     type: 'update',
                     timestamp: Date.now(),
                     read: false
                 });
-            }, 10000);
+            }, 15000);
             
             setTimeout(() => {
                 addNotification({
                     id: Date.now(),
-                    title: 'Productivity Tip',
-                    message: 'Use El Futuro AI to boost your daily productivity.',
+                    title: 'Productivity Tip 💡',
+                    message: 'Use El Futuro AI to automate your daily tasks and save time.',
                     type: 'tip',
                     timestamp: Date.now(),
                     read: false
                 });
-            }, 20000);
+            }, 30000);
+            
+            // Schedule periodic notifications (every 2 hours)
+            setInterval(() => {
+                const tips = [
+                    "Did you know? SkyCast Pro can predict weather patterns 7 days in advance!",
+                    "Boost your learning with PopOut Pro's visual study tools.",
+                    "Mindscribe can help organize your thoughts and ideas efficiently.",
+                    "Try Peo-TTS for natural sounding text-to-speech conversion.",
+                    "Securepass ensures your passwords are always strong and secure."
+                ];
+                const randomTip = tips[Math.floor(Math.random() * tips.length)];
+                
+                addNotification({
+                    id: Date.now(),
+                    title: 'Pro Tip 💫',
+                    message: randomTip,
+                    type: 'tip',
+                    timestamp: Date.now(),
+                    read: false
+                });
+            }, 2 * 60 * 60 * 1000); // 2 hours
         }
 
         // Add a notification
@@ -1529,12 +1740,14 @@
             localStorage.setItem('notifications', JSON.stringify(notifications));
             updateNotificationBadge();
             
-            // Show browser notification if enabled
-            if (notificationsEnabled && 'Notification' in window && Notification.permission === 'granted') {
-                new Notification(notification.title, {
-                    body: notification.message,
-                    icon: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif'
-                });
+            // Show push notification if enabled
+            if (pushNotificationsEnabled) {
+                sendPushNotification(notification);
+            }
+            
+            // Show in-app notification if enabled
+            if (inAppNotificationsEnabled && document.visibilityState === 'visible') {
+                showToast(`📱 ${notification.title}`);
             }
         }
 
@@ -1730,7 +1943,7 @@
                     </div>
                     <div class="thank-you-section">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-blue-500 mb-2">
-                             <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                         </svg>
                         <p>Thank you for using Exonova Axis</p>
                     </div>
@@ -1784,9 +1997,9 @@
                         <div class="flex items-start space-x-3">
                             <span class="material-icons text-blue-500">update</span>
                             <div>
-                                <h3 class="font-medium">Launched 'Securepass'</h3>
-                                <p class="opacity-75">Securepass is your perfect Password advisor launched at the web app and at the <strong>Exonova Axis</strong> mobile app.</p>
-                                <p class="text-xs opacity-50 mt-1">23/09/25             9:17 PM</p>
+                                <h3 class="font-medium">Push Notifications Added</h3>
+                                <p class="opacity-75">Now get notifications even when the app is closed. Install the app for best experience.</p>
+                                <p class="text-xs opacity-50 mt-1">Just now</p>
                             </div>
                         </div>
                     </div>
@@ -1823,17 +2036,15 @@
                 showToast('Added to favorites');
                 
                 // Send notification for favorite
-                if (notificationsEnabled) {
-                    const product = products.find(p => p.id === productId);
-                    addNotification({
-                        id: Date.now(),
-                        title: 'Added to Favorites',
-                        message: `${product.name} has been added to your favorites.`,
-                        type: 'info',
-                        timestamp: Date.now(),
-                        read: false
-                    });
-                }
+                const product = products.find(p => p.id === productId);
+                addNotification({
+                    id: Date.now(),
+                    title: 'Added to Favorites ⭐',
+                    message: `${product.name} has been added to your favorites.`,
+                    type: 'info',
+                    timestamp: Date.now(),
+                    read: false
+                });
             } else {
                 favorites.splice(index, 1);
                 showToast('Removed from favorites');
@@ -1992,26 +2203,55 @@
             // Clear notifications button
             document.getElementById('clear-notifications-btn').addEventListener('click', clearNotifications);
             
-            // Notifications toggle
-            notificationsToggle.addEventListener('change', (e) => {
-                notificationsEnabled = e.target.checked;
-                localStorage.setItem('notificationsEnabled', notificationsEnabled);
+            // Push notifications toggle
+            pushNotificationsToggle.addEventListener('change', (e) => {
+                pushNotificationsEnabled = e.target.checked;
+                localStorage.setItem('pushNotificationsEnabled', pushNotificationsEnabled);
                 
-                if (notificationsEnabled) {
-                    if ('Notification' in window && Notification.permission === 'default') {
-                        Notification.requestPermission().then(permission => {
-                            if (permission === 'granted') {
-                                showToast('Notifications enabled!');
-                                scheduleDemoNotifications();
-                            }
-                        });
+                if (pushNotificationsEnabled) {
+                    if ('Notification' in window) {
+                        if (Notification.permission === 'default') {
+                            Notification.requestPermission().then(permission => {
+                                if (permission === 'granted') {
+                                    showToast('Push notifications enabled!');
+                                    subscribeToPushNotifications();
+                                    scheduleDemoNotifications();
+                                } else {
+                                    pushNotificationsToggle.checked = false;
+                                    localStorage.setItem('pushNotificationsEnabled', 'false');
+                                }
+                            });
+                        } else if (Notification.permission === 'granted') {
+                            showToast('Push notifications enabled!');
+                            subscribeToPushNotifications();
+                            scheduleDemoNotifications();
+                        } else {
+                            pushNotificationsToggle.checked = false;
+                            localStorage.setItem('pushNotificationsEnabled', 'false');
+                            showToast('Please enable notifications in browser settings');
+                        }
                     } else {
-                        showToast('Notifications enabled!');
-                        scheduleDemoNotifications();
+                        showToast('Push notifications not supported');
+                        pushNotificationsToggle.checked = false;
+                        localStorage.setItem('pushNotificationsEnabled', 'false');
                     }
                 } else {
-                    showToast('Notifications disabled');
+                    showToast('Push notifications disabled');
                 }
+            });
+            
+            // In-app notifications toggle
+            inAppNotificationsToggle.addEventListener('change', (e) => {
+                inAppNotificationsEnabled = e.target.checked;
+                localStorage.setItem('inAppNotificationsEnabled', inAppNotificationsEnabled);
+                showToast(inAppNotificationsEnabled ? 'In-app notifications enabled' : 'In-app notifications disabled');
+            });
+            
+            // Install app buttons
+            installBtn.addEventListener('click', installApp);
+            installAppBtn.addEventListener('click', installApp);
+            closeInstallPrompt.addEventListener('click', () => {
+                installPrompt.classList.add('hidden');
             });
             
             // Search input
