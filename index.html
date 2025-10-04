@@ -2055,79 +2055,136 @@
         }
 
         // Schedule notifications that work only when app is open
-        function scheduleInAppNotifications() {
-            // Clear any existing intervals
-            if (window.notificationIntervals) {
-                window.notificationIntervals.forEach(interval => clearInterval(interval));
-            }
-            
-            window.notificationIntervals = [];
-            
-            const oneHourNotifications = [
-                {
-                    title: 'Productivity Tip 💡',
-                    message: 'Use El Futuro AI to automate your daily tasks and save time.',
-                    type: 'tip'
-                },
-                {
-                    title: 'Did You Know? 🤔',
-                    message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
-                    type: 'info'
-                }
-            ];
-            
-            const twoHourNotifications = [
-                {
-                    title: 'Feature Spotlight 🔦',
-                    message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
-                    type: 'update'
-                },
-                {
-                    title: 'Try This 👇',
-                    message: 'Peo-TTS for natural sounding text-to-speech conversion.',
-                    type: 'tip'
-                }
-            ];
-            
-            // Schedule in-app notifications (only work when app is open)
-            const oneHourInterval = setInterval(() => {
-                if (oneHourNotifications.length > 0) {
-                    const oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
-                    const notification = oneHourNotifications[oneHourIndex];
-                    
-                    addNotification({
-                        id: 'inapp-1.5h-' + Date.now(),
-                        title: notification.title,
-                        message: notification.message,
-                        type: notification.type,
-                        timestamp: Date.now(),
-                        read: false
-                    });
-                    
-                    localStorage.setItem('oneHourIndex', ((oneHourIndex + 1) % oneHourNotifications.length).toString());
-                }
-            }, 1.5 * 60 * 60 * 1000);
-            
-            const twoHourInterval = setInterval(() => {
-                if (twoHourNotifications.length > 0) {
-                    const twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
-                    const notification = twoHourNotifications[twoHourIndex];
-                    
-                    addNotification({
-                        id: 'inapp-2h-' + Date.now(),
-                        title: notification.title,
-                        message: notification.message,
-                        type: notification.type,
-                        timestamp: Date.now(),
-                        read: false
-                    });
-                    
-                    localStorage.setItem('twoHourIndex', ((twoHourIndex + 1) % twoHourNotifications.length).toString());
-                }
-            }, 2 * 60 * 60 * 1000);
-            
-            window.notificationIntervals.push(oneHourInterval, twoHourInterval);
+        // Replace the entire scheduleEnhancedNotifications function with this:
+function scheduleEnhancedNotifications() {
+    if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
+    
+    // Clear any existing intervals first
+    if (window.notificationIntervals) {
+        window.notificationIntervals.forEach(interval => clearInterval(interval));
+        window.notificationIntervals = [];
+    }
+    
+    // Add welcome notification (only once per day) with better check
+    const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
+    const today = new Date().toDateString();
+    
+    // More robust check to prevent duplicate welcome notifications
+    if (lastWelcomeDate !== today) {
+        // Additional check - make sure we haven't shown it in the last few minutes
+        const lastWelcomeTime = localStorage.getItem('lastWelcomeTime');
+        const currentTime = Date.now();
+        
+        if (!lastWelcomeTime || (currentTime - parseInt(lastWelcomeTime)) > 60000) { // At least 1 minute apart
+            addNotification({
+                id: 'welcome-' + currentTime,
+                title: 'Welcome to Exonova Axis! 🚀',
+                message: 'Your productivity hub is ready. Explore all tools in one place.',
+                type: 'welcome',
+                timestamp: currentTime,
+                read: false
+            });
+            localStorage.setItem('lastWelcomeDate', today);
+            localStorage.setItem('lastWelcomeTime', currentTime.toString());
         }
+    }
+    
+    // Schedule in-app notifications with proper cleanup
+    scheduleInAppNotifications();
+}
+
+// Replace the scheduleInAppNotifications function with this:
+function scheduleInAppNotifications() {
+    // Clear any existing intervals
+    if (window.notificationIntervals) {
+        window.notificationIntervals.forEach(interval => clearInterval(interval));
+    }
+    
+    window.notificationIntervals = [];
+    
+    const oneHourNotifications = [
+        {
+            title: 'Productivity Tip 💡',
+            message: 'Use El Futuro AI to automate your daily tasks and save time.',
+            type: 'tip'
+        },
+        {
+            title: 'Did You Know? 🤔',
+            message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
+            type: 'info'
+        }
+    ];
+    
+    const twoHourNotifications = [
+        {
+            title: 'Feature Spotlight 🔦',
+            message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
+            type: 'update'
+        },
+        {
+            title: 'Try This 👇',
+            message: 'Peo-TTS for natural sounding text-to-speech conversion.',
+            type: 'tip'
+        }
+    ];
+    
+    // Use much longer intervals for testing, or remove entirely for production
+    const oneHourInterval = setInterval(() => {
+        if (oneHourNotifications.length > 0 && document.visibilityState === 'visible') {
+            const oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
+            const notification = oneHourNotifications[oneHourIndex];
+            
+            addNotification({
+                id: 'inapp-1.5h-' + Date.now(),
+                title: notification.title,
+                message: notification.message,
+                type: notification.type,
+                timestamp: Date.now(),
+                read: false
+            });
+            
+            localStorage.setItem('oneHourIndex', ((oneHourIndex + 1) % oneHourNotifications.length).toString());
+        }
+    }, 1.5 * 60 * 60 * 1000); // 1.5 hours
+    
+    const twoHourInterval = setInterval(() => {
+        if (twoHourNotifications.length > 0 && document.visibilityState === 'visible') {
+            const twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
+            const notification = twoHourNotifications[twoHourIndex];
+            
+            addNotification({
+                id: 'inapp-2h-' + Date.now(),
+                title: notification.title,
+                message: notification.message,
+                type: notification.type,
+                timestamp: Date.now(),
+                read: false
+            });
+            
+            localStorage.setItem('twoHourIndex', ((twoHourIndex + 1) % twoHourNotifications.length).toString());
+        }
+    }, 2 * 60 * 60 * 1000); // 2 hours
+    
+    window.notificationIntervals.push(oneHourInterval, twoHourInterval);
+}
+
+// Add this function to clear all notifications immediately:
+function clearAllNotificationIntervals() {
+    if (window.notificationIntervals) {
+        window.notificationIntervals.forEach(interval => {
+            clearInterval(interval);
+            clearTimeout(interval);
+        });
+        window.notificationIntervals = [];
+    }
+    
+    // Clear any pending timeouts
+    const highestId = window.setTimeout(() => {}, 0);
+    for (let i = 0; i < highestId; i++) {
+        window.clearTimeout(i);
+        window.clearInterval(i);
+    }
+}
 
         // Schedule background sync for offline notifications
         function scheduleBackgroundSync() {
