@@ -22,18 +22,40 @@
 
     <link rel="icon" type="image/x-icon" href="https://aditya-cmd-max.github.io/axis/axislogo.png">
     
-    <!-- Service Worker Registration -->
+    <!-- Enhanced Service Worker Registration -->
     <script>
-        // Register service worker for PWA functionality
+        // Enhanced service worker registration for PWA functionality
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/axis/sw.js')
-                    .then(function(registration) {
-                        console.log('ServiceWorker registration successful');
-                    })
-                    .catch(function(err) {
-                        console.log('ServiceWorker registration failed: ', err);
+            window.addEventListener('load', async function() {
+                try {
+                    // First, request notification permission
+                    if ('Notification' in window && Notification.permission === 'default') {
+                        await Notification.requestPermission();
+                    }
+                    
+                    // Register service worker with proper scope
+                    const registration = await navigator.serviceWorker.register('/axis/sw.js', {
+                        scope: '/axis/'
                     });
+                    console.log('✅ ServiceWorker registration successful with scope:', registration.scope);
+                    
+                    // Wait for service worker to be ready
+                    await navigator.serviceWorker.ready;
+                    
+                } catch (err) {
+                    console.log('❌ ServiceWorker registration failed: ', err);
+                }
+            });
+        }
+
+        // Enhanced service worker update handling
+        let refreshing = false;
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (!refreshing) {
+                    refreshing = true;
+                    window.location.reload();
+                }
             });
         }
     </script>
@@ -1306,7 +1328,7 @@
                             <span class="material-icons">close</span>
                         </button>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="grid grid-col-2 gap-4 mb-6">
                         <button data-theme="light" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-white w-full h-8 rounded-lg mb-2 border border-gray-200"></div>
                             <span class="text-sm font-medium">Light</span>
@@ -1590,164 +1612,179 @@
             }
         }
 
-        function initNotifications() {
+        // Enhanced notification initialization
+        async function initNotifications() {
+            console.log('🔔 Initializing notifications...');
+            
             // Update notification badge
             updateNotificationBadge();
             
-            // Request notification permission for push notifications
-            if (pushNotificationsEnabled && 'Notification' in window) {
-                if (Notification.permission === 'default') {
-                    Notification.requestPermission().then(permission => {
-                        if (permission === 'granted') {
-                            showToast('Push notifications enabled!');
-                            // Subscribe to push notifications
-                            subscribeToPushNotifications();
-                        }
-                    });
-                } else if (Notification.permission === 'granted') {
-                    subscribeToPushNotifications();
-                }
+            // Initialize push notifications only if enabled
+            if (pushNotificationsEnabled) {
+                await initializePushNotifications();
             }
             
-            // Schedule notifications with improved timing
+            // Schedule regular notifications
             scheduleEnhancedNotifications();
         }
 
-       // Enhanced push notification subscription
-async function subscribeToPushNotifications() {
-    try {
-        // Check browser support
-        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-            console.log('❌ Push notifications not supported in this browser');
-            showToast('Push notifications not supported');
-            return null;
+        // Separate push notification initialization
+        async function initializePushNotifications() {
+            try {
+                // Check if we have permission
+                if (Notification.permission === 'granted') {
+                    console.log('✅ Notification permission already granted');
+                    await subscribeToPushNotifications();
+                } else if (Notification.permission === 'default') {
+                    console.log('ℹ️ Notification permission not yet requested');
+                    // We'll request permission on first user interaction
+                } else {
+                    console.log('❌ Notification permission denied');
+                }
+            } catch (error) {
+                console.error('❌ Push notification initialization failed:', error);
+            }
         }
 
-        // Check notification permission
-        if (Notification.permission === 'denied') {
-            console.log('❌ Notification permission denied by user');
-            showToast('Please enable notifications in browser settings');
-            return null;
-        }
+        // Enhanced push notification subscription
+        async function subscribeToPushNotifications() {
+            try {
+                // Check browser support
+                if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+                    console.log('❌ Push notifications not supported in this browser');
+                    showToast('Push notifications not supported');
+                    return null;
+                }
 
-        // Wait for service worker to be ready
-        const registration = await navigator.serviceWorker.ready;
-        
-        // Check if already subscribed
-        let subscription = await registration.pushManager.getSubscription();
-        
-        if (subscription) {
-            console.log('✅ Already subscribed to push notifications');
-            return subscription;
-        }
+                // Check notification permission
+                if (Notification.permission === 'denied') {
+                    console.log('❌ Notification permission denied by user');
+                    showToast('Please enable notifications in browser settings');
+                    return null;
+                }
 
-        // Request permission if not already granted
-        if (Notification.permission === 'default') {
-            const permission = await Notification.requestPermission();
-            if (permission !== 'granted') {
-                console.log('❌ Notification permission not granted');
-                showToast('Notifications permission required');
+                // Wait for service worker to be ready
+                const registration = await navigator.serviceWorker.ready;
+                
+                // Check if already subscribed
+                let subscription = await registration.pushManager.getSubscription();
+                
+                if (subscription) {
+                    console.log('✅ Already subscribed to push notifications');
+                    return subscription;
+                }
+
+                // Request permission if not already granted
+                if (Notification.permission === 'default') {
+                    const permission = await Notification.requestPermission();
+                    if (permission !== 'granted') {
+                        console.log('❌ Notification permission not granted');
+                        showToast('Notifications permission required');
+                        return null;
+                    }
+                }
+
+                // Subscribe to push notifications
+                subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array('BLaZmVYnyEcksSzkLqgJYbeUcDUsqwQRcPoypsbMLBYiAKDymDtYboOJ1SBr7Thh0apXN17UDeAC2EPNnyh5x-c')
+                });
+
+                console.log('✅ Push subscription successful:', subscription);
+                
+                // Store subscription locally
+                localStorage.setItem('pushSubscription', JSON.stringify(subscription));
+                showToast('Push notifications enabled!');
+                
+                // Send test notification
+                sendTestPushNotification();
+                
+                return subscription;
+
+            } catch (error) {
+                console.error('❌ Push subscription failed:', error);
+                
+                // Show specific error messages
+                if (error.name === 'NotAllowedError') {
+                    showToast('Notification permission denied');
+                } else if (error.name === 'AbortError') {
+                    showToast('Push subscription was aborted');
+                } else {
+                    showToast('Failed to enable push notifications');
+                }
+                
                 return null;
             }
         }
 
-        // Subscribe to push notifications
-        subscription = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array('BLaZmVYnyEcksSzkLqgJYbeUcDUsqwQRcPoypsbMLBYiAKDymDtYboOJ1SBr7Thh0apXN17UDeAC2EPNnyh5x-c')
-        });
-
-        console.log('✅ Push subscription successful:', subscription);
-        
-        // Store subscription locally
-        localStorage.setItem('pushSubscription', JSON.stringify(subscription));
-        showToast('Push notifications enabled!');
-        
-        // Send test notification
-        sendTestPushNotification();
-        
-        return subscription;
-
-    } catch (error) {
-        console.error('❌ Push subscription failed:', error);
-        
-        // Show specific error messages
-        if (error.name === 'NotAllowedError') {
-            showToast('Notification permission denied');
-        } else if (error.name === 'AbortError') {
-            showToast('Push subscription was aborted');
-        } else {
-            showToast('Failed to enable push notifications');
+        // Test function to verify push notifications are working
+        function sendTestPushNotification() {
+            if (!('serviceWorker' in navigator)) return;
+            
+            navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification('Exonova Axis - Test ✅', {
+                    body: 'Push notifications are working correctly! You will receive updates on your lock screen.',
+                    icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                    badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                    image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                    tag: 'test-notification',
+                    requireInteraction: true, // Makes notification stay until interacted with
+                    actions: [
+                        {
+                            action: 'open',
+                            title: '🚀 Open App'
+                        },
+                        {
+                            action: 'dismiss',
+                            title: '❌ Dismiss'
+                        }
+                    ],
+                    vibrate: [200, 100, 200, 100, 200], // Vibration pattern for mobile
+                    data: {
+                        url: window.location.href,
+                        timestamp: Date.now()
+                    }
+                });
+            });
         }
-        
-        return null;
-    }
-}
 
-// Test function to verify push notifications are working
-function sendTestPushNotification() {
-    if (!('serviceWorker' in navigator)) return;
-    
-    navigator.serviceWorker.ready.then(registration => {
-        registration.showNotification('Exonova Axis', {
-            body: 'Push notifications are working correctly! You will receive updates on your lock screen.',
-            icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-            badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-            image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-            tag: 'test-notification',
-            requireInteraction: true, // Makes notification stay until interacted with
-            actions: [
-                {
-                    action: 'open',
-                    title: 'Open App'
-                },
-                {
-                    action: 'dismiss',
-                    title: ' Dismiss'
-                }
-            ],
-            vibrate: [200, 100, 200, 100, 200], // Vibration pattern for mobile
-            data: {
-                url: window.location.href,
-                timestamp: Date.now()
-            }
-        });
-    });
-}
-
-// Enhanced VAPID key conversion function
-function urlBase64ToUint8Array(base64String) {
-    try {
-        const padding = '='.repeat((4 - base64String.length % 4) % 4);
-        const base64 = (base64String + padding)
-            .replace(/\-/g, '+')
-            .replace(/_/g, '/');
-        
-        const rawData = atob(base64);
-        const outputArray = new Uint8Array(rawData.length);
-        
-        for (let i = 0; i < rawData.length; ++i) {
-            outputArray[i] = rawData.charCodeAt(i);
-        }
-        return outputArray;
-    } catch (error) {
-        console.error('❌ Invalid VAPID key format:', error);
-        throw new Error('Invalid VAPID key format');
-    }
-}
-
-        // Convert VAPID key to Uint8Array
+        // Enhanced VAPID key conversion function
         function urlBase64ToUint8Array(base64String) {
-            const padding = '='.repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding)
-                .replace(/\-/g, '+')
-                .replace(/_/g, '/');
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
+            try {
+                const padding = '='.repeat((4 - base64String.length % 4) % 4);
+                const base64 = (base64String + padding)
+                    .replace(/\-/g, '+')
+                    .replace(/_/g, '/');
+                
+                const rawData = atob(base64);
+                const outputArray = new Uint8Array(rawData.length);
+                
+                for (let i = 0; i < rawData.length; ++i) {
+                    outputArray[i] = rawData.charCodeAt(i);
+                }
+                return outputArray;
+            } catch (error) {
+                console.error('❌ Invalid VAPID key format:', error);
+                throw new Error('Invalid VAPID key format');
             }
-            return outputArray;
+        }
+
+        // Function to unsubscribe from push notifications
+        async function unsubscribeFromPushNotifications() {
+            try {
+                if ('serviceWorker' in navigator) {
+                    const registration = await navigator.serviceWorker.ready;
+                    const subscription = await registration.pushManager.getSubscription();
+                    
+                    if (subscription) {
+                        await subscription.unsubscribe();
+                        console.log('✅ Unsubscribed from push notifications');
+                        localStorage.removeItem('pushSubscription');
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Failed to unsubscribe from push notifications:', error);
+            }
         }
 
         // Send push notification (simulated for demo)
@@ -1779,7 +1816,7 @@ function urlBase64ToUint8Array(base64String) {
         function scheduleEnhancedNotifications() {
             if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
             
-            // Add welcome notification (only once per day) - FIXED LOGIC
+            // Add welcome notification (only once per day)
             const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
             const today = new Date().toDateString();
             
@@ -2374,6 +2411,34 @@ function urlBase64ToUint8Array(base64String) {
             }, 300);
         }
 
+        // Debug function to test notifications manually
+        function testAllNotifications() {
+            console.log('=== TESTING ALL NOTIFICATION TYPES ===');
+            
+            // Test in-app toast
+            showToast('🔔 Testing in-app notifications...');
+            
+            // Test push notification
+            if (pushNotificationsEnabled && Notification.permission === 'granted') {
+                sendTestPushNotification();
+            } else {
+                console.log('❌ Push notifications not enabled or permission not granted');
+            }
+            
+            // Test adding to notification list
+            addNotification({
+                id: 'manual-test-' + Date.now(),
+                title: 'Manual Test ✅',
+                message: 'This is a test notification in your notifications list.',
+                type: 'info',
+                timestamp: Date.now(),
+                read: false
+            });
+        }
+
+        // Make it available globally for testing
+        window.testNotifications = testAllNotifications;
+
         // Set up event listeners
         function setupEventListeners() {
             // Theme buttons
@@ -2425,39 +2490,23 @@ function urlBase64ToUint8Array(base64String) {
             // Clear notifications button
             document.getElementById('clear-notifications-btn').addEventListener('click', clearNotifications);
             
-            // Push notifications toggle
-            pushNotificationsToggle.addEventListener('change', (e) => {
+            // Push notifications toggle - UPDATED
+            pushNotificationsToggle.addEventListener('change', async (e) => {
                 pushNotificationsEnabled = e.target.checked;
                 localStorage.setItem('pushNotificationsEnabled', pushNotificationsEnabled);
                 
                 if (pushNotificationsEnabled) {
-                    if ('Notification' in window) {
-                        if (Notification.permission === 'default') {
-                            Notification.requestPermission().then(permission => {
-                                if (permission === 'granted') {
-                                    showToast('Push notifications enabled!');
-                                    subscribeToPushNotifications();
-                                    scheduleEnhancedNotifications();
-                                } else {
-                                    pushNotificationsToggle.checked = false;
-                                    localStorage.setItem('pushNotificationsEnabled', 'false');
-                                }
-                            });
-                        } else if (Notification.permission === 'granted') {
-                            showToast('Push notifications enabled!');
-                            subscribeToPushNotifications();
-                            scheduleEnhancedNotifications();
-                        } else {
-                            pushNotificationsToggle.checked = false;
-                            localStorage.setItem('pushNotificationsEnabled', 'false');
-                            showToast('Please enable notifications in browser settings');
-                        }
-                    } else {
-                        showToast('Push notifications not supported');
+                    // Enable push notifications
+                    const result = await subscribeToPushNotifications();
+                    if (!result) {
+                        // If subscription failed, uncheck the toggle
                         pushNotificationsToggle.checked = false;
+                        pushNotificationsEnabled = false;
                         localStorage.setItem('pushNotificationsEnabled', 'false');
                     }
                 } else {
+                    // Disable push notifications
+                    await unsubscribeFromPushNotifications();
                     showToast('Push notifications disabled');
                 }
             });
