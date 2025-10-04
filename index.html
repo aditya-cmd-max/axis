@@ -2624,5 +2624,158 @@
         // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
+
+    <script>// Enhanced push notification test with real FCM
+async function testCompletePushNotification() {
+    console.log('🧪 Testing complete push notification flow...');
+    
+    try {
+        // Get the current subscription
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+        
+        if (!subscription) {
+            console.log('❌ No push subscription found');
+            showToast('Please enable push notifications first');
+            return;
+        }
+        
+        console.log('✅ Push subscription found:', subscription);
+        
+        // Test local notification first
+        await sendTestPushNotification();
+        
+        // Simulate server-side push (for demo purposes)
+        await simulateServerPush(subscription);
+        
+        showToast('🔔 Push notification test initiated!');
+        
+    } catch (error) {
+        console.error('❌ Push test failed:', error);
+        showToast('Push test failed: ' + error.message);
+    }
+}
+
+// Simulate server-side push notification
+async function simulateServerPush(subscription) {
+    console.log('🌐 Simulating server push...');
+    
+    // In a real app, you would send this to your backend server
+    // For demo, we'll simulate what the server would send
+    
+    const pushData = {
+        title: '🚀 Exonova Axis - Server Test',
+        body: 'This simulates a push notification from the server! Works even when app is closed.',
+        icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+        image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+        badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+        tag: 'server-test-' + Date.now(),
+        timestamp: Date.now(),
+        requireInteraction: true,
+        actions: [
+            { action: 'open', title: '📱 Open App' },
+            { action: 'test', title: '🧪 Run Tests' },
+            { action: 'dismiss', title: '❌ Dismiss' }
+        ],
+        data: {
+            url: '/axis/',
+            type: 'server-test',
+            notificationId: 'server-push-' + Date.now(),
+            source: 'server',
+            test: true
+        }
+    };
+    
+    // This is what your server would send to FCM
+    const serverPayload = {
+        subscription: subscription,
+        payload: pushData
+    };
+    
+    console.log('📦 Server payload would be:', serverPayload);
+    
+    // For now, we'll trigger it locally since we can't actually send to FCM from client
+    setTimeout(() => {
+        // This simulates the server sending a push after 3 seconds
+        sendAdvancedTestNotification();
+    }, 3000);
+}
+
+// Advanced test notification
+function sendAdvancedTestNotification() {
+    if (!('serviceWorker' in navigator)) return;
+    
+    navigator.serviceWorker.ready.then(registration => {
+        registration.showNotification('🌐 Server Push Simulation', {
+            body: 'This notification simulates what would happen when your server sends a real push through FCM. The notification would appear on your lock screen and notification center!',
+            icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+            badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+            image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+            tag: 'server-simulation-' + Date.now(),
+            requireInteraction: true,
+            vibrate: [200, 100, 200, 100, 200, 100, 200],
+            actions: [
+                {
+                    action: 'open',
+                    title: '🚀 Open Exonova'
+                },
+                {
+                    action: 'test_more',
+                    title: '🧪 More Tests'
+                },
+                {
+                    action: 'dismiss',
+                    title: '❌ Close'
+                }
+            ],
+            data: {
+                url: '/axis/',
+                type: 'server-simulation',
+                notificationId: 'advanced-test-' + Date.now(),
+                source: 'simulated-server',
+                timestamp: Date.now()
+            }
+        });
+    });
+}
+
+// Add this to your debug functions
+function debugPushSubscription() {
+    console.log('🔍 Debugging Push Subscription...');
+    
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        console.log('❌ Push notifications not supported');
+        return;
+    }
+    
+    navigator.serviceWorker.ready.then(registration => {
+        registration.pushManager.getSubscription().then(subscription => {
+            if (subscription) {
+                console.log('✅ Active Push Subscription:', {
+                    endpoint: subscription.endpoint,
+                    expirationTime: subscription.expirationTime,
+                    keys: subscription.options ? Object.keys(subscription.options) : 'No keys'
+                });
+                
+                // Show the actual FCM endpoint
+                console.log('📡 FCM Endpoint:', subscription.endpoint);
+                
+                // Parse the FCM token from endpoint
+                const endpointParts = subscription.endpoint.split('/');
+                const fcmToken = endpointParts[endpointParts.length - 1];
+                console.log('🔑 FCM Token:', fcmToken);
+                
+            } else {
+                console.log('❌ No active push subscription');
+            }
+        });
+    });
+}
+
+// Make functions globally available
+window.testCompletePush = testCompletePushNotification;
+window.debugPush = debugPushSubscription;
+    
+    </script>
 </body>
 </html>
