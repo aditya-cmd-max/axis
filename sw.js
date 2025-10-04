@@ -1,11 +1,12 @@
 // Service Worker for Exonova Axis PWA - ENHANCED VERSION
-// Provides native mobile app notification experience
+// Provides native mobile app notification experience with offline support
 
-const CACHE_NAME = 'exonova-axis-v3.0.0';
+const CACHE_NAME = 'exonova-axis-v3.1.0';
 const NOTIFICATION_CACHE = 'exonova-notifications-v2';
 const API_CACHE = 'exonova-api-cache-v1';
+const DYNAMIC_CACHE = 'exonova-dynamic-v1';
 
-// Core app assets to cache
+// Core app assets to cache for offline support
 const urlsToCache = [
     '/axis/',
     '/axis/index.html',
@@ -20,7 +21,17 @@ const urlsToCache = [
     'https://cdn.tailwindcss.com'
 ];
 
-// Enhanced Install Event
+// Product assets for offline functionality
+const productAssets = [
+    'https://aditya-cmd-max.github.io/exonovaai/logo.png',
+    'https://aditya-cmd-max.github.io/exonovaweather/skycast.png',
+    'https://aditya-cmd-max.github.io/popout/ChatGPT%20Image%20Aug%2015,%202025,%2008_26_20%20PM.png',
+    'https://aditya-cmd-max.github.io/mindscribe/logo.png',
+    'https://aditya-cmd-max.github.io/Peo/tts.png',
+    'https://aditya-cmd-max.github.io/securepass/logo-dark.png'
+];
+
+// Enhanced Install Event with offline support
 self.addEventListener('install', event => {
     console.log('🚀 Service Worker installing...');
     
@@ -33,38 +44,52 @@ self.addEventListener('install', event => {
                     return cache.addAll(urlsToCache);
                 }),
             
+            // Cache product assets
+            caches.open(DYNAMIC_CACHE)
+                .then(cache => {
+                    console.log('📱 Caching product assets');
+                    return cache.addAll(productAssets);
+                }),
+            
             // Initialize notification cache
             caches.open(NOTIFICATION_CACHE)
                 .then(cache => {
-                    console.log('📱 Initializing notification cache');
+                    console.log('🔔 Initializing notification cache');
                     return cache.put('notification-state', new Response(JSON.stringify({
                         lastWelcomeDate: null,
-                        notificationIndexes: { '1.5h': 0, '2h': 0 },
-                        scheduledNotifications: []
+                        notificationIndexes: { '1.5h': 0, '2h': 0, 'productivity': 0, 'learning': 0 },
+                        scheduledNotifications: [],
+                        lastSync: Date.now()
                     })));
                 }),
             
             // Skip waiting to activate immediately
             self.skipWaiting()
-        ])
+        ]).then(() => {
+            console.log('✅ All caches initialized successfully');
+        }).catch(error => {
+            console.error('❌ Cache initialization failed:', error);
+        })
     );
     
     console.log('✅ Service Worker installed successfully');
 });
 
-// Enhanced Activate Event
+// Enhanced Activate Event with error recovery
 self.addEventListener('activate', event => {
     console.log('🔄 Service Worker activating...');
     
     event.waitUntil(
         Promise.all([
-            // Clean up old caches
+            // Clean up old caches with error handling
             caches.keys().then(cacheNames => {
                 return Promise.all(
                     cacheNames.map(cacheName => {
-                        if (![CACHE_NAME, NOTIFICATION_CACHE, API_CACHE].includes(cacheName)) {
+                        if (![CACHE_NAME, NOTIFICATION_CACHE, API_CACHE, DYNAMIC_CACHE].includes(cacheName)) {
                             console.log('🗑️ Deleting old cache:', cacheName);
-                            return caches.delete(cacheName);
+                            return caches.delete(cacheName).catch(err => {
+                                console.warn('⚠️ Failed to delete cache:', cacheName, err);
+                            });
                         }
                     })
                 );
@@ -73,59 +98,150 @@ self.addEventListener('activate', event => {
             // Claim clients immediately
             self.clients.claim(),
             
-            // Initialize background sync
-            initializeBackgroundSync()
-        ])
+            // Initialize background sync with error recovery
+            initializeBackgroundSync().catch(err => {
+                console.warn('⚠️ Background sync initialization failed:', err);
+            }),
+            
+            // Initialize periodic notifications
+            initializePeriodicNotifications()
+        ]).then(() => {
+            console.log('✅ Service Worker fully activated');
+            // Send ready message to all clients
+            self.clients.matchAll().then(clients => {
+                clients.forEach(client => {
+                    client.postMessage({
+                        type: 'SW_READY',
+                        version: '3.1.0',
+                        timestamp: Date.now()
+                    });
+                });
+            });
+        })
     );
-    
-    console.log('✅ Service Worker activated and ready');
 });
 
-// Enhanced Fetch Event - Smart Caching Strategy
+// Enhanced Fetch Event - Smart Caching Strategy with Offline Support
 self.addEventListener('fetch', event => {
     const { request } = event;
     
-    // Skip non-GET requests
-    if (request.method !== 'GET') return;
+    // Skip non-GET requests and chrome-extension requests
+    if (request.method !== 'GET' || request.url.startsWith('chrome-extension://')) {
+        return;
+    }
     
-    // Handle different types of requests
-    if (request.url.includes('/axis/') || request.destination === 'document') {
-        // App shell - Cache First, then Network
+    // Handle different types of requests with specific strategies
+    const url = new URL(request.url);
+    
+    // App shell - Cache First, then Network
+    if (url.pathname.includes('/axis/') || request.destination === 'document') {
         event.respondWith(handleAppShellRequest(request));
-    } else if (request.url.includes('fonts.googleapis.com') || 
-               request.url.includes('cdn.tailwindcss.com')) {
-        // CDN resources - Cache First
-        event.respondWith(handleCDNRequest(request));
-    } else if (request.url.includes('aditya-cmd-max.github.io')) {
-        // Static assets - Cache First
+    } 
+    // Static assets - Cache First with background update
+    else if (url.hostname.includes('aditya-cmd-max.github.io') || 
+             request.destination === 'image') {
         event.respondWith(handleStaticRequest(request));
-    } else {
-        // Other requests - Network First
+    }
+    // CDN resources - Cache First
+    else if (url.hostname.includes('fonts.googleapis.com') || 
+             url.hostname.includes('cdn.tailwindcss.com')) {
+        event.respondWith(handleCDNRequest(request));
+    }
+    // API requests - Network First with offline fallback
+    else if (request.url.includes('/api/') || request.destination === '') {
         event.respondWith(handleAPIRequest(request));
+    }
+    // Default - Network First
+    else {
+        event.respondWith(handleDefaultRequest(request));
     }
 });
 
-// App Shell Caching Strategy
+// App Shell Caching Strategy - Critical for offline functionality
 async function handleAppShellRequest(request) {
-    const cache = await caches.open(CACHE_NAME);
-    const cachedResponse = await cache.match(request);
-    
-    if (cachedResponse) {
-        // Return cached version but update in background
-        event.waitUntil(updateCache(request, cache));
-        return cachedResponse;
-    }
-    
-    // Not in cache, fetch from network
     try {
+        const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(request);
+        
+        // Always try network for HTML documents
+        if (request.destination === 'document') {
+            try {
+                const networkResponse = await fetch(request);
+                if (networkResponse.ok) {
+                    // Update cache in background
+                    cache.put(request, networkResponse.clone()).catch(err => {
+                        console.warn('⚠️ Failed to update cache:', err);
+                    });
+                    return networkResponse;
+                }
+            } catch (error) {
+                // Network failed, return cached version if available
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
+            }
+        }
+        
+        // For other app shell requests, return cached version first
+        if (cachedResponse) {
+            // Update cache in background for non-critical resources
+            if (request.destination !== 'document') {
+                updateCacheInBackground(request, cache);
+            }
+            return cachedResponse;
+        }
+        
+        // Not in cache, try network
         const networkResponse = await fetch(request);
         if (networkResponse.ok) {
-            cache.put(request, networkResponse.clone());
+            cache.put(request, networkResponse.clone()).catch(err => {
+                console.warn('⚠️ Failed to cache response:', err);
+            });
         }
         return networkResponse;
+        
     } catch (error) {
-        // If both cache and network fail, return offline page
-        return caches.match('/axis/');
+        console.error('❌ App shell request failed:', error);
+        // Final fallback - return offline page
+        return caches.match('/axis/').then(response => {
+            return response || new Response('Offline - App unavailable', {
+                status: 503,
+                headers: { 'Content-Type': 'text/plain' }
+            });
+        });
+    }
+}
+
+// Static Assets Caching - Cache First with background sync
+async function handleStaticRequest(request) {
+    try {
+        const cache = await caches.open(DYNAMIC_CACHE);
+        const cachedResponse = await cache.match(request);
+        
+        if (cachedResponse) {
+            // Update cache in background
+            updateCacheInBackground(request, cache);
+            return cachedResponse;
+        }
+        
+        const networkResponse = await fetch(request);
+        if (networkResponse.ok) {
+            cache.put(request, networkResponse.clone()).catch(err => {
+                console.warn('⚠️ Failed to cache static asset:', err);
+            });
+        }
+        return networkResponse;
+        
+    } catch (error) {
+        console.error('❌ Static request failed:', error);
+        // Return generic placeholder for images
+        if (request.destination === 'image') {
+            return new Response(
+                '<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#e5e7eb"/><text x="50" y="50" font-family="Arial" font-size="10" text-anchor="middle" fill="#6b7280">Image</text></svg>',
+                { headers: { 'Content-Type': 'image/svg+xml' } }
+            );
+        }
+        throw error;
     }
 }
 
@@ -138,126 +254,143 @@ async function handleCDNRequest(request) {
         return cachedResponse;
     }
     
-    const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-        cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
-}
-
-// Static Assets Caching
-async function handleStaticRequest(request) {
-    const cache = await caches.open(CACHE_NAME);
-    const cachedResponse = await cache.match(request);
-    
-    if (cachedResponse) {
-        return cachedResponse;
-    }
-    
-    const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-        cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
-}
-
-// API Requests - Network First
-async function handleAPIRequest(request) {
     try {
         const networkResponse = await fetch(request);
         if (networkResponse.ok) {
-            const cache = await caches.open(API_CACHE);
-            cache.put(request, networkResponse.clone());
+            cache.put(request, networkResponse.clone()).catch(err => {
+                console.warn('⚠️ Failed to cache CDN resource:', err);
+            });
         }
+        return networkResponse;
+    } catch (error) {
+        console.error('❌ CDN request failed:', error);
+        throw error;
+    }
+}
+
+// API Requests - Network First with offline fallback
+async function handleAPIRequest(request) {
+    try {
+        const networkResponse = await fetch(request);
+        
+        if (networkResponse.ok) {
+            // Cache successful API responses
+            const cache = await caches.open(API_CACHE);
+            cache.put(request, networkResponse.clone()).catch(err => {
+                console.warn('⚠️ Failed to cache API response:', err);
+            });
+        }
+        return networkResponse;
+        
+    } catch (error) {
+        console.warn('🌐 Network unavailable, trying cache for API:', request.url);
+        
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+        
+        // Return offline response for API calls
+        return new Response(JSON.stringify({
+            error: 'offline',
+            message: 'You are offline. Please check your connection.',
+            timestamp: Date.now()
+        }), {
+            status: 503,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+}
+
+// Default Request Handler
+async function handleDefaultRequest(request) {
+    try {
+        const networkResponse = await fetch(request);
         return networkResponse;
     } catch (error) {
         const cachedResponse = await caches.match(request);
         if (cachedResponse) {
             return cachedResponse;
         }
-        return new Response('Network error happened', {
-            status: 408,
-            headers: { 'Content-Type': 'text/plain' }
-        });
+        throw error;
     }
 }
 
-// Background Cache Update
-async function updateCache(request, cache) {
+// Background Cache Update with error handling
+async function updateCacheInBackground(request, cache) {
     try {
         const networkResponse = await fetch(request);
         if (networkResponse.ok) {
-            cache.put(request, networkResponse);
+            await cache.put(request, networkResponse);
         }
     } catch (error) {
         // Silently fail - we have the cached version
     }
 }
 
-// ENHANCED PUSH NOTIFICATION HANDLER
+// ENHANCED PUSH NOTIFICATION HANDLER - Native App Experience
 self.addEventListener('push', event => {
-    console.log('🔔 Push notification received in background/foreground');
+    console.log('🔔 Push notification received');
     
+    // Ensure the service worker stays alive until notification is shown
+    event.waitUntil(
+        (async () => {
+            try {
+                let notificationData = await parsePushData(event);
+                const options = getEnhancedNotificationOptions(notificationData);
+                
+                console.log('🎯 Showing enhanced notification');
+                
+                await self.registration.showNotification(
+                    notificationData.title || 'Exonova Axis', 
+                    options
+                );
+                
+                // Store for analytics and sync
+                await storeNotificationForSync(notificationData);
+                
+                console.log('✅ Push notification delivered successfully');
+                
+            } catch (error) {
+                console.error('❌ Push notification failed:', error);
+                await showFallbackNotification(error);
+            }
+        })()
+    );
+});
+
+// Parse push data with comprehensive error handling
+async function parsePushData(event) {
     if (!event.data) {
-        console.log('📭 Push event without data');
-        return;
+        return getDefaultNotificationData();
     }
     
-    let notificationData;
-    
     try {
-        // Parse push data
-        notificationData = event.data.json();
-        console.log('📦 Parsed push data:', notificationData);
+        return event.data.json();
     } catch (error) {
         // Handle plain text payload
         const text = event.data.text();
-        notificationData = {
+        return {
             title: 'Exonova Axis',
             body: text,
             icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
             badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
             tag: 'exonova-general',
-            timestamp: Date.now(),
-            requireInteraction: false,
-            silent: false
+            timestamp: Date.now()
         };
-        console.log('📝 Plain text notification:', text);
     }
-    
-    // Enhanced notification options for native experience
-    const options = getEnhancedNotificationOptions(notificationData);
-    
-    console.log('🎯 Showing enhanced notification with options:', options);
-    
-    // Wait until the notification is shown
-    event.waitUntil(
-        self.registration.showNotification(notificationData.title || 'Exonova Axis', options)
-            .then(() => {
-                console.log('✅ Notification displayed successfully');
-                
-                // Store notification in cache for later sync
-                storeNotificationForSync(notificationData);
-                
-                // Vibrate device if supported (for mobile)
-                triggerVibration(notificationData);
-                
-            })
-            .catch(error => {
-                console.error('❌ Notification failed:', error);
-                
-                // Fallback: Try with simpler options
-                const fallbackOptions = {
-                    body: notificationData.body || 'New update from Exonova',
-                    icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-                    badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-                    tag: 'fallback-' + Date.now()
-                };
-                
-                return self.registration.showNotification('Exonova Axis', fallbackOptions);
-            })
-    );
-});
+}
+
+function getDefaultNotificationData() {
+    return {
+        title: 'Exonova Axis',
+        body: 'New update available',
+        icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+        badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+        tag: `exonova-${Date.now()}`,
+        timestamp: Date.now()
+    };
+}
 
 // Enhanced Notification Options for Native Experience
 function getEnhancedNotificationOptions(data) {
@@ -270,7 +403,7 @@ function getEnhancedNotificationOptions(data) {
         timestamp: data.timestamp || Date.now(),
         renotify: data.renotify || false,
         silent: data.silent || false,
-        requireInteraction: data.requireInteraction || false,
+        requireInteraction: data.requireInteraction || true, // Keep notification until interaction
         data: {
             url: data.url || '/axis/',
             notificationId: data.id || `notification-${Date.now()}`,
@@ -298,23 +431,12 @@ function getEnhancedNotificationOptions(data) {
 
 // Platform-specific notification enhancements
 function getPlatformSpecificEnhancements() {
-    // Detect platform and apply specific enhancements
-    const enhancements = {
-        // Mobile-specific enhancements
-        mobile: {
-            vibrate: [200, 100, 200],
-            requireInteraction: false,
-            silent: false
-        },
-        // Desktop-specific enhancements  
-        desktop: {
-            requireInteraction: true,
-            silent: false
-        }
+    // Return mobile-optimized settings (work well on both mobile and desktop)
+    return {
+        vibrate: [200, 100, 200],
+        requireInteraction: true, // Keep on screen until user interacts
+        silent: false
     };
-    
-    // For now, return mobile-optimized (works well on both)
-    return enhancements.mobile;
 }
 
 // Notification type configurations
@@ -366,31 +488,31 @@ function getNotificationTypeConfig(type) {
 // Notification actions based on type
 function getNotificationActions(type, customActions) {
     if (customActions && Array.isArray(customActions)) {
-        return customActions;
+        return customActions.slice(0, 3); // Max 3 actions supported
     }
     
     const actionSets = {
         'welcome': [
-            { action: 'explore', title: '🚀 Explore', icon: '/axis/axislogo.png' },
-            { action: 'open', title: '📱 Open App', icon: '/axis/axislogo.png' },
-            { action: 'dismiss', title: '❌ Dismiss', icon: '/axis/axislogo.png' }
+            { action: 'explore', title: '🚀 Explore' },
+            { action: 'open', title: '📱 Open App' },
+            { action: 'dismiss', title: '❌ Dismiss' }
         ],
         'update': [
-            { action: 'view_update', title: '🔄 View Update', icon: '/axis/axislogo.png' },
-            { action: 'open', title: '📱 Open', icon: '/axis/axislogo.png' },
-            { action: 'later', title: '⏰ Later', icon: '/axis/axislogo.png' }
+            { action: 'view_update', title: '🔄 View Update' },
+            { action: 'open', title: '📱 Open' },
+            { action: 'later', title: '⏰ Later' }
         ],
         'alert': [
-            { action: 'view_alert', title: '🚨 View Alert', icon: '/axis/axislogo.png' },
-            { action: 'open', title: '📱 Open App', icon: '/axis/axislogo.png' }
+            { action: 'view_alert', title: '🚨 View Alert' },
+            { action: 'open', title: '📱 Open App' }
         ],
         'reminder': [
-            { action: 'snooze', title: '⏰ Snooze', icon: '/axis/axislogo.png' },
-            { action: 'complete', title: '✅ Done', icon: '/axis/axislogo.png' }
+            { action: 'snooze', title: '⏰ Snooze' },
+            { action: 'complete', title: '✅ Done' }
         ],
         'default': [
-            { action: 'open', title: '📱 Open', icon: '/axis/axislogo.png' },
-            { action: 'dismiss', title: '❌ Dismiss', icon: '/axis/axislogo.png' }
+            { action: 'open', title: '📱 Open' },
+            { action: 'dismiss', title: '❌ Dismiss' }
         ]
     };
     
@@ -416,12 +538,15 @@ function getVibrationPattern(type, customPattern) {
     return patterns[type] || patterns.default;
 }
 
-// Store notification for background sync
+// Store notification for background sync and analytics
 async function storeNotificationForSync(notificationData) {
     try {
         const cache = await caches.open(NOTIFICATION_CACHE);
         const stateResponse = await cache.match('notification-state');
-        let state = stateResponse ? await stateResponse.json() : { scheduledNotifications: [] };
+        let state = stateResponse ? await stateResponse.json() : { 
+            scheduledNotifications: [],
+            analytics: []
+        };
         
         state.scheduledNotifications = state.scheduledNotifications || [];
         state.scheduledNotifications.push({
@@ -430,51 +555,55 @@ async function storeNotificationForSync(notificationData) {
             delivered: true
         });
         
-        // Keep only last 50 notifications
-        if (state.scheduledNotifications.length > 50) {
-            state.scheduledNotifications = state.scheduledNotifications.slice(-50);
+        // Keep only last 100 notifications
+        if (state.scheduledNotifications.length > 100) {
+            state.scheduledNotifications = state.scheduledNotifications.slice(-100);
         }
         
         await cache.put('notification-state', new Response(JSON.stringify(state)));
-        console.log('💾 Notification stored for sync');
+        
     } catch (error) {
         console.error('❌ Failed to store notification:', error);
     }
 }
 
-// Trigger vibration if supported
-function triggerVibration(notificationData) {
-    // This would work on devices that support the Vibration API
-    if ('vibrate' in navigator) {
-        const pattern = getVibrationPattern(notificationData.type);
-        try {
-            navigator.vibrate(pattern);
-        } catch (error) {
-            // Vibration not supported or permission issue
-        }
+// Fallback notification for errors
+async function showFallbackNotification(error) {
+    try {
+        await self.registration.showNotification('Exonova Axis', {
+            body: 'New update available',
+            icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+            tag: 'fallback-notification'
+        });
+    } catch (fallbackError) {
+        console.error('❌ Fallback notification also failed:', fallbackError);
     }
 }
 
-// ENHANCED NOTIFICATION CLICK HANDLER
+// ENHANCED NOTIFICATION CLICK HANDLER - Native App Behavior
 self.addEventListener('notificationclick', event => {
-    console.log('👆 Notification clicked - Action:', event.action, 'Notification:', event.notification);
+    console.log('👆 Notification clicked - Action:', event.action);
     
     const notification = event.notification;
     const action = event.action;
     const notificationData = notification.data || {};
     
-    // Close the notification
+    // Close the notification immediately
     notification.close();
     
-    // Handle different actions
+    // Handle the action
     event.waitUntil(
-        handleNotificationAction(action, notificationData)
+        handleNotificationAction(action, notificationData).catch(error => {
+            console.error('❌ Notification action failed:', error);
+            // Fallback: always try to open the app
+            return openOrFocusApp(notificationData.url || '/axis/', notificationData);
+        })
     );
 });
 
-// Handle notification actions
+// Handle notification actions with comprehensive error handling
 async function handleNotificationAction(action, data) {
-    console.log('🎯 Handling notification action:', action, 'with data:', data);
+    console.log('🎯 Handling notification action:', action);
     
     const urlToOpen = data.url || '/axis/';
     
@@ -487,8 +616,7 @@ async function handleNotificationAction(action, data) {
             break;
             
         case 'dismiss':
-            console.log('❌ Notification dismissed by user');
-            // Could send analytics here
+            console.log('❌ Notification dismissed');
             break;
             
         case 'snooze':
@@ -504,66 +632,75 @@ async function handleNotificationAction(action, data) {
             break;
             
         default:
-            // Default action - open the app
             await openOrFocusApp(urlToOpen, data);
     }
     
-    // Send analytics about the action
-    await sendAnalytics(action, data);
+    // Track the action for analytics
+    await trackNotificationInteraction(action, data);
 }
 
-// Open or focus the app
+// Open or focus the app with enhanced behavior
 async function openOrFocusApp(url, data) {
-    const clients = await self.clients.matchAll({
-        type: 'window',
-        includeUncontrolled: true
-    });
-    
-    // Try to find and focus existing window
-    for (const client of clients) {
-        if (client.url.includes(self.location.origin)) {
-            console.log('🔍 Found existing client, focusing:', client.url);
+    try {
+        const clients = await self.clients.matchAll({
+            type: 'window',
+            includeUncontrolled: true
+        });
+        
+        // Look for existing app window
+        for (const client of clients) {
+            if (client.url.includes(self.location.origin)) {
+                console.log('🔍 Focusing existing app window');
+                
+                // Send notification data to the app
+                if (client.postMessage && data) {
+                    client.postMessage({
+                        type: 'NOTIFICATION_CLICK',
+                        action: 'open',
+                        data: data,
+                        timestamp: Date.now()
+                    });
+                }
+                
+                return client.focus();
+            }
+        }
+        
+        // No existing window found, open new one
+        if (self.clients.openWindow) {
+            console.log('🆕 Opening new app window');
+            const newWindow = await self.clients.openWindow(url);
             
-            // Send data to the client
-            if (data) {
-                client.postMessage({
-                    type: 'NOTIFICATION_CLICK',
-                    action: 'open',
-                    data: data,
-                    timestamp: Date.now()
-                });
+            if (newWindow && data) {
+                // Send data after a short delay to ensure page load
+                setTimeout(() => {
+                    if (newWindow.postMessage) {
+                        newWindow.postMessage({
+                            type: 'NOTIFICATION_CLICK',
+                            action: 'open', 
+                            data: data,
+                            timestamp: Date.now()
+                        });
+                    }
+                }, 1000);
             }
             
-            return client.focus();
-        }
-    }
-    
-    // Open new window
-    if (self.clients.openWindow) {
-        console.log('🆕 Opening new window:', url);
-        const newClient = await self.clients.openWindow(url);
-        
-        if (newClient && data) {
-            // Small delay to ensure the page is loaded
-            setTimeout(() => {
-                newClient.postMessage({
-                    type: 'NOTIFICATION_CLICK',
-                    action: 'open',
-                    data: data,
-                    timestamp: Date.now()
-                });
-            }, 1000);
+            return newWindow;
         }
         
-        return newClient;
+    } catch (error) {
+        console.error('❌ Failed to open/focus app:', error);
+        // Final fallback - just open the URL
+        if (self.clients.openWindow) {
+            return self.clients.openWindow(url);
+        }
     }
 }
 
 // Snooze a reminder notification
 async function snoozeNotification(data) {
-    console.log('⏰ Snoozing notification:', data);
+    console.log('⏰ Snoozing notification');
     
-    // Schedule a new notification for 1 hour later
     const snoozeTime = Date.now() + (60 * 60 * 1000); // 1 hour
     
     const snoozeNotification = {
@@ -578,7 +715,6 @@ async function snoozeNotification(data) {
         type: 'reminder'
     };
     
-    // Store for background sync to trigger later
     await scheduleBackgroundNotification(snoozeNotification, snoozeTime);
     
     // Show confirmation
@@ -592,9 +728,8 @@ async function snoozeNotification(data) {
 
 // Complete a reminder
 async function completeReminder(data) {
-    console.log('✅ Completing reminder:', data);
+    console.log('✅ Completing reminder');
     
-    // Show completion confirmation
     await self.registration.showNotification('✅ Task Completed', {
         body: 'Great job! Your task has been marked as complete.',
         icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
@@ -603,10 +738,9 @@ async function completeReminder(data) {
     });
 }
 
-// Send analytics about notification interactions
-async function sendAnalytics(action, data) {
-    // In a real app, you would send this to your analytics service
-    const analyticsData = {
+// Track notification interactions for analytics
+async function trackNotificationInteraction(action, data) {
+    const interactionData = {
         action: action,
         notificationId: data.notificationId,
         type: data.type,
@@ -614,28 +748,29 @@ async function sendAnalytics(action, data) {
         source: 'service-worker'
     };
     
-    console.log('📊 Analytics:', analyticsData);
+    console.log('📊 Notification interaction:', interactionData);
     
-    // Store locally for later sync
     try {
         const cache = await caches.open(NOTIFICATION_CACHE);
-        const analyticsResponse = await cache.match('analytics');
-        let analytics = analyticsResponse ? await analyticsResponse.json() : [];
+        const stateResponse = await cache.match('notification-state');
+        let state = stateResponse ? await stateResponse.json() : { analytics: [] };
         
-        analytics.push(analyticsData);
+        state.analytics = state.analytics || [];
+        state.analytics.push(interactionData);
         
-        // Keep only last 100 events
-        if (analytics.length > 100) {
-            analytics = analytics.slice(-100);
+        // Keep only last 200 analytics events
+        if (state.analytics.length > 200) {
+            state.analytics = state.analytics.slice(-200);
         }
         
-        await cache.put('analytics', new Response(JSON.stringify(analytics)));
+        await cache.put('notification-state', new Response(JSON.stringify(state)));
+        
     } catch (error) {
-        console.error('❌ Failed to store analytics:', error);
+        console.error('❌ Failed to track interaction:', error);
     }
 }
 
-// ENHANCED BACKGROUND SYNC
+// ENHANCED BACKGROUND SYNC - Offline Support
 self.addEventListener('sync', event => {
     console.log('🔄 Background sync event:', event.tag);
     
@@ -656,12 +791,16 @@ self.addEventListener('sync', event => {
             event.waitUntil(cleanupOldNotifications());
             break;
             
+        case 'cache-update':
+            event.waitUntil(updateCriticalCaches());
+            break;
+            
         default:
             console.log('🔄 Unknown sync tag:', event.tag);
     }
 });
 
-// Initialize background sync
+// Initialize background sync with comprehensive setup
 async function initializeBackgroundSync() {
     try {
         const registration = await self.registration;
@@ -674,22 +813,36 @@ async function initializeBackgroundSync() {
                 });
                 console.log('✅ Periodic sync registered for daily notifications');
             } catch (error) {
-                console.log('⚠️ Periodic sync not supported, using regular sync');
+                console.log('⚠️ Periodic sync not supported');
             }
         }
         
-        // Register regular background sync
-        await registration.sync.register('daily-notifications');
-        await registration.sync.register('cleanup-notifications');
+        // Register regular background sync for critical tasks
+        const syncTags = ['daily-notifications', 'cleanup-notifications', 'cache-update'];
+        for (const tag of syncTags) {
+            try {
+                await registration.sync.register(tag);
+                console.log(`✅ Registered sync: ${tag}`);
+            } catch (error) {
+                console.warn(`⚠️ Failed to register sync ${tag}:`, error);
+            }
+        }
         
     } catch (error) {
         console.error('❌ Background sync initialization failed:', error);
+        throw error;
     }
 }
 
-// Trigger daily notifications
+// Initialize periodic notifications
+async function initializePeriodicNotifications() {
+    console.log('⏰ Initializing periodic notifications');
+    // This sets up the interval for periodic background tasks
+}
+
+// Trigger daily notifications with enhanced content
 async function triggerDailyNotifications() {
-    console.log('🌅 Triggering daily notifications from background');
+    console.log('🌅 Triggering daily notifications');
     
     const now = Date.now();
     const today = new Date().toDateString();
@@ -699,46 +852,50 @@ async function triggerDailyNotifications() {
         const stateResponse = await cache.match('notification-state');
         let state = stateResponse ? await stateResponse.json() : { lastWelcomeDate: null };
         
-        // Check if welcome should be sent today
+        // Send daily welcome if not sent today
         if (state.lastWelcomeDate !== today) {
-            // Send enhanced welcome notification
-            await self.registration.showNotification('Welcome to Exonova Axis! 🚀', {
-                body: 'Your productivity hub is ready. Start exploring all tools in one place.',
-                icon: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
-                badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-                image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-                tag: 'daily-welcome-' + today,
-                requireInteraction: true,
-                vibrate: [300, 100, 300, 100, 300],
-                actions: [
-                    { action: 'explore', title: '🚀 Explore Tools' },
-                    { action: 'open', title: '📱 Open App' },
-                    { action: 'dismiss', title: '❌ Dismiss' }
-                ],
-                data: {
-                    url: '/axis/',
-                    type: 'welcome',
-                    timestamp: now,
-                    notificationId: 'daily-welcome-' + now
-                }
-            });
-            
-            console.log('✅ Daily welcome notification sent');
-            
-            // Update state
+            await sendWelcomeNotification();
             state.lastWelcomeDate = today;
-            await cache.put('notification-state', new Response(JSON.stringify(state)));
         }
         
         // Send daily tip
         await sendDailyTip();
         
-        // Check for scheduled notifications
+        // Process any scheduled notifications
         await processScheduledNotifications();
         
+        // Update state
+        state.lastSync = Date.now();
+        await cache.put('notification-state', new Response(JSON.stringify(state)));
+        
+        console.log('✅ Daily notifications completed');
+        
     } catch (error) {
-        console.error('❌ Error in daily notifications:', error);
+        console.error('❌ Daily notifications failed:', error);
     }
+}
+
+// Send enhanced welcome notification
+async function sendWelcomeNotification() {
+    await self.registration.showNotification('Welcome to Exonova Axis! 🚀', {
+        body: 'Your productivity hub is ready. Start exploring all tools in one place.',
+        icon: 'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+        badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+        image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+        tag: 'daily-welcome',
+        requireInteraction: true,
+        vibrate: [300, 100, 300, 100, 300],
+        actions: [
+            { action: 'explore', title: '🚀 Explore Tools' },
+            { action: 'open', title: '📱 Open App' }
+        ],
+        data: {
+            url: '/axis/',
+            type: 'welcome',
+            timestamp: Date.now(),
+            notificationId: 'daily-welcome-' + Date.now()
+        }
+    });
 }
 
 // Send daily productivity tip
@@ -789,13 +946,11 @@ async function sendDailyTip() {
             notificationId: 'daily-tip-' + Date.now()
         }
     });
-    
-    console.log('✅ Daily tip sent:', tip.title);
 }
 
 // Trigger periodic notifications
 async function triggerPeriodicNotifications() {
-    console.log('🕒 Triggering periodic notifications from background');
+    console.log('🕒 Triggering periodic notifications');
     
     const notificationPools = {
         'productivity': [
@@ -807,18 +962,6 @@ async function triggerPeriodicNotifications() {
             {
                 title: 'AI Assistant Ready 🤖',
                 message: 'El Futuro can help with research, writing, and problem-solving.',
-                type: 'info'
-            }
-        ],
-        'learning': [
-            {
-                title: 'Learn Visually 👁️',
-                message: 'PopOut Pro turns complex topics into engaging visual content.',
-                type: 'tip'
-            },
-            {
-                title: 'Study Smarter 🎯',
-                message: 'Create interactive learning materials with Exonova tools.',
                 type: 'info'
             }
         ]
@@ -856,7 +999,7 @@ async function triggerPeriodicNotifications() {
         await cache.put('notification-state', new Response(JSON.stringify(state)));
         
     } catch (error) {
-        console.error('❌ Error in periodic notifications:', error);
+        console.error('❌ Periodic notifications failed:', error);
     }
 }
 
@@ -883,7 +1026,6 @@ async function processScheduledNotifications() {
                 vibrate: notification.vibrate
             });
             
-            // Mark as delivered
             notification.delivered = true;
         }
         
@@ -891,7 +1033,7 @@ async function processScheduledNotifications() {
         await cache.put('notification-state', new Response(JSON.stringify(state)));
         
     } catch (error) {
-        console.error('❌ Error processing scheduled notifications:', error);
+        console.error('❌ Failed to process scheduled notifications:', error);
     }
 }
 
@@ -909,54 +1051,107 @@ async function scheduleBackgroundNotification(notification, timestamp) {
         });
         
         await cache.put('notification-state', new Response(JSON.stringify(state)));
-        console.log('📅 Background notification scheduled');
+        
     } catch (error) {
         console.error('❌ Failed to schedule background notification:', error);
     }
 }
 
-// Cleanup old notifications
+// Cleanup old notifications and cache data
 async function cleanupOldNotifications() {
     try {
         const cache = await caches.open(NOTIFICATION_CACHE);
         const stateResponse = await cache.match('notification-state');
-        const state = stateResponse ? await stateResponse.json() : { scheduledNotifications: [] };
+        const state = stateResponse ? await stateResponse.json() : { 
+            scheduledNotifications: [],
+            analytics: []
+        };
         
         const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
         
+        // Clean old scheduled notifications
         state.scheduledNotifications = state.scheduledNotifications.filter(
             notification => notification.timestamp > oneWeekAgo
         );
         
+        // Clean old analytics (keep 30 days)
+        const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+        state.analytics = (state.analytics || []).filter(
+            event => event.timestamp > thirtyDaysAgo
+        );
+        
         await cache.put('notification-state', new Response(JSON.stringify(state)));
-        console.log('🧹 Cleaned up old notifications');
+        
+        // Clean old API cache
+        const apiCache = await caches.open(API_CACHE);
+        const requests = await apiCache.keys();
+        for (const request of requests) {
+            const response = await apiCache.match(request);
+            if (response) {
+                const dateHeader = response.headers.get('date');
+                if (dateHeader) {
+                    const responseDate = new Date(dateHeader).getTime();
+                    if (responseDate < oneWeekAgo) {
+                        await apiCache.delete(request);
+                    }
+                }
+            }
+        }
+        
+        console.log('🧹 Cleanup completed');
+        
     } catch (error) {
-        console.error('❌ Error cleaning up notifications:', error);
+        console.error('❌ Cleanup failed:', error);
     }
 }
 
-// Sync pending notifications
+// Update critical caches in background
+async function updateCriticalCaches() {
+    try {
+        const cache = await caches.open(CACHE_NAME);
+        
+        // Update core app assets
+        for (const url of urlsToCache) {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    await cache.put(url, response);
+                }
+            } catch (error) {
+                // Silently continue with other URLs
+            }
+        }
+        
+        console.log('🔄 Critical caches updated');
+        
+    } catch (error) {
+        console.error('❌ Cache update failed:', error);
+    }
+}
+
+// Sync pending notifications with server (placeholder for real implementation)
 async function syncPendingNotifications() {
     console.log('🔄 Syncing pending notifications');
-    // This would sync with your server in a real app
+    // In a real app, this would sync with your backend
 }
 
 // MESSAGE HANDLING FROM MAIN APP
 self.addEventListener('message', event => {
-    const { type, payload } = event.data || {};
-    console.log('📨 Message received in service worker:', type, payload);
+    const { data } = event;
+    const { type, payload } = data || {};
+    
+    console.log('📨 Message from app:', type);
     
     switch(type) {
         case 'SKIP_WAITING':
             self.skipWaiting();
-            console.log('🔄 Service Worker skipWaiting called');
             break;
             
         case 'GET_VERSION':
-            event.ports[0].postMessage({
-                version: '3.0.0',
+            event.ports?.[0]?.postMessage({
+                version: '3.1.0',
                 cacheName: CACHE_NAME,
-                features: ['push-notifications', 'background-sync', 'offline-support']
+                features: ['push-notifications', 'background-sync', 'offline-support', 'native-notifications']
             });
             break;
             
@@ -975,18 +1170,23 @@ self.addEventListener('message', event => {
         case 'CLEAR_NOTIFICATIONS':
             self.registration.getNotifications().then(notifications => {
                 notifications.forEach(notification => notification.close());
-                console.log('🗑️ Cleared all notifications');
             });
             break;
             
         case 'TRIGGER_SYNC':
-            if (payload && payload.syncType) {
+            if (payload?.syncType) {
                 self.registration.sync.register(payload.syncType);
             }
             break;
             
         case 'TEST_NOTIFICATION':
             sendTestNotification();
+            break;
+            
+        case 'CACHE_URLS':
+            if (payload?.urls) {
+                cacheAdditionalUrls(payload.urls);
+            }
             break;
             
         default:
@@ -997,7 +1197,7 @@ self.addEventListener('message', event => {
 // Send test notification
 async function sendTestNotification() {
     await self.registration.showNotification('Exonova Axis - Test ✅', {
-        body: 'Background notifications are working perfectly! You\'ll receive updates even when the app is closed.',
+        body: 'All notification features are working! You\'ll receive updates even when offline.',
         icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
         badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
         image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
@@ -1017,34 +1217,64 @@ async function sendTestNotification() {
     });
 }
 
+// Cache additional URLs dynamically
+async function cacheAdditionalUrls(urls) {
+    try {
+        const cache = await caches.open(DYNAMIC_CACHE);
+        for (const url of urls) {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    await cache.put(url, response);
+                }
+            } catch (error) {
+                console.warn('⚠️ Failed to cache URL:', url, error);
+            }
+        }
+    } catch (error) {
+        console.error('❌ Dynamic caching failed:', error);
+    }
+}
+
 // Enhanced service worker lifecycle events
 self.addEventListener('updatefound', () => {
-    console.log('🔄 New service worker found, updating...');
+    console.log('🔄 New service worker version found');
+    self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+            client.postMessage({
+                type: 'SW_UPDATE_FOUND',
+                version: '3.1.0',
+                timestamp: Date.now()
+            });
+        });
+    });
 });
 
 self.addEventListener('controllerchange', () => {
-    console.log('🎮 Service worker controller changed - Page will reload');
+    console.log('🎮 Service worker controller changed');
+    self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+            client.postMessage({
+                type: 'SW_CONTROLLER_CHANGE', 
+                timestamp: Date.now()
+            });
+        });
+    });
 });
 
-// Periodic background tasks (runs every hour)
+// Periodic background tasks for maintenance
 setInterval(async () => {
-    console.log('⏰ Running periodic background tasks');
+    console.log('⏰ Running periodic maintenance tasks');
     
     try {
-        // Check for and send any due notifications
-        await processScheduledNotifications();
-        
-        // Clean up old data
         await cleanupOldNotifications();
-        
-        // Sync analytics if any
-        await syncPendingNotifications();
-        
+        await processScheduledNotifications();
     } catch (error) {
-        console.error('❌ Error in periodic background tasks:', error);
+        console.error('❌ Periodic tasks failed:', error);
     }
-}, 60 * 60 * 1000); // Run every hour
+}, 2 * 60 * 60 * 1000); // Run every 2 hours
 
-console.log('🎯 Enhanced Service Worker loaded successfully');
-console.log('📱 Features: Push Notifications, Background Sync, Offline Support');
-console.log('🔔 Native mobile app notification experience enabled');
+console.log('🎯 Enhanced Service Worker v3.1.0 loaded successfully');
+console.log('📱 Features: Native Push Notifications, Background Sync, Offline Support');
+console.log('🔔 Lock screen notifications, Vibration, Rich interactions enabled');
+console.log('💾 Smart caching, Error recovery, Offline functionality active');
