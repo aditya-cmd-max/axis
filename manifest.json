@@ -4,8 +4,8 @@
     "description": "All of Exonova • At one place",
     "start_url": "https://aditya-cmd-max.github.io/axis/",
     "display": "standalone",
-    "background_color": "#001f2a",
-    "theme_color": "#0ea5e9",
+    "background_color": "#000000",
+    "theme_color": "#001f2a",
     "orientation": "portrait",
     "scope": "https://aditya-cmd-max.github.io/axis/",
     "icons": [
