@@ -1,1 +1,2616 @@
-Just chill 
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exonova Axis</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/axis/manifest.json">
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Exonova Axis">
+    <link rel="apple-touch-icon" href="https://aditya-cmd-max.github.io/axis/axislogo.png">
+    
+    <!-- Product Sans Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="icon" type="image/x-icon" href="https://aditya-cmd-max.github.io/axis/axislogo.png">
+    
+    <!-- Enhanced Service Worker Registration -->
+    <script>
+        // Enhanced service worker registration for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async function() {
+                try {
+                    // Register service worker with proper scope
+                    const registration = await navigator.serviceWorker.register('/axis/sw.js', {
+                        scope: '/axis/'
+                    });
+                    console.log('✅ ServiceWorker registration successful with scope:', registration.scope);
+                    
+                    // Wait for service worker to be ready
+                    await navigator.serviceWorker.ready;
+                    
+                } catch (err) {
+                    console.log('❌ ServiceWorker registration failed: ', err);
+                }
+            });
+        }
+
+        // Enhanced service worker update handling
+        let refreshing = false;
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (!refreshing) {
+                    refreshing = true;
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Product Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+             --md-sys-color-primary-dark: #D0BCFF;
+  --md-sys-color-on-primary-dark: #381E72;
+  --md-sys-color-primary-container-dark: #4F378B;
+  --md-sys-color-on-primary-container-dark: #EADDFF;
+
+  --md-sys-color-secondary-dark: #CCC2DC;
+  --md-sys-color-on-secondary-dark: #332D41;
+  --md-sys-color-secondary-container-dark: #4A4458;
+  --md-sys-color-on-secondary-container-dark: #E8DEF8;
+
+  --md-sys-color-tertiary-dark: #EFB8C8;
+  --md-sys-color-on-tertiary-dark: #492532;
+  --md-sys-color-tertiary-container-dark: #633B48;
+  --md-sys-color-on-tertiary-container-dark: #FFD8E4;
+
+  --md-sys-color-error-dark: #FFB4AB;
+  --md-sys-color-on-error-dark: #690005;
+  --md-sys-color-error-container-dark: #93000A;
+  --md-sys-color-on-error-container-dark: #FFDAD6;
+
+  --md-sys-color-background-dark: #1E1E1E;
+  --md-sys-color-on-background-dark: #D0BCFF;
+  --md-sys-color-surface-dark: #1E1E1E;
+  --md-sys-color-on-surface-dark: #E6E1E5;
+
+  --md-sys-color-surface-variant-dark: #49454E;
+  --md-sys-color-on-surface-variant-dark: #CAC4D0;
+  --md-sys-color-outline-dark: #938F99;
+
+  --md-sys-color-shadow-dark: #000000;
+  --md-sys-color-inverse-surface-dark: #E6E1E5;
+  --md-sys-color-inverse-on-surface-dark: #313033;
+  --md-sys-color-inverse-primary-dark: #6750A4;
+}
+            
+            /* Elevation shadows */
+            --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+            --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+            --md-elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+            --md-elevation-4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px rgba(0, 0, 0, 0.3);
+            --md-elevation-5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
+            
+            /* Gradient themes */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-gradient-dark: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Product Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Light theme */
+        .light {
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+        }
+
+        .light .status-bar {
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .light #main-container {
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+        }
+
+        .light .app-header {
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .light .product-card {
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .light .m3-surface {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .light #search-modal {
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .light #settings-modal > div {
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .light .ripple:after {
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, transparent 10.01%);
+        }
+
+        /* Dark theme */
+        .dark {
+            background-color: var(--md-sys-color-background-dark);
+            color: var(--md-sys-color-on-background-dark);
+        }
+
+        .dark .status-bar {
+            background-color: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .dark #main-container {
+            background-color: var(--md-sys-color-background-dark);
+            color: var(--md-sys-color-on-background-dark);
+        }
+
+        .dark .app-header {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .dark .product-card {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .dark .m3-surface {
+            background-color: var(--md-sys-color-surface-variant-dark);
+            color: var(--md-sys-color-on-surface-variant-dark);
+        }
+
+        .dark #search-modal {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .dark #settings-modal > div {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .dark .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10.01%);
+        }
+
+        .logo-hint {
+            animation: logoHint 2s ease-in-out infinite;
+        }
+        
+        .logo-pulse {
+            animation: logoPulse 3s infinite;
+        }
+        
+        .logo-tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--md-sys-color-inverse-surface);
+            color: var(--md-sys-color-inverse-on-surface);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .dark .logo-tooltip {
+            background-color: var(--md-sys-color-inverse-surface-dark);
+            color: var(--md-sys-color-inverse-on-surface-dark);
+        }
+        
+        .gradient-bg .logo-tooltip,
+        .gradient-dark .logo-tooltip {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+        }
+        
+        .logo-container:hover .logo-tooltip {
+            opacity: 1;
+        }
+        
+        /* First time user hint */
+        .first-time-hint {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background: var(--md-sys-color-primary);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 20;
+            animation: fadeIn 0.5s ease-out;
+            box-shadow: var(--md-elevation-2);
+        }
+        
+        .dark .first-time-hint {
+            background: var(--md-sys-color-primary-dark);
+        }
+        
+        .gradient-bg .first-time-hint,
+        .gradient-dark .first-time-hint {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .first-time-hint:after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid var(--md-sys-color-primary);
+        }
+        
+        .dark .first-time-hint:after {
+            border-bottom-color: var(--md-sys-color-primary-dark);
+        }
+        
+        .gradient-bg .first-time-hint:after,
+        .gradient-dark .first-time-hint:after {
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+      
+        /* Gradient theme */
+        .gradient-bg {
+            color: #ffffff;
+            background: var(--primary-gradient);
+        }
+
+        .gradient-bg .status-bar {
+            color: #ffffff;
+            background: var(--primary-gradient);
+        }
+
+        .gradient-bg #main-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .app-header {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-bg .product-card {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-bg .m3-surface {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg #search-modal {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg #settings-modal > div {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-bg .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.01%);
+        }
+
+        /* Gradient Dark theme */
+        .gradient-dark {
+            color: #ffffff;
+            background: var(--primary-gradient-dark);
+        }
+
+        .gradient-dark .status-bar {
+            color: #ffffff;
+            background: var(--primary-gradient-dark);
+        }
+
+        .gradient-dark #main-container {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .app-header {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-dark .product-card {
+            background: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-dark .m3-surface {
+            background-color: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark #search-modal {
+            background: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark #settings-modal > div {
+            background: rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .ripple:after {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.01%);
+        }
+
+        /* App view container */
+        .app-view-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            background: var(--md-sys-color-background);
+        }
+
+        .dark .app-view-container {
+            background-color: var(--md-sys-color-background-dark);
+        }
+
+        .gradient-bg .app-view-container {
+            background: var(--primary-gradient);
+        }
+
+        .gradient-dark .app-view-container {
+            background: var(--primary-gradient-dark);
+        }
+
+        .app-view-container.active {
+            transform: translateY(0);
+        }
+
+        /* Isolated pill container */
+        .isolated-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(103, 80, 164, 0.3);
+            color: #fff;
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s, background 0.3s;
+            cursor: default;
+            user-select: none;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--md-sys-color-outline);
+            border-radius: 2px;
+        }
+
+        /* Main container styling */
+        #main-container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        #main-container {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            border-radius: 0;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        /* Header styling */
+        .app-header {
+            padding: 16px;
+            border-radius: 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Product card styling */
+        .product-card {
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .product-card:hover {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .product-card:active {
+            transform: scale(0.98);
+        }
+
+        /* Product logo */
+        .product-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .product-logo img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        /* Info section */
+        .product-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-info h3 {
+            font-size: 15px;
+            font-weight: 500;
+            margin: 0 0 2px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-info p {
+            font-size: 13px;
+            opacity: 0.75;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Favorite button */
+        .favorite-btn {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            background: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .favorite-btn:hover {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        /* Theme buttons */
+        .theme-btn {
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .theme-btn.active {
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .dark .theme-btn.active {
+            border-color: var(--md-sys-color-primary-dark);
+        }
+
+        .gradient-bg .theme-btn.active,
+        .gradient-dark .theme-btn.active {
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Search overlay */
+        #search-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Settings modal */
+        #settings-modal > div {
+            border-radius: 28px;
+            box-shadow: var(--md-elevation-4);
+        }
+
+        /* Bottom navigation for mobile app feel */
+        .material-icons { 
+            font-size: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;  
+            height: 40px;
+            border-radius: 50%; 
+            background-color: rgba(103, 80, 164, 0.3); 
+            color: white;
+        }
+
+        /* Tab content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 48px 16px;
+        }
+
+        .empty-state .material-icons {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Material 3 button styles */
+        .m3-button {
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-weight: 500;
+            text-transform: none;
+            transition: all 0.2s ease;
+        }
+
+        /* Animation for favorite button */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .favorite-pulse {
+            animation: pulse 0.3s ease;
+        }
+
+        /* Loading animation */
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(200px + 100%) 0; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200px 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .dark .shimmer {
+            background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+            background-size: 200px 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--md-sys-color-inverse-surface);
+            color: var(--md-sys-color-inverse-on-surface);
+            padding: 12px 24px;
+            border-radius: 24px;
+            z-index: 1000;
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            font-size: 14px;
+            box-shadow: var(--md-elevation-2);
+        }
+
+        .gradient-bg .toast,
+        .gradient-dark .toast {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Splash screen - Simplified Android style */
+        #splash {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--md-sys-color-background-dark);
+            z-index: 9999;
+        }
+
+        #splash img {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            animation: logoPop 0.6s ease-in-out forwards;
+        }
+
+        #splash h1 {
+            margin-top: 16px;
+            font-size: 24px;
+            color: var(--md-sys-color-on-background-dark);
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeInText 0.5s ease forwards 0.3s;
+        }
+
+        /* Footer styling */
+        .app-footer {
+            padding: 16px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: auto;
+            opacity: 0.7;
+        }
+
+        /* Spinner loader */
+        .spinner {
+            width: 32px;
+            height: 32px;
+            margin: 20px auto;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #fff;
+            animation: spin 1s linear infinite;
+        }
+
+        .light .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid var(--md-sys-color-primary);
+        }
+
+        .gradient-bg .spinner,
+        .gradient-dark .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #f345fe;
+        }
+
+        /* Animations */
+        @keyframes logoPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInText {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Android-style back button */
+        .back-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        /* Improved app bar */
+        .app-bar {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .dark .app-bar {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .gradient-bg .app-bar {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-dark .app-bar {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #1e1e1e;
+            border-radius: 1024px;
+            padding: 12px 16px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .bg-pill {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 36px;
+            border-radius: 18px;
+            background: rgba(103, 80, 164, 0.3);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+            left: 0;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 13px;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-icon-wrapper {
+            width: 48px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4px;
+            transition: transform 0.3s;
+        }
+
+        .nav-item svg, .nav-item .material-icons {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            font-size: 22px;
+            transition: transform 0.3s;
+        }
+
+        .nav-item.active {
+            color: #fff;
+        }
+
+        .nav-item.active svg, .nav-item.active .material-icons {
+            transform: scale(1.1);
+            color: #bb86fc;
+        }
+        
+        /* Improved product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            padding: 16px;
+        }
+
+        /* Thank you section */
+        .thank-you-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            text-align: center;
+            margin-top: 16px;
+            border-top: 1px solid var(--md-sys-color-outline);
+            opacity: 0.7;
+        }
+
+        .gradient-bg .thank-you-section,
+        .gradient-dark .thank-you-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Search input styling */
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            padding: 8px 0;
+        }
+
+        .search-input::placeholder {
+            opacity: 0.7;
+        }
+
+        /* Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: var(--md-elevation-3);
+            z-index: 1000;
+            max-width: 400px;
+            width: 90%;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .dark .install-prompt {
+            background: var(--md-sys-color-surface-dark);
+            color: var(--md-sys-color-on-surface-dark);
+        }
+
+        .install-prompt.hidden {
+            display: none;
+        }
+
+        /* Notification badge */
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Hide splash on desktop */
+        @media (min-width: 768px) {
+            #splash {
+                display: none;
+            }
+            
+            #main-container {
+                border-radius: 12px;
+                margin: 12px 0;
+                min-height: calc(100vh - 24px);
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .product-card {
+                padding: 14px;
+            }
+            
+            .product-logo {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .product-logo img {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .product-info h3 {
+                font-size: 15px;
+            }
+            
+            .product-info p {
+                font-size: 13px;
+            }
+            
+            .product-grid {
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .app-header {
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark">
+   
+   <div id="splash">
+        <img src="https://aditya-cmd-max.github.io/axis/Untitled design (2).gif" alt="Exonova Logo">
+        <h1>Exonova Axis</h1>
+        <br><br><br><br><br>
+        <!-- tagline section -->
+        <div class="tagline-container">
+            <div class="mesh"></div>
+            <section class="hero">
+                <span data-text="Exonova is for the curious"></span> Exonova is for the curious.
+            </section>
+        </div>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@700&display=swap');
+
+            .tagline-container {
+                position: relative;
+                background: var(--md-sys-color-background-dark);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 80px 20px;
+                overflow: hidden;
+            }
+
+            .tagline-container .mesh {
+                position: absolute;
+                inset: 0;
+                background: var(--md-sys-color-background-dark);
+                background-size: 40px 40px;
+                opacity: 0.05;
+                z-index: -1;
+            }
+
+            .tagline-container .hero {
+                color: var(--md-sys-color-on-background-dark);
+                font-family: "Product Sans", Arial, sans-serif;
+                font-weight: 700;
+                font-size: clamp(2rem, 8vw, 7rem);
+                text-align: center;
+                letter-spacing: -1px;
+                line-height: 1.1;
+                width: 90%;
+                z-index: 1;
+            }
+
+            .tagline-container .hero span {
+                position: relative;
+                display: inline-block;
+            }
+
+            .tagline-container .hero span::after {
+                content: attr(data-text);
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                color: #fff;
+                filter: blur(15px);
+                opacity: 0.2;
+                z-index: -1;
+            }
+        </style>
+   </div> 
+    
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Install Prompt -->
+    <div id="install-prompt" class="install-prompt hidden">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold">Install Exonova Axis</h3>
+            <button id="close-install-prompt" class="p-1 rounded-full ripple">
+                <span class="material-icons text-sm">close</span>
+            </button>
+        </div>
+        <p class="text-sm opacity-75 mb-3">Install for the best experience and offline notifications</p>
+        <button id="install-btn" class="w-full m3-button bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+            Install App
+        </button>
+    </div>
+
+   <!-- Exonova Logo Modal -->
+   <div id="logo-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black backdrop-blur-sm">
+        <div class="rounded-2xl p-4 sm:p-6 w-full max-w-xs sm:max-w-sm md:max-w-md transform transition-all duration-300 scale-95 opacity-0 max-h-[85vh] overflow-y-auto" id="logo-modal-content" style="box-shadow: var(--md-elevation-4);">
+            <div class="flex justify-between items-center mb-4 sm:mb-5">
+                <h2 class="text-lg sm:text-xl font-semibold">About Exonova</h2>
+                <button id="close-logo-modal-btn" class="p-1 sm:p-2 rounded-full ripple">
+                    <span class="material-icons text-lg sm:text-xl">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col items-center mb-3 sm:mb-4">
+                <img src="https://aditya-cmd-max.github.io/axis/Untitled design.gif" alt="Exonova Logo" class="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-xl mb-3 sm:mb-4">
+                <h3 class="text-base sm:text-lg font-medium mb-1 sm:mb-2">Exonova Axis</h3>
+                <p class="text-center opacity-75 text-sm sm:text-base mb-3 sm:mb-4">All of Exonova • At one place</p>
+            </div>
+            <div class="space-y-2 sm:space-y-3 text-sm sm:text-base">
+                <p class="opacity-75">Exonova is a collection of innovative tools and applications designed to enhance productivity and creativity.</p>
+                <p class="opacity-75">Our mission is to create intuitive, powerful applications that solve real-world problems and make technology more accessible.</p>
+                <div class="border-t border-opacity-20 pt-2 sm:pt-3 mt-2 sm:mt-3">
+                    <div class="isolated-pill"><h4 class="font-medium mb-1 sm:mb-2 text-sm sm:text-base">Our Products Include:</h4></div>
+                    <ul class="list-disc pl-4 sm:pl-5 space-y-1 opacity-75 text-sm">
+                        <li>El Futuro - Intelligent AI Assistant</li>
+                        <li>SkyCast Pro - Weather & Environmental Platform</li>
+                        <li>PopOut Pro - Visual Learning Tool</li>
+                        <li>Mindscribe - AI-Powered Digital Notebook</li>
+                        <li>Peo-TTS - Text-to-Speech Engine</li>
+                        <li>Securepass - Password Security Advisor</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-opacity-20 pt-3 sm:pt-4 mt-3 sm:mt-4 text-center">
+                <p class="text-xs sm:text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Wrapper to simulate mobile screen on desktop -->
+    <div id="main-container-wrapper">
+        <!-- Main Container -->
+        <div id="main-container" class="min-h-screen flex flex-col">
+            <div class="status-bar w-full text-center py-1">
+                <div class="isolated-pill">
+                    <div id="current-time" class="font-medium">12:00 PM</div>
+                </div>
+            </div>
+            
+            <!-- Header -->
+            <header class="app-header flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="logo-container relative">
+                        <img src="https://aditya-cmd-max.github.io/axis/Untitled design.gif" alt="Exonova Logo" class="h-10 w-10 rounded-xl cursor-pointer ripple logo-pulse" id="logo-btn" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
+                        <div class="logo-tooltip">Click for info</div>
+                        <!-- First time user hint -->
+                        <div id="first-time-hint" class="first-time-hint hidden">
+                            Click the logo to learn more about Exonova
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold">Exonova Axis</h1>
+                        <p class="text-xs opacity-75">All of Exonova • At one place</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="search-btn" class="p-2 rounded-full ripple">
+                        <span class="material-icons">search</span>
+                    </button>
+                    <button id="settings-btn" class="p-2 rounded-full ripple">
+                        <span class="material-icons">settings</span>
+                    </button>
+                    <div class="relative">
+                        <button id="notifications-btn" class="p-2 rounded-full ripple">
+                            <span class="material-icons">notifications</span>
+                        </button>
+                        <div id="notification-badge" class="notification-badge hidden">3</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Search Bar Overlay -->
+            <div id="search-overlay" class="hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
+                <div id="search-modal" class="w-full max-w-md rounded-2xl p-5 transform transition-all duration-300 scale-95 opacity-0" style="box-shadow: var(--md-elevation-4);">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="material-icons opacity-75">search</span>
+                        <input type="text" id="search-input" placeholder="Search across all Exonova tools..." class="search-input flex-grow bg-transparent border-none focus:outline-none">
+                        <button id="close-search-btn" class="p-2 rounded-full ripple">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div id="search-results" class="max-h-72 overflow-y-auto">
+                        <!-- Search results will be rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Modal -->
+            <div id="settings-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+                <div class="rounded-2xl p-6 w-full max-w-sm transform transition-all duration-300 scale-95 opacity-0" id="settings-modal-content">
+                    <div class="flex justify-between items-center mb-5">
+                        <h2 class="text-xl font-semibold">Appearance</h2>
+                        <button id="close-settings-btn" class="p-2 rounded-full ripple">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div class="grid grid-col-2 gap-4 mb-6">
+                        <button data-theme="light" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
+                            <div class="bg-white w-full h-8 rounded-lg mb-2 border border-gray-200"></div>
+                            <span class="text-sm font-medium">Light</span>
+                        </button>
+                        <button data-theme="dark" class="theme-btn active p-4 rounded-xl flex flex-col items-center transition-all ripple">
+                            <div class="bg-gray-900 w-full h-8 rounded-lg mb-2 border border-gray-800"></div>
+                            <span class="text-sm font-medium">Dark</span>
+                        </button>
+                        <button data-theme="gradient-bg" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
+                            <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
+                            <span class="text-sm font-medium">Gradient</span>
+                        </button>
+                        <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
+                            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
+                            <span class="text-sm font-medium">Night</span>
+                        </button>
+                    </div>
+                    <div class="border-t border-opacity-20 pt-4">
+                        <h3 class="font-medium mb-3">Push Notifications</h3>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="opacity-75">Push Notifications</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="push-notifications-toggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="opacity-75">In-App Notifications</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="inapp-notifications-toggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="border-t border-opacity-20 pt-4 mt-4 text-center">
+                        <button id="install-app-btn" class="m3-button bg-blue-500 text-white hover:bg-blue-600 transition-colors mb-2">
+                           Update App
+                        </button>
+                        <p class="text-sm opacity-75">Made with ❤️ by Aditya Jha</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Modal -->
+            <div id="notifications-modal" class="hidden bg-black fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
+                <div id="notifications-modal-content" class="w-full max-w-md rounded-2xl p-5 transform transition-all duration-300 scale-95 opacity-0" style="box-shadow: var(--md-elevation-4);">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold">Notifications</h2>
+                        <button id="close-notifications-btn" class="p-2 rounded-full ripple">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div id="notifications-list" class="max-h-72 overflow-y-auto">
+                        <!-- Notifications will be rendered here -->
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button id="clear-notifications-btn" class="m3-button bg-opacity-20 hover:bg-opacity-30 transition-all">
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <main id="main-content" class="flex-grow overflow-y-auto">
+                <!-- Tab content will be rendered here -->
+            </main>
+            <br><br><br><br>
+            
+            <!-- New Bottom Navigation -->
+            <nav class="nav-container">
+                <div class="bg-pill"></div>
+
+                <a href="#" data-tab="home" class="nav-item active flex flex-col items-center">
+                    <div class="nav-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                        </svg>
+                    </div>
+                    <span>Home</span>
+                </a>
+            
+                <a href="#" data-tab="favorites" class="nav-item flex flex-col items-center">
+                    <div class="nav-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"/>
+                        </svg>
+                    </div>
+                    <span>Favorites</span>
+                </a>
+
+                <a href="#" data-tab="updates" class="nav-item flex flex-col items-center">
+                    <div class="nav-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> 
+                            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                        </svg>
+                    </div>
+                    <span>Updates</span>
+                </a>
+            </nav>
+
+            <!-- Dynamic View Container (for opening apps) -->
+            <div id="app-view" class="app-view-container">
+                <div class="app-bar">
+                    <button id="back-to-home-btn" class="back-button ripple">
+                        <span class="material-icons">arrow_back</span>
+                    </button>
+                    <h2 id="app-title" class="text-xl font-semibold flex-grow text-center"></h2>
+                    <div class="w-48px"></div> <!-- Spacer to center title -->
+                </div>
+                <div id="app-content" class="h-full">
+                    <!-- App content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data for Exonova Products with real logos and URLs
+        const products = [{
+            id: 'el-futuro',
+            name: 'El Futuro',
+            description: 'Intelligent AI • Useful for everyday tasks',
+            logoUrl: 'https://aditya-cmd-max.github.io/exonovaai/logo.png',
+            color: 'bg-blue-500',
+            url: 'https://aditya-cmd-max.github.io/exonovaai/chat/'
+        }, {
+            id: 'skycast-pro',
+            name: 'SkyCast Pro',
+            description: 'Interactive environmental science platform with real-world data visualization.',
+            logoUrl: 'https://aditya-cmd-max.github.io/exonovaweather/skycast.png',
+            color: 'bg-green-500',
+            url: 'https://aditya-cmd-max.github.io/exonovaweather/app.html'
+        }, {
+            id: 'popout-pro',
+            name: 'PopOut Pro',
+            description: 'AI-powered visual learning tool for creating engaging educational content.',
+            logoUrl: 'https://aditya-cmd-max.github.io/popout/ChatGPT%20Image%20Aug%2015,%202025,%2008_26_20%20PM.png',
+            color: 'bg-black',
+            url: 'https://aditya-cmd-max.github.io/popout/app.html'
+        }, {
+            id: 'mindscribe-notes',
+            name: 'Mindscribe',
+            description: 'Mindscribe is your AI powered digital notebook to make everyday learning easier.',
+            logoUrl: 'https://aditya-cmd-max.github.io/mindscribe/logo.png',
+            color: 'bg-white',
+            url: 'https://aditya-cmd-max.github.io/mindscribe/'
+        }, {
+            id: 'peo-tts',
+            name: 'Peo-TTS',
+            description: 'Natural sounding text-to-speech for accessible learning materials.',
+            logoUrl: 'https://aditya-cmd-max.github.io/Peo/tts.png',
+            color: 'bg-yellow-500',
+            url: 'https://aditya-cmd-max.github.io/Peo/app.html'
+        }, {
+            id: 'securepass',
+            name: 'Securepass',
+            description: 'Your perfect password advisor for secure and strong passwords.',
+            logoUrl: 'https://aditya-cmd-max.github.io/securepass/logo-dark.png',
+            color: 'bg-indigo-500',
+            url: 'https://aditya-cmd-max.github.io/securepass'
+        }];
+
+        // App State
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let currentTab = 'home';
+        let hasSeenLogoHint = localStorage.getItem('hasSeenLogoHint') === 'true';
+        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+        let pushNotificationsEnabled = localStorage.getItem('pushNotificationsEnabled') !== 'false';
+        let inAppNotificationsEnabled = localStorage.getItem('inAppNotificationsEnabled') !== 'false';
+        let deferredPrompt = null;
+        let isAppInstalled = localStorage.getItem('isAppInstalled') === 'true';
+        
+        // Notification intervals tracking
+        let notificationIntervals = [];
+
+        // DOM Elements
+        const mainContent = document.getElementById('main-content');
+        const settingsModal = document.getElementById('settings-modal');
+        const searchOverlay = document.getElementById('search-overlay');
+        const searchModal = document.getElementById('search-modal');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        const appView = document.getElementById('app-view');
+        const appTitle = document.getElementById('app-title');
+        const appContent = document.getElementById('app-content');
+        const splashScreen = document.getElementById('splash');
+        const toast = document.getElementById('toast');
+        const settingsModalContent = document.getElementById('settings-modal-content');
+        const logoModal = document.getElementById('logo-modal');
+        const logoModalContent = document.getElementById('logo-modal-content');
+        const logoBtn = document.getElementById('logo-btn');
+        const firstTimeHint = document.getElementById('first-time-hint');
+        const notificationsBtn = document.getElementById('notifications-btn');
+        const notificationBadge = document.getElementById('notification-badge');
+        const notificationsModal = document.getElementById('notifications-modal');
+        const notificationsModalContent = document.getElementById('notifications-modal-content');
+        const notificationsList = document.getElementById('notifications-list');
+        const pushNotificationsToggle = document.getElementById('push-notifications-toggle');
+        const inAppNotificationsToggle = document.getElementById('inapp-notifications-toggle');
+        const installPrompt = document.getElementById('install-prompt');
+        const installBtn = document.getElementById('install-btn');
+        const closeInstallPrompt = document.getElementById('close-install-prompt');
+        const installAppBtn = document.getElementById('install-app-btn');
+
+        // Initialize the app
+        function initApp() {
+            updateTime();
+            setInterval(updateTime, 60000);
+            
+            // Apply saved theme
+            applyTheme(currentTheme);
+            
+            // Render initial content
+            renderContent();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Set active theme button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                if (btn.dataset.theme === currentTheme) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Initialize notifications
+            initNotifications();
+            
+            // Initialize PWA features
+            initPWA();
+            
+            // Show first-time hint if needed
+            if (!hasSeenLogoHint) {
+                setTimeout(() => {
+                    firstTimeHint.classList.remove('hidden');
+                    // Remove hint after 5 seconds
+                    setTimeout(() => {
+                        firstTimeHint.classList.add('hidden');
+                        localStorage.setItem('hasSeenLogoHint', 'true');
+                        hasSeenLogoHint = true;
+                    }, 5000);
+                }, 2000);
+            }
+        }
+
+        // Initialize PWA features
+        function initPWA() {
+            // Set toggle states
+            pushNotificationsToggle.checked = pushNotificationsEnabled;
+            inAppNotificationsToggle.checked = inAppNotificationsEnabled;
+            
+            // Listen for before install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show install prompt if app isn't installed
+                if (!isAppInstalled) {
+                    setTimeout(() => {
+                        installPrompt.classList.remove('hidden');
+                    }, 5000);
+                }
+            });
+            
+            // Check if app is already installed
+            window.addEventListener('appinstalled', () => {
+                isAppInstalled = true;
+                localStorage.setItem('isAppInstalled', 'true');
+                installPrompt.classList.add('hidden');
+                showToast('App installed successfully!');
+            });
+            
+            // Check if running in standalone mode (installed)
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+                isAppInstalled = true;
+                localStorage.setItem('isAppInstalled', 'true');
+            }
+        }
+
+        // Install app
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                showToast('App Update not available');
+            }
+        }
+
+        // Enhanced notification initialization
+        async function initNotifications() {
+            console.log('🔔 Initializing notifications...');
+            
+            // Clear any existing intervals
+            clearAllNotificationIntervals();
+            
+            // Update notification badge
+            updateNotificationBadge();
+            
+            // Initialize push notifications only if enabled
+            if (pushNotificationsEnabled) {
+                await initializePushNotifications();
+            }
+            
+            // Schedule regular notifications
+            scheduleEnhancedNotifications();
+        }
+
+        // Separate push notification initialization
+        async function initializePushNotifications() {
+            try {
+                // Check if we have permission
+                if (Notification.permission === 'granted') {
+                    console.log('✅ Notification permission already granted');
+                    await subscribeToPushNotifications();
+                } else if (Notification.permission === 'default') {
+                    console.log('ℹ️ Notification permission not yet requested');
+                    // We'll request permission on first user interaction
+                } else {
+                    console.log('❌ Notification permission denied');
+                }
+            } catch (error) {
+                console.error('❌ Push notification initialization failed:', error);
+            }
+        }
+
+        // Enhanced push notification subscription
+        async function subscribeToPushNotifications() {
+            try {
+                // Check browser support
+                if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+                    console.log('❌ Push notifications not supported in this browser');
+                    showToast('Push notifications not supported');
+                    return null;
+                }
+
+                // Check notification permission
+                if (Notification.permission === 'denied') {
+                    console.log('❌ Notification permission denied by user');
+                    showToast('Please enable notifications in browser settings');
+                    return null;
+                }
+
+                // Wait for service worker to be ready
+                const registration = await navigator.serviceWorker.ready;
+                
+                // Check if already subscribed
+                let subscription = await registration.pushManager.getSubscription();
+                
+                if (subscription) {
+                    console.log('✅ Already subscribed to push notifications');
+                    return subscription;
+                }
+
+                // Request permission if not already granted
+                if (Notification.permission === 'default') {
+                    const permission = await Notification.requestPermission();
+                    if (permission !== 'granted') {
+                        console.log('❌ Notification permission not granted');
+                        showToast('Notifications permission required');
+                        return null;
+                    }
+                }
+
+                // Subscribe to push notifications
+                subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array('BLaZmVYnyEcksSzkLqgJYbeUcDUsqwQRcPoypsbMLBYiAKDymDtYboOJ1SBr7Thh0apXN17UDeAC2EPNnyh5x-c')
+                });
+
+                console.log('✅ Push subscription successful:', subscription);
+                
+                // Store subscription locally
+                localStorage.setItem('pushSubscription', JSON.stringify(subscription));
+                showToast('Push notifications enabled!');
+                
+                return subscription;
+
+            } catch (error) {
+                console.error('❌ Push subscription failed:', error);
+                
+                // Show specific error messages
+                if (error.name === 'NotAllowedError') {
+                    showToast('Notification permission denied');
+                } else if (error.name === 'AbortError') {
+                    showToast('Push subscription was aborted');
+                } else {
+                    showToast('Failed to enable push notifications');
+                }
+                
+                return null;
+            }
+        }
+
+        // Enhanced VAPID key conversion function
+        function urlBase64ToUint8Array(base64String) {
+            try {
+                const padding = '='.repeat((4 - base64String.length % 4) % 4);
+                const base64 = (base64String + padding)
+                    .replace(/\-/g, '+')
+                    .replace(/_/g, '/');
+                
+                const rawData = atob(base64);
+                const outputArray = new Uint8Array(rawData.length);
+                
+                for (let i = 0; i < rawData.length; ++i) {
+                    outputArray[i] = rawData.charCodeAt(i);
+                }
+                return outputArray;
+            } catch (error) {
+                console.error('❌ Invalid VAPID key format:', error);
+                throw new Error('Invalid VAPID key format');
+            }
+        }
+
+        // Function to unsubscribe from push notifications
+        async function unsubscribeFromPushNotifications() {
+            try {
+                if ('serviceWorker' in navigator) {
+                    const registration = await navigator.serviceWorker.ready;
+                    const subscription = await registration.pushManager.getSubscription();
+                    
+                    if (subscription) {
+                        await subscription.unsubscribe();
+                        console.log('✅ Unsubscribed from push notifications');
+                        localStorage.removeItem('pushSubscription');
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Failed to unsubscribe from push notifications:', error);
+            }
+        }
+
+        // Send push notification (simulated for demo)
+        function sendPushNotification(notification) {
+            if (pushNotificationsEnabled && 'serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification(notification.title, {
+                        body: notification.message,
+                        icon: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                        badge: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                        tag: notification.id,
+                        requireInteraction: true,
+                        actions: [
+                            {
+                                action: 'open',
+                                title: 'Open App'
+                            },
+                            {
+                                action: 'dismiss',
+                                title: 'Dismiss'
+                            }
+                        ]
+                    });
+                });
+            }
+        }
+
+        // FIXED: Schedule notifications with proper timing and cleanup
+        function scheduleEnhancedNotifications() {
+            if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
+            
+            // Clear any existing intervals first
+            clearAllNotificationIntervals();
+            
+            // Add welcome notification (only once per day)
+            const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
+            const today = new Date().toDateString();
+            
+            if (lastWelcomeDate !== today) {
+                addNotification({
+                    id: 'welcome-' + Date.now(),
+                    title: 'Welcome to Exonova Axis! 🚀',
+                    message: 'Your productivity hub is ready. Explore all tools in one place.',
+                    type: 'welcome',
+                    timestamp: Date.now(),
+                    read: false
+                });
+                localStorage.setItem('lastWelcomeDate', today);
+                console.log('✅ Welcome notification added for today');
+            } else {
+                console.log('ℹ️ Welcome notification already shown today');
+            }
+            
+            // Schedule in-app notifications with much longer intervals for safety
+            scheduleInAppNotifications();
+        }
+
+        // FIXED: Schedule in-app notifications with proper intervals
+        function scheduleInAppNotifications() {
+            // Clear any existing intervals
+            clearAllNotificationIntervals();
+            
+            const oneHourNotifications = [
+                {
+                    title: 'Productivity Tip 💡',
+                    message: 'Use El Futuro AI to automate your daily tasks and save time.',
+                    type: 'tip'
+                },
+                {
+                    title: 'Did You Know? 🤔',
+                    message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
+                    type: 'info'
+                }
+            ];
+            
+            const twoHourNotifications = [
+                {
+                    title: 'Feature Spotlight 🔦',
+                    message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
+                    type: 'update'
+                },
+                {
+                    title: 'Try This 👇',
+                    message: 'Peo-TTS for natural sounding text-to-speech conversion.',
+                    type: 'tip'
+                }
+            ];
+            
+            // Use much longer intervals for safety (6 hours and 12 hours)
+            const sixHourInterval = setInterval(() => {
+                if (oneHourNotifications.length > 0 && document.visibilityState === 'visible') {
+                    const oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
+                    const notification = oneHourNotifications[oneHourIndex];
+                    
+                    addNotification({
+                        id: 'inapp-6h-' + Date.now(),
+                        title: notification.title,
+                        message: notification.message,
+                        type: notification.type,
+                        timestamp: Date.now(),
+                        read: false
+                    });
+                    
+                    localStorage.setItem('oneHourIndex', ((oneHourIndex + 1) % oneHourNotifications.length).toString());
+                }
+            }, 6 * 60 * 60 * 1000); // 6 hours
+            
+            const twelveHourInterval = setInterval(() => {
+                if (twoHourNotifications.length > 0 && document.visibilityState === 'visible') {
+                    const twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
+                    const notification = twoHourNotifications[twoHourIndex];
+                    
+                    addNotification({
+                        id: 'inapp-12h-' + Date.now(),
+                        title: notification.title,
+                        message: notification.message,
+                        type: notification.type,
+                        timestamp: Date.now(),
+                        read: false
+                    });
+                    
+                    localStorage.setItem('twoHourIndex', ((twoHourIndex + 1) % twoHourNotifications.length).toString());
+                }
+            }, 12 * 60 * 60 * 1000); // 12 hours
+            
+            // Track intervals for cleanup
+            notificationIntervals.push(sixHourInterval, twelveHourInterval);
+        }
+
+        // FIXED: Clear all notification intervals
+        function clearAllNotificationIntervals() {
+            notificationIntervals.forEach(interval => {
+                clearInterval(interval);
+            });
+            notificationIntervals = [];
+        }
+
+        // Add a notification
+        function addNotification(notification) {
+            notifications.unshift(notification);
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            updateNotificationBadge();
+            
+            // Show push notification if enabled
+            if (pushNotificationsEnabled) {
+                sendPushNotification(notification);
+            }
+            
+            // Show in-app notification if enabled
+            if (inAppNotificationsEnabled && document.visibilityState === 'visible') {
+                showToast(`📱 ${notification.title}`);
+            }
+        }
+
+        // Update notification badge
+        function updateNotificationBadge() {
+            const unreadCount = notifications.filter(n => !n.read).length;
+            if (unreadCount > 0) {
+                notificationBadge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                notificationBadge.classList.remove('hidden');
+            } else {
+                notificationBadge.classList.add('hidden');
+            }
+        }
+
+        // Mark notification as read
+        function markNotificationAsRead(notificationId) {
+            const notification = notifications.find(n => n.id === notificationId);
+            if (notification && !notification.read) {
+                notification.read = true;
+                localStorage.setItem('notifications', JSON.stringify(notifications));
+                updateNotificationBadge();
+                renderNotifications();
+            }
+        }
+
+        // Clear all notifications
+        function clearNotifications() {
+            notifications = [];
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            updateNotificationBadge();
+            renderNotifications();
+            showToast('Notifications cleared');
+        }
+
+        // Enhanced notification display with better styling
+        function renderNotifications() {
+            if (notifications.length === 0) {
+                notificationsList.innerHTML = `
+                    <div class="text-center py-8 opacity-75">
+                        <span class="material-icons text-4xl mb-2">notifications_off</span>
+                        <p>No notifications</p>
+                        <p class="text-xs mt-2">You'll receive notifications about updates and tips</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Group notifications by date
+            const today = new Date().toDateString();
+            const yesterday = new Date(Date.now() - 86400000).toDateString();
+            
+            const todayNotifications = notifications.filter(n => 
+                new Date(n.timestamp).toDateString() === today
+            );
+            
+            const yesterdayNotifications = notifications.filter(n => 
+                new Date(n.timestamp).toDateString() === yesterday
+            );
+            
+            const olderNotifications = notifications.filter(n => {
+                const date = new Date(n.timestamp).toDateString();
+                return date !== today && date !== yesterday;
+            });
+            
+            let html = '';
+            
+            // Today's notifications
+            if (todayNotifications.length > 0) {
+                html += `<div class="mb-4">
+                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Today</h3>
+                    ${todayNotifications.map(notification => renderNotificationItem(notification)).join('')}
+                </div>`;
+            }
+            
+            // Yesterday's notifications
+            if (yesterdayNotifications.length > 0) {
+                html += `<div class="mb-4">
+                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Yesterday</h3>
+                    ${yesterdayNotifications.map(notification => renderNotificationItem(notification)).join('')}
+                </div>`;
+            }
+            
+            // Older notifications
+            if (olderNotifications.length > 0) {
+                html += `<div class="mb-4">
+                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Older</h3>
+                    ${olderNotifications.map(notification => renderNotificationItem(notification)).join('')}
+                </div>`;
+            }
+            
+            notificationsList.innerHTML = html;
+            
+            // Add event listeners to notifications
+            notificationsList.querySelectorAll('[data-notification-id]').forEach(item => {
+                item.addEventListener('click', () => {
+                    const notificationId = item.dataset.notificationId;
+                    markNotificationAsRead(notificationId);
+                });
+            });
+        }
+
+        // Helper function to render individual notification items
+        function renderNotificationItem(notification) {
+            return `
+                <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ${!notification.read ? 'bg-opacity-5' : ''}" data-notification-id="${notification.id}">
+                    <div class="flex items-start space-x-3">
+                        <span class="material-icons text-${getNotificationColor(notification.type)} ${!notification.read ? 'animate-pulse' : ''}">${getNotificationIcon(notification.type)}</span>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <h3 class="font-medium ${!notification.read ? 'font-semibold' : ''}">${notification.title}</h3>
+                                <span class="text-xs opacity-50 whitespace-nowrap">${formatTime(notification.timestamp)}</span>
+                            </div>
+                            <p class="text-sm opacity-75 mt-1">${notification.message}</p>
+                            ${notification.type === 'welcome' ? '<div class="mt-2 text-xs bg-blue-500 bg-opacity-20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full inline-block">Daily Welcome</div>' : ''}
+                        </div>
+                        ${!notification.read ? '<div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>' : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Enhanced notification icon mapping
+        function getNotificationIcon(type) {
+            switch(type) {
+                case 'welcome': return 'rocket_launch';
+                case 'info': return 'info';
+                case 'update': return 'update';
+                case 'tip': return 'lightbulb';
+                case 'warning': return 'warning';
+                default: return 'notifications';
+            }
+        }
+
+        // Enhanced notification color mapping
+        function getNotificationColor(type) {
+            switch(type) {
+                case 'welcome': return 'purple-500';
+                case 'info': return 'blue-500';
+                case 'update': return 'green-500';
+                case 'tip': return 'yellow-500';
+                case 'warning': return 'red-500';
+                default: return 'gray-500';
+            }
+        }
+
+        // Format time for notifications
+        function formatTime(timestamp) {
+            const now = Date.now();
+            const diff = now - timestamp;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            return `${days}d ago`;
+        }
+
+        // Open notifications modal
+        function openNotificationsModal() {
+            renderNotifications();
+            notificationsModal.classList.remove('hidden');
+            setTimeout(() => {
+                notificationsModalContent.classList.add('opacity-100');
+                notificationsModalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        // Close notifications modal
+        function closeNotificationsModal() {
+            notificationsModalContent.classList.remove('opacity-100');
+            notificationsModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                notificationsModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', options);
+        }
+
+        // Apply theme to the app
+        function applyTheme(theme) {
+            document.documentElement.className = theme;
+            localStorage.setItem('theme', theme);
+            currentTheme = theme;
+        }
+
+        // Render content based on current tab
+        function renderContent() {
+            let html = '';
+            
+            if (currentTab === 'home') {
+                html = renderHomeTab();
+            } else if (currentTab === 'favorites') {
+                html = renderFavoritesTab();
+            } else if (currentTab === 'updates') {
+                html = renderUpdatesTab();
+            }
+            
+            mainContent.innerHTML = html;
+            
+            // Add event listeners to product cards
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const productId = card.dataset.productId;
+                    openProduct(productId);
+                });
+            });
+            
+            // Add event listeners to favorite buttons
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const productId = btn.dataset.productId;
+                    toggleFavorite(productId);
+                });
+            });
+        }
+
+        // Render Home Tab
+        function renderHomeTab() {
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-2">Welcome to Exonova</h2>
+                    <p class="opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
+                    <div class="product-grid">
+                        ${products.map(product => `
+                            <div class="product-card ripple" data-product-id="${product.id}">
+                                <div class="product-logo ${product.color}">
+                                    <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                                </div>
+                                <div class="product-info">
+                                    <h3>${product.name}</h3>
+                                    <p>${product.description}</p>
+                                </div>
+                                <button class="favorite-btn ripple" data-product-id="${product.id}">
+                                    <span class="material-icons ${favorites.includes(product.id) ? 'text-red-500' : 'opacity-50'}">favorite</span>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="thank-you-section">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-blue-500 mb-2">
+                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                        </svg>
+                        <p>Thank you for using Exonova Axis</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Favorites Tab
+        function renderFavoritesTab() {
+            const favoriteProducts = products.filter(product => favorites.includes(product.id));
+            
+            if (favoriteProducts.length === 0) {
+                return `
+                    <div class="empty-state">
+                        <span class="material-icons">favorite_border</span>
+                        <h3 class="font-medium mb-2">No favorites yet</h3>
+                        <p class="opacity-75">Add products to favorites to see them here</p>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-6">Your Favorites</h2>
+                    <div class="product-grid">
+                        ${favoriteProducts.map(product => `
+                            <div class="product-card ripple" data-product-id="${product.id}">
+                                <div class="product-logo ${product.color}">
+                                    <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                                </div>
+                                <div class="product-info">
+                                    <h3>${product.name}</h3>
+                                    <p>${product.description}</p>
+                                </div>
+                                <button class="favorite-btn ripple" data-product-id="${product.id}">
+                                    <span class="material-icons text-red-500">favorite</span>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Updates Tab
+        function renderUpdatesTab() {
+            return `
+                <div class="p-4">
+                    <h2 class="text-2xl font-bold mb-6">Recent Updates</h2>
+                    <div class="m3-surface rounded-xl p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-blue-500">update</span>
+                            <div>
+                                <h3 class="font-medium">Background Notifications</h3>
+                                <p class="opacity-75">Notifications now work even when the app is closed using Background Sync API.</p>
+                                <p class="text-xs opacity-50 mt-1">Just now</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m3-surface rounded-xl p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-green-500">update</span>
+                            <div>
+                                <h3 class="font-medium">Exonova Axis Improvement</h3>
+                                <p class="opacity-75">Completely redesigned UI with Android app feel</p>
+                                <p class="text-xs opacity-50 mt-1">17/09/25            5:44 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m3-surface rounded-xl p-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-purple-500">update</span>
+                            <div>
+                                <h3 class="font-medium">El Futuro AI Enhancements</h3>
+                                <p class="opacity-75">Improved the backing for better responses</p>
+                                <p class="text-xs opacity-50 mt-1">12/09/25            7:48 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle favorite status for a product
+        function toggleFavorite(productId) {
+            const index = favorites.indexOf(productId);
+            
+            if (index === -1) {
+                favorites.push(productId);
+                showToast('Added to favorites');
+                
+                // Send notification for favorite
+                const product = products.find(p => p.id === productId);
+                addNotification({
+                    id: Date.now(),
+                    title: 'Added to Favorites',
+                    message: `${product.name} has been added to your favorites.`,
+                    type: 'info',
+                    timestamp: Date.now(),
+                    read: false
+                });
+            } else {
+                favorites.splice(index, 1);
+                showToast('Removed from favorites');
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // Update UI
+            const favoriteBtn = document.querySelector(`.favorite-btn[data-product-id="${productId}"]`);
+            if (favoriteBtn) {
+                const icon = favoriteBtn.querySelector('.material-icons');
+                if (favorites.includes(productId)) {
+                    icon.classList.remove('opacity-50');
+                    icon.classList.add('text-red-500');
+                    icon.classList.add('favorite-pulse');
+                    setTimeout(() => icon.classList.remove('favorite-pulse'), 300);
+                } else {
+                    icon.classList.add('opacity-50');
+                    icon.classList.remove('text-red-500');
+                }
+            }
+            
+            // If we're on the favorites tab, re-render it
+            if (currentTab === 'favorites') {
+                renderContent();
+            }
+        }
+
+        // Open a product in the app view
+        function openProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            appTitle.textContent = product.name;
+            appContent.innerHTML = `
+                <div class="h-full w-full flex items-center justify-center">
+                    <div class="text-center p-6">
+                        <div class="spinner mb-4"></div>
+                        <p>Loading ${product.name}...</p>
+                    </div>
+                </div>
+            `;
+            
+            appView.classList.add('active');
+            
+            // Simulate loading delay for demo purposes
+            setTimeout(() => {
+                appContent.innerHTML = `
+                    <iframe src="${product.url}" class="w-full h-full border-0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+                `;
+            }, 1500);
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Close search overlay
+        function closeSearch() {
+            searchModal.classList.remove('opacity-100');
+            searchModal.classList.add('scale-95');
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+            
+            setTimeout(() => {
+                searchOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close settings modal
+        function closeSettings() {
+            settingsModalContent.classList.remove('opacity-100');
+            settingsModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                settingsModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Open logo modal
+        function openLogoModal() {
+            logoModal.classList.remove('hidden');
+            setTimeout(() => {
+                logoModalContent.classList.add('opacity-100');
+                logoModalContent.classList.remove('scale-95');
+            }, 10);
+            
+            // Stop the logo animation once the modal is opened
+            logoBtn.classList.remove('logo-pulse');
+        }
+
+        // Close logo modal
+        function closeLogoModal() {
+            logoModalContent.classList.remove('opacity-100');
+            logoModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                logoModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Debug function to test notifications manually
+        function testAllNotifications() {
+            console.log('=== TESTING ALL NOTIFICATION TYPES ===');
+            
+            // Test in-app toast
+            showToast('🔔 Testing in-app notifications...');
+            
+            // Test adding to notification list
+            addNotification({
+                id: 'manual-test-' + Date.now(),
+                title: 'Manual Test ✅',
+                message: 'This is a test notification in your notifications list.',
+                type: 'info',
+                timestamp: Date.now(),
+                read: false
+            });
+        }
+
+        // Make it available globally for testing
+        window.testNotifications = testAllNotifications;
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Theme buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyTheme(btn.dataset.theme);
+                });
+            });
+            
+            // Settings button
+            document.getElementById('settings-btn').addEventListener('click', () => {
+                settingsModal.classList.remove('hidden');
+                setTimeout(() => {
+                    settingsModalContent.classList.add('opacity-100');
+                    settingsModalContent.classList.remove('scale-95');
+                }, 10);
+            });
+            
+            // Close settings button
+            document.getElementById('close-settings-btn').addEventListener('click', closeSettings);
+            
+            // Search button
+            document.getElementById('search-btn').addEventListener('click', () => {
+                searchOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    searchModal.classList.add('opacity-100');
+                    searchModal.classList.remove('scale-95');
+                    searchInput.focus();
+                }, 10);
+            });
+            
+            // Close search button
+            document.getElementById('close-search-btn').addEventListener('click', closeSearch);
+            
+            // Logo button
+            logoBtn.addEventListener('click', openLogoModal);
+            
+            // Close logo modal button
+            document.getElementById('close-logo-modal-btn').addEventListener('click', closeLogoModal);
+            
+            // Notifications button
+            notificationsBtn.addEventListener('click', openNotificationsModal);
+            
+            // Close notifications button
+            document.getElementById('close-notifications-btn').addEventListener('click', closeNotificationsModal);
+            
+            // Clear notifications button
+            document.getElementById('clear-notifications-btn').addEventListener('click', clearNotifications);
+            
+            // Push notifications toggle - UPDATED
+            pushNotificationsToggle.addEventListener('change', async (e) => {
+                pushNotificationsEnabled = e.target.checked;
+                localStorage.setItem('pushNotificationsEnabled', pushNotificationsEnabled);
+                
+                if (pushNotificationsEnabled) {
+                    // Enable push notifications
+                    const result = await subscribeToPushNotifications();
+                    if (!result) {
+                        // If subscription failed, uncheck the toggle
+                        pushNotificationsToggle.checked = false;
+                        pushNotificationsEnabled = false;
+                        localStorage.setItem('pushNotificationsEnabled', 'false');
+                    }
+                } else {
+                    // Disable push notifications
+                    await unsubscribeFromPushNotifications();
+                    showToast('Push notifications disabled');
+                }
+            });
+            
+            // In-app notifications toggle
+            inAppNotificationsToggle.addEventListener('change', (e) => {
+                inAppNotificationsEnabled = e.target.checked;
+                localStorage.setItem('inAppNotificationsEnabled', inAppNotificationsEnabled);
+                showToast(inAppNotificationsEnabled ? 'In-app notifications enabled' : 'In-app notifications disabled');
+                
+                // Restart notification scheduling
+                if (inAppNotificationsEnabled) {
+                    scheduleEnhancedNotifications();
+                } else {
+                    clearAllNotificationIntervals();
+                }
+            });
+            
+            // Install app buttons
+            installBtn.addEventListener('click', installApp);
+            installAppBtn.addEventListener('click', installApp);
+            closeInstallPrompt.addEventListener('click', () => {
+                installPrompt.classList.add('hidden');
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                
+                if (query.length === 0) {
+                    searchResults.innerHTML = '<p class="text-center py-4 opacity-75">Type to search Exonova products</p>';
+                    return;
+                }
+                
+                const results = products.filter(product => 
+                    product.name.toLowerCase().includes(query) || 
+                    product.description.toLowerCase().includes(query)
+                );
+                
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<p class="text-center py-4 opacity-75">No products found</p>';
+                    return;
+                }
+                
+                searchResults.innerHTML = results.map(product => `
+                    <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ripple" data-product-id="${product.id}">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center ${product.color}">
+                                <img src="${product.logoUrl}" alt="${product.name}" class="w-6 h-6" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
+                            </div>
+                            <div>
+                                <h3 class="font-medium">${product.name}</h3>
+                                <p class="text-sm opacity-75">${product.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Add event listeners to search results
+                searchResults.querySelectorAll('[data-product-id]').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const productId = item.dataset.productId;
+                        closeSearch();
+                        openProduct(productId);
+                    });
+                });
+            });
+            
+            // Navigation tabs
+            document.querySelectorAll('[data-tab]').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentTab = tab.dataset.tab;
+                    renderContent();
+                });
+            });
+            
+            // Back to home button
+            document.getElementById('back-to-home-btn').addEventListener('click', () => {
+                appView.classList.remove('active');
+            });
+            
+            // Close search when clicking outside
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) {
+                    closeSearch();
+                }
+            });
+            
+            // Close settings when clicking outside
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    closeSettings();
+                }
+            });
+            
+            // Close logo modal when clicking outside
+            logoModal.addEventListener('click', (e) => {
+                if (e.target === logoModal) {
+                    closeLogoModal();
+                }
+            });
+            
+            // Close notifications modal when clicking outside
+            notificationsModal.addEventListener('click', (e) => {
+                if (e.target === notificationsModal) {
+                    closeNotificationsModal();
+                }
+            });
+        }
+
+        // Hide splash screen after 2 seconds
+        setTimeout(() => {
+            splashScreen.style.opacity = '0';
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+            }, 600);
+        }, 2000);
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+
+    <script>
+        // Navigation pill movement
+        const items = document.querySelectorAll('.nav-item');
+        const bgPill = document.querySelector('.bg-pill');
+
+        function movePill(index) {
+            const tab = items[index];
+            const navRect = tab.parentElement.getBoundingClientRect();
+            const tabRect = tab.getBoundingClientRect();
+
+            // compute relative X inside nav container
+            const x = tabRect.left - navRect.left + (tabRect.width - bgPill.offsetWidth)/2;
+            bgPill.style.transform = `translateX(${x}px) translateY(-75%)`;
+        }
+
+        // Initial position
+        const activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
+        movePill(activeIndex);
+
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                document.querySelector('.nav-item.active').classList.remove('active');
+                item.classList.add('active');
+                movePill(index);
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            const activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
+            movePill(activeIndex);
+        });
+    </script>
+  
+</body>
+</html>
