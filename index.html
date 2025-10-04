@@ -552,6 +552,60 @@
             z-index: 10;
         }
 
+      .update-card {
+  background: rgba(103, 80, 164, 0.08); /* expressive surface */
+  border-radius: 24px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+
+.update-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(103, 80, 164, 0.35);
+}
+
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background: var(--accent-color, #6366F1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
+}
+
+.icon-wrapper:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+.update-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.update-card p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 2px;
+}
+
+.update-card .text-xs {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+      
+      
         /* Product card styling */
         .product-card {
             background: var(--md-sys-color-surface);
@@ -831,7 +885,7 @@
 
         #splash h1 {
             margin-top: 16px;
-            font-size: 24px;
+            font-size: 2.25rem;
             color: var(--md-sys-color-on-background-dark);
             font-weight: 500;
             opacity: 0;
@@ -2143,8 +2197,8 @@
         function renderHomeTab() {
             return `
                 <div class="p-4">
-                    <h2 class="text-2xl font-bold mb-2">Welcome to Exonova</h2>
-                    <p class="opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
+                    <h2 class="text-5xl font-bold mb-2">Welcome to Exonova</h2>
+                    <p class="text-2xl opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
                     <div class="product-grid">
                         ${products.map(product => `
                             <div class="product-card ripple" data-product-id="${product.id}">
@@ -2211,39 +2265,51 @@
         // Render Updates Tab
         function renderUpdatesTab() {
             return `
-                <div class="p-4">
-                    <h2 class="text-2xl font-bold mb-6">Recent Updates</h2>
-                    <div class="m3-surface rounded-xl p-4 mb-4">
-                        <div class="flex items-start space-x-3">
-                            <span class="material-icons text-blue-500">update</span>
-                            <div>
-                                <h3 class="font-medium">Background Notifications</h3>
-                                <p class="opacity-75">Notifications now work even when the app is closed using Background Sync API.</p>
-                                <p class="text-xs opacity-50 mt-1">Just now</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m3-surface rounded-xl p-4 mb-4">
-                        <div class="flex items-start space-x-3">
-                            <span class="material-icons text-green-500">update</span>
-                            <div>
-                                <h3 class="font-medium">Exonova Axis Improvement</h3>
-                                <p class="opacity-75">Completely redesigned UI with Android app feel</p>
-                                <p class="text-xs opacity-50 mt-1">17/09/25            5:44 PM</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m3-surface rounded-xl p-4">
-                        <div class="flex items-start space-x-3">
-                            <span class="material-icons text-purple-500">update</span>
-                            <div>
-                                <h3 class="font-medium">El Futuro AI Enhancements</h3>
-                                <p class="opacity-75">Improved the backing for better responses</p>
-                                <p class="text-xs opacity-50 mt-1">12/09/25            7:48 PM</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+             <div class="p-4">
+  <h2 class="text-5xl font-bold mb-6 text-white">Recent Updates</h2>
+
+  <div class="m3-surface update-card" style="--accent-color: #6366F1;">
+    <div class="flex items-start space-x-3">
+      <div class="icon-wrapper">
+        <span class="material-icons">update</span>
+      </div>
+      <div>
+        <h3 class="font-medium">Background Notifications</h3>
+        <p>Notifications now work even when the app is closed using Background Sync API.</p>
+        <p class="text-xs opacity-50 mt-1">Just now</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="m3-surface update-card" style="--accent-color: #10B981;">
+    <div class="flex items-start space-x-3">
+      <div class="icon-wrapper">
+        <span class="material-icons">update</span>
+      </div>
+      <div>
+        <h3 class="font-medium">Exonova Axis Improvement</h3>
+        <p>Completely redesigned UI with Android app feel</p>
+        <p class="text-xs opacity-50 mt-1">17/09/25 5:44 PM</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="m3-surface update-card" style="--accent-color: #8B5CF6;">
+    <div class="flex items-start space-x-3">
+      <div class="icon-wrapper">
+        <span class="material-icons">update</span>
+      </div>
+      <div>
+        <h3 class="font-medium">El Futuro AI Enhancements</h3>
+        <p>Improved the backing for better responses</p>
+        <p class="text-xs opacity-50 mt-1">12/09/25 7:48 PM</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
             `;
         }
 
