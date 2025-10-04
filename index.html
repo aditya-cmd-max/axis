@@ -44,6 +44,8 @@
                     
                 } catch (err) {
                     console.log('❌ ServiceWorker registration failed: ', err);
+                    // Fallback: Create a simple service worker inline if external one fails
+                    registerFallbackServiceWorker();
                 }
             });
         }
@@ -57,6 +59,166 @@
                     window.location.reload();
                 }
             });
+        }
+
+        // Fallback service worker registration
+        async function registerFallbackServiceWorker() {
+            try {
+                const fallbackSW = `
+                    // Fallback Service Worker
+                    const CACHE_NAME = 'exonova-axis-v1.0';
+                    const urlsToCache = [
+                        '/axis/',
+                        '/axis/index.html',
+                        'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                        'https://aditya-cmd-max.github.io/axis/Untitled%20design%20(2).gif',
+                        'https://aditya-cmd-max.github.io/axis/Untitled%20design.gif',
+                        'https://fonts.googleapis.com/css2?family=Product+Sans:wght@300;400;500;700&display=swap',
+                        'https://fonts.googleapis.com/icon?family=Material+Icons',
+                        'https://cdn.tailwindcss.com'
+                    ];
+
+                    self.addEventListener('install', (event) => {
+                        console.log('🛠️ Service Worker installing...');
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then((cache) => {
+                                    console.log('📦 Opened cache');
+                                    return cache.addAll(urlsToCache);
+                                })
+                                .catch(err => console.log('Cache addAll error:', err))
+                        );
+                        self.skipWaiting();
+                    });
+
+                    self.addEventListener('activate', (event) => {
+                        console.log('🚀 Service Worker activating...');
+                        event.waitUntil(
+                            caches.keys().then((cacheNames) => {
+                                return Promise.all(
+                                    cacheNames.map((cacheName) => {
+                                        if (cacheName !== CACHE_NAME) {
+                                            console.log('🗑️ Deleting old cache:', cacheName);
+                                            return caches.delete(cacheName);
+                                        }
+                                    })
+                                );
+                            })
+                        );
+                        self.clients.claim();
+                    });
+
+                    self.addEventListener('fetch', (event) => {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then((response) => {
+                                    // Return cached version or fetch from network
+                                    if (response) {
+                                        return response;
+                                    }
+                                    return fetch(event.request).catch(() => {
+                                        // Return offline page or fallback for failed requests
+                                        if (event.request.destination === 'document') {
+                                            return caches.match('/axis/');
+                                        }
+                                    });
+                                })
+                        );
+                    });
+
+                    self.addEventListener('sync', (event) => {
+                        if (event.tag === 'background-sync') {
+                            console.log('🔄 Background sync triggered');
+                            event.waitUntil(doBackgroundSync());
+                        }
+                    });
+
+                    self.addEventListener('push', (event) => {
+                        console.log('📱 Push notification received');
+                        
+                        let data = {};
+                        if (event.data) {
+                            data = event.data.json();
+                        }
+                        
+                        const options = {
+                            body: data.body || 'New notification from Exonova Axis',
+                            icon: data.icon || 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                            badge: data.badge || 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                            image: data.image || 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                            tag: data.tag || 'exonova-notification',
+                            requireInteraction: true,
+                            vibrate: [200, 100, 200, 100, 200],
+                            data: data.data || { url: '/' },
+                            actions: data.actions || [
+                                { action: 'open', title: 'Open App' },
+                                { action: 'dismiss', title: 'Dismiss' }
+                            ]
+                        };
+                        
+                        event.waitUntil(
+                            self.registration.showNotification(
+                                data.title || 'Exonova Axis',
+                                options
+                            )
+                        );
+                    });
+
+                    self.addEventListener('notificationclick', (event) => {
+                        console.log('🔔 Notification clicked');
+                        event.notification.close();
+                        
+                        if (event.action === 'open') {
+                            event.waitUntil(
+                                clients.matchAll({type: 'window'}).then((clientList) => {
+                                    for (const client of clientList) {
+                                        if (client.url === '/' && 'focus' in client) {
+                                            return client.focus();
+                                        }
+                                    }
+                                    if (clients.openWindow) {
+                                        return clients.openWindow('/axis/');
+                                    }
+                                })
+                            );
+                        }
+                    });
+
+                    async function doBackgroundSync() {
+                        // Perform background tasks here
+                        console.log('🔄 Performing background sync');
+                        
+                        // Example: Check for new content
+                        try {
+                            const response = await fetch('/axis/api/check-updates');
+                            const data = await response.json();
+                            
+                            if (data.updates) {
+                                await self.registration.showNotification('Exonova Updates', {
+                                    body: 'New updates available!',
+                                    icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                                    tag: 'updates-available'
+                                });
+                            }
+                        } catch (error) {
+                            console.log('Background sync failed:', error);
+                        }
+                    }
+                `;
+                
+                const blob = new Blob([fallbackSW], { type: 'application/javascript' });
+                const swURL = URL.createObjectURL(blob);
+                
+                const registration = await navigator.serviceWorker.register(swURL, {
+                    scope: '/axis/'
+                });
+                
+                console.log('✅ Fallback ServiceWorker registered');
+                URL.revokeObjectURL(swURL);
+                
+            } catch (error) {
+                console.log('❌ Fallback ServiceWorker registration failed:', error);
+            }
         }
     </script>
 
@@ -2625,157 +2787,157 @@
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 
-    <script>// Enhanced push notification test with real FCM
-async function testCompletePushNotification() {
-    console.log('🧪 Testing complete push notification flow...');
-    
-    try {
-        // Get the current subscription
-        const registration = await navigator.serviceWorker.ready;
-        const subscription = await registration.pushManager.getSubscription();
-        
-        if (!subscription) {
-            console.log('❌ No push subscription found');
-            showToast('Please enable push notifications first');
-            return;
-        }
-        
-        console.log('✅ Push subscription found:', subscription);
-        
-        // Test local notification first
-        await sendTestPushNotification();
-        
-        // Simulate server-side push (for demo purposes)
-        await simulateServerPush(subscription);
-        
-        showToast('🔔 Push notification test initiated!');
-        
-    } catch (error) {
-        console.error('❌ Push test failed:', error);
-        showToast('Push test failed: ' + error.message);
-    }
-}
-
-// Simulate server-side push notification
-async function simulateServerPush(subscription) {
-    console.log('🌐 Simulating server push...');
-    
-    // In a real app, you would send this to your backend server
-    // For demo, we'll simulate what the server would send
-    
-    const pushData = {
-        title: '🚀 Exonova Axis - Server Test',
-        body: 'This simulates a push notification from the server! Works even when app is closed.',
-        icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-        image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-        badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-        tag: 'server-test-' + Date.now(),
-        timestamp: Date.now(),
-        requireInteraction: true,
-        actions: [
-            { action: 'open', title: '📱 Open App' },
-            { action: 'test', title: '🧪 Run Tests' },
-            { action: 'dismiss', title: '❌ Dismiss' }
-        ],
-        data: {
-            url: '/axis/',
-            type: 'server-test',
-            notificationId: 'server-push-' + Date.now(),
-            source: 'server',
-            test: true
-        }
-    };
-    
-    // This is what your server would send to FCM
-    const serverPayload = {
-        subscription: subscription,
-        payload: pushData
-    };
-    
-    console.log('📦 Server payload would be:', serverPayload);
-    
-    // For now, we'll trigger it locally since we can't actually send to FCM from client
-    setTimeout(() => {
-        // This simulates the server sending a push after 3 seconds
-        sendAdvancedTestNotification();
-    }, 3000);
-}
-
-// Advanced test notification
-function sendAdvancedTestNotification() {
-    if (!('serviceWorker' in navigator)) return;
-    
-    navigator.serviceWorker.ready.then(registration => {
-        registration.showNotification('🌐 Server Push Simulation', {
-            body: 'This notification simulates what would happen when your server sends a real push through FCM. The notification would appear on your lock screen and notification center!',
-            icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-            badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-            image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-            tag: 'server-simulation-' + Date.now(),
-            requireInteraction: true,
-            vibrate: [200, 100, 200, 100, 200, 100, 200],
-            actions: [
-                {
-                    action: 'open',
-                    title: '🚀 Open Exonova'
-                },
-                {
-                    action: 'test_more',
-                    title: '🧪 More Tests'
-                },
-                {
-                    action: 'dismiss',
-                    title: '❌ Close'
+    <script>
+        // Enhanced push notification test with real FCM
+        async function testCompletePushNotification() {
+            console.log('🧪 Testing complete push notification flow...');
+            
+            try {
+                // Get the current subscription
+                const registration = await navigator.serviceWorker.ready;
+                const subscription = await registration.pushManager.getSubscription();
+                
+                if (!subscription) {
+                    console.log('❌ No push subscription found');
+                    showToast('Please enable push notifications first');
+                    return;
                 }
-            ],
-            data: {
-                url: '/axis/',
-                type: 'server-simulation',
-                notificationId: 'advanced-test-' + Date.now(),
-                source: 'simulated-server',
-                timestamp: Date.now()
+                
+                console.log('✅ Push subscription found:', subscription);
+                
+                // Test local notification first
+                await sendTestPushNotification();
+                
+                // Simulate server-side push (for demo purposes)
+                await simulateServerPush(subscription);
+                
+                showToast('🔔 Push notification test initiated!');
+                
+            } catch (error) {
+                console.error('❌ Push test failed:', error);
+                showToast('Push test failed: ' + error.message);
             }
-        });
-    });
-}
+        }
 
-// Add this to your debug functions
-function debugPushSubscription() {
-    console.log('🔍 Debugging Push Subscription...');
-    
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-        console.log('❌ Push notifications not supported');
-        return;
-    }
-    
-    navigator.serviceWorker.ready.then(registration => {
-        registration.pushManager.getSubscription().then(subscription => {
-            if (subscription) {
-                console.log('✅ Active Push Subscription:', {
-                    endpoint: subscription.endpoint,
-                    expirationTime: subscription.expirationTime,
-                    keys: subscription.options ? Object.keys(subscription.options) : 'No keys'
+        // Simulate server-side push notification
+        async function simulateServerPush(subscription) {
+            console.log('🌐 Simulating server push...');
+            
+            // In a real app, you would send this to your backend server
+            // For demo, we'll simulate what the server would send
+            
+            const pushData = {
+                title: '🚀 Exonova Axis - Server Test',
+                body: 'This simulates a push notification from the server! Works even when app is closed.',
+                icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                tag: 'server-test-' + Date.now(),
+                timestamp: Date.now(),
+                requireInteraction: true,
+                actions: [
+                    { action: 'open', title: '📱 Open App' },
+                    { action: 'test', title: '🧪 Run Tests' },
+                    { action: 'dismiss', title: '❌ Dismiss' }
+                ],
+                data: {
+                    url: '/axis/',
+                    type: 'server-test',
+                    notificationId: 'server-push-' + Date.now(),
+                    source: 'server',
+                    test: true
+                }
+            };
+            
+            // This is what your server would send to FCM
+            const serverPayload = {
+                subscription: subscription,
+                payload: pushData
+            };
+            
+            console.log('📦 Server payload would be:', serverPayload);
+            
+            // For now, we'll trigger it locally since we can't actually send to FCM from client
+            setTimeout(() => {
+                // This simulates the server sending a push after 3 seconds
+                sendAdvancedTestNotification();
+            }, 3000);
+        }
+
+        // Advanced test notification
+        function sendAdvancedTestNotification() {
+            if (!('serviceWorker' in navigator)) return;
+            
+            navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification('🌐 Server Push Simulation', {
+                    body: 'This notification simulates what would happen when your server sends a real push through FCM. The notification would appear on your lock screen and notification center!',
+                    icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                    badge: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                    image: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                    tag: 'server-simulation-' + Date.now(),
+                    requireInteraction: true,
+                    vibrate: [200, 100, 200, 100, 200, 100, 200],
+                    actions: [
+                        {
+                            action: 'open',
+                            title: '🚀 Open Exonova'
+                        },
+                        {
+                            action: 'test_more',
+                            title: '🧪 More Tests'
+                        },
+                        {
+                            action: 'dismiss',
+                            title: '❌ Close'
+                        }
+                    ],
+                    data: {
+                        url: '/axis/',
+                        type: 'server-simulation',
+                        notificationId: 'advanced-test-' + Date.now(),
+                        source: 'simulated-server',
+                        timestamp: Date.now()
+                    }
                 });
-                
-                // Show the actual FCM endpoint
-                console.log('📡 FCM Endpoint:', subscription.endpoint);
-                
-                // Parse the FCM token from endpoint
-                const endpointParts = subscription.endpoint.split('/');
-                const fcmToken = endpointParts[endpointParts.length - 1];
-                console.log('🔑 FCM Token:', fcmToken);
-                
-            } else {
-                console.log('❌ No active push subscription');
-            }
-        });
-    });
-}
+            });
+        }
 
-// Make functions globally available
-window.testCompletePush = testCompletePushNotification;
-window.debugPush = debugPushSubscription;
-    
+        // Add this to your debug functions
+        function debugPushSubscription() {
+            console.log('🔍 Debugging Push Subscription...');
+            
+            if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+                console.log('❌ Push notifications not supported');
+                return;
+            }
+            
+            navigator.serviceWorker.ready.then(registration => {
+                registration.pushManager.getSubscription().then(subscription => {
+                    if (subscription) {
+                        console.log('✅ Active Push Subscription:', {
+                            endpoint: subscription.endpoint,
+                            expirationTime: subscription.expirationTime,
+                            keys: subscription.options ? Object.keys(subscription.options) : 'No keys'
+                        });
+                        
+                        // Show the actual FCM endpoint
+                        console.log('📡 FCM Endpoint:', subscription.endpoint);
+                        
+                        // Parse the FCM token from endpoint
+                        const endpointParts = subscription.endpoint.split('/');
+                        const fcmToken = endpointParts[endpointParts.length - 1];
+                        console.log('🔑 FCM Token:', fcmToken);
+                        
+                    } else {
+                        console.log('❌ No active push subscription');
+                    }
+                });
+            });
+        }
+
+        // Make functions globally available
+        window.testCompletePush = testCompletePushNotification;
+        window.debugPush = debugPushSubscription;
     </script>
 </body>
 </html>
