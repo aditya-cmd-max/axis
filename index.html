@@ -740,71 +740,95 @@
             z-index: 10;
         }
 
-        /* Product card styling */
-        .product-card {
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+   /* Product card styling */
+.product-card {
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 
-        .product-card:active {
-            transform: scale(0.98);
-        }
+.product-card:hover {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
 
-        .product-logo {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+.product-card:active {
+  transform: scale(0.98);
+}
 
-        .product-logo img {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-        }
+/* Product logo */
+.product-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
 
-        .product-info {
-            flex: 1;
-            min-width: 0;
-        }
+.product-logo img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
 
-        .product-info h3 {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+/* Info section */
+.product-info {
+  flex: 1;
+  min-width: 0; /* keeps text from overflowing */
+}
 
-        .product-info p {
-            font-size: 14px;
-            opacity: 0.7;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+.product-info h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 0 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-        .favorite-btn {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
+.product-info p {
+  font-size: 13px;
+  opacity: 0.75;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Favorite button */
+.favorite-btn {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  background: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.favorite-btn:hover {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
 
         /* Theme buttons */
         .theme-btn {
@@ -1451,7 +1475,7 @@
             <header class="app-header flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="logo-container relative">
-                        <img src="https://aditya-cmd-max.github.io/axis/Untitled design (2).gif" alt="Exonova Logo" class="h-10 w-10 rounded-xl cursor-pointer ripple logo-pulse" id="logo-btn" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
+                        <img src="https://aditya-cmd-max.github.io/axis/Untitled design.gif" alt="Exonova Logo" class="h-10 w-10 rounded-xl cursor-pointer ripple logo-pulse" id="logo-btn" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
                         <div class="logo-tooltip">Click for info</div>
                         <!-- First time user hint -->
                         <div id="first-time-hint" class="first-time-hint hidden">
@@ -1459,8 +1483,8 @@
                         </div>
                     </div>
                     <div>
-                      <h1 class="text-xl font-bold">Exonova Axis</h1>   <div class="isolated-pill">   <p class="text-xs opacity-75">All of Exonova • At one place</p></div>
-                    </div>
+                      <h1 class="text-xl font-bold">Exonova Axis</h1>     <p class="text-xs opacity-75">All of Exonova • At one place</p></div>
+                 
                 </div>
                 <div class="flex items-center space-x-2">
                     <button id="search-btn" class="p-2 rounded-full ripple">
