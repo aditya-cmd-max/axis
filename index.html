@@ -1294,6 +1294,32 @@
                 opacity: 0.2;
                 z-index: -1;
             }
+          
+          /* Swipe animation for tab transitions */
+#main-content {
+    transition: transform 0.3s ease;
+}
+
+.swipe-left {
+    animation: swipeLeft 0.3s ease;
+}
+
+.swipe-right {
+    animation: swipeRight 0.3s ease;
+}
+
+@keyframes swipeLeft {
+    0% { transform: translateX(0); opacity: 1; }
+    50% { transform: translateX(-20px); opacity: 0.5; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes swipeRight {
+    0% { transform: translateX(0); opacity: 1; }
+    50% { transform: translateX(20px); opacity: 0.5; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+          
         </style>
    </div> 
     
@@ -2821,6 +2847,104 @@ document.getElementById('back-to-home-btn').addEventListener('click', () => {
     }, 300);
 });
   </script>
+  <script>
+  // Swipe gesture detection for tab navigation
+let touchStartX = 0;
+let touchEndX = 0;
+let currentTabIndex = 0;
+const tabs = ['home', 'favorites', 'updates'];
+
+// Function to handle tab switching
+function switchTab(direction) {
+    if (direction === 'left') {
+        currentTabIndex = (currentTabIndex + 1) % tabs.length;
+    } else if (direction === 'right') {
+        currentTabIndex = (currentTabIndex - 1 + tabs.length) % tabs.length;
+    }
+    
+    // Update the active tab
+    const newTab = tabs[currentTabIndex];
+    document.querySelectorAll('[data-tab]').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.dataset.tab === newTab) {
+            tab.classList.add('active');
+        }
+    });
+    
+    // Update the navigation pill position
+    const activeIndex = Array.from(document.querySelectorAll('[data-tab]')).findIndex(
+        item => item.classList.contains('active')
+    );
+    movePill(activeIndex);
+    
+    // Update content
+    currentTab = newTab;
+    renderContent();
+}
+
+// Touch event handlers for swipe detection
+document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+// Mouse event handlers for desktop testing
+let mouseDownX = 0;
+let mouseUpX = 0;
+
+document.addEventListener('mousedown', e => {
+    mouseDownX = e.screenX;
+});
+
+document.addEventListener('mouseup', e => {
+    mouseUpX = e.screenX;
+    handleMouseSwipe();
+});
+
+// Handle swipe gesture
+function handleSwipe() {
+    const minSwipeDistance = 50; // Minimum distance for a swipe to be registered
+    
+    if (touchEndX < touchStartX - minSwipeDistance) {
+        // Swipe left - go to next tab
+        switchTab('left');
+    }
+    
+    if (touchEndX > touchStartX + minSwipeDistance) {
+        // Swipe right - go to previous tab
+        switchTab('right');
+    }
+}
+
+// Handle mouse swipe for desktop testing
+function handleMouseSwipe() {
+    const minSwipeDistance = 50;
+    
+    if (mouseUpX < mouseDownX - minSwipeDistance) {
+        switchTab('left');
+    }
+    
+    if (mouseUpX > mouseDownX + minSwipeDistance) {
+        switchTab('right');
+    }
+}
+
+// Initialize current tab index based on active tab
+function initializeTabIndex() {
+    const activeTab = document.querySelector('.nav-item.active');
+    currentTabIndex = tabs.indexOf(activeTab.dataset.tab);
+}
+
+// Call this after DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeTabIndex);  
+  
+  
+  </script>
+  
   
 </body>
 </html>
