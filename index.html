@@ -544,13 +544,55 @@
         }
 
         /* Header styling */
-        .app-header {
-            padding: 16px;
-            border-radius: 0;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
+        /* Header styling - Material 3 inspired */
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* logo left, menu right */
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.06); /* subtle translucent background */
+    backdrop-filter: blur(12px); /* soft glassy effect */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* gentle elevation */
+    transition: all 0.3s ease;
+}
+
+/* Hover / scroll effect for extra expressiveness */
+.app-header.scrolled {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+/* Logo styling */
+.app-header .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #6750A4; /* Material 3 purple accent */
+    letter-spacing: 1px;
+}
+
+/* Menu / nav links styling */
+.app-header .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.app-header .nav-links a {
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.app-header .nav-links a:hover {
+    color: #7F3FBF; /* subtle hover accent */
+    transform: translateY(-2px);
+}
+
 
       .update-card {
   background: rgba(103, 80, 164, 0.08); /* expressive surface */
