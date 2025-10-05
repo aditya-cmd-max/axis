@@ -2189,8 +2189,62 @@
             return `
                 <div class="p-4">
                     <h2 class="text-5xl font-bold mb-2">Welcome to Exonova</h2>
+  
+  
+  
                     <p class="text-2xl opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
+                    
+                    <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
+  <!-- First SVG -->
+  <svg width="52" height="52" viewBox="0 0 282 281">
+    <path 
+      d="M75.9469 280.078C91.5033 280.078 105.96 275.398 117.97 267.376C130.585 258.951 151.308 258.951 163.924 267.376C175.934 275.398 190.39 280.078 205.947 280.078C247.615 280.078 281.394 246.499 281.394 205.078C281.394 189.768 276.779 175.529 268.856 163.661C260.282 150.817 260.282 129.339 268.856 116.496C276.779 104.628 281.394 90.3887 281.394 75.0781C281.394 33.6568 247.615 0.078125 205.947 0.078125C190.39 0.078125 175.934 4.75843 163.924 12.7798C151.308 21.2056 130.585 21.2056 117.97 12.7798C105.96 4.75843 91.5033 0.078125 75.9469 0.078125C34.2787 0.078125 0.5 33.6568 0.5 75.0781C0.5 90.3887 5.11505 104.628 13.0377 116.496C21.6119 129.339 21.6119 150.817 13.0377 163.661C5.11505 175.529 0.5 189.768 0.5 205.078C0.5 246.499 34.2787 280.078 75.9469 280.078Z" 
+      fill="url(#purple-gradient)" stroke="#6750A4" stroke-width="2"
+    />
+    <defs>
+      <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#7F3FBF"/>
+        <stop offset="100%" stop-color="#6750A4"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Second SVG: scaled to fit same visual size -->
+  <svg width="60" height="60" viewBox="0 0 249 247">
+    <path 
+      d="M245.7,56.1l0-9.9c0-22.7-18.4-41-41-41l-160.2,0c-22.7,0-41,18.4-41,41l0,9.9c0,11,4.3,21,11.4,28.4 c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4l0,9.9c0,11,4.3,21,11.4,28.4c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4 l0,10.1c0,22.7,18.4,41,41,41l160.2,0c22.7,0,41-18.4,41-41l0-10.1c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5 c7.1-7.4,11.4-17.4,11.4-28.4l0-9.9c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5C241.3,77.1,245.7,67.1,245.7,56.1z" 
+      fill="url(#purple-gradient2)" stroke="#6750A4" stroke-width="2"
+      transform="scale(0.8) translate(28,28)" 
+    />
+    <defs>
+      <linearGradient id="purple-gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#7F3FBF"/>
+        <stop offset="100%" stop-color="#6750A4"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Third SVG: scaled to fit same visual size -->
+  <svg width="60" height="60" viewBox="0 0 277 301">
+    <path 
+      d="M108.103 8.24078C126.954 -2.64276 150.179 -2.64276 169.03 8.24078L246.169 52.7773C265.02 63.6609 276.633 83.7745 276.633 105.542V194.615C276.633 216.382 265.02 236.495 246.169 247.379L169.03 291.915C150.179 302.799 126.954 302.799 108.103 291.915L30.9635 247.379C12.1126 236.495 0.5 216.382 0.5 194.615V105.542C0.5 83.7745 12.1126 63.6609 30.9635 52.7773L108.103 8.24078Z" 
+      fill="url(#purple-gradient3)" stroke="#6750A4" stroke-width="2"
+      transform="scale(0.85) translate(22,15)" 
+    />
+    <defs>
+      <linearGradient id="purple-gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#7F3FBF"/>
+        <stop offset="100%" stop-color="#6750A4"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
+                    
+                    
                     <div class="product-grid">
+                   
+                    
                         ${products.map(product => `
                             <div class="product-card ripple" data-product-id="${product.id}">
                                 <div class="product-logo ${product.color} relative overflow-hidden">
