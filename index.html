@@ -1296,28 +1296,152 @@
             }
           
           /* Swipe animation for tab transitions */
+/* Ultra-fast swipe animation for tab transitions - 8x improvement */
 #main-content {
-    transition: transform 0.3s ease;
+    transition: transform 0.0375s cubic-bezier(0.4, 0, 0.2, 1); /* 8x faster (0.3s -> 0.0375s) */
+    will-change: transform; /* Performance optimization */
 }
 
 .swipe-left {
-    animation: swipeLeft 0.3s ease;
+    animation: swipeLeftUltra 0.0375s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .swipe-right {
-    animation: swipeRight 0.3s ease;
+    animation: swipeRightUltra 0.0375s cubic-bezier(0.2, 0, 0, 1) !important;
 }
 
-@keyframes swipeLeft {
-    0% { transform: translateX(0); opacity: 1; }
-    50% { transform: translateX(-20px); opacity: 0.5; }
-    100% { transform: translateX(0); opacity: 1; }
+/* Ultra-fast keyframe animations */
+@keyframes swipeLeftUltra {
+    0% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: translateX(-8px) scale(0.998);
+        opacity: 0.95;
+    }
+    100% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
 }
 
-@keyframes swipeRight {
-    0% { transform: translateX(0); opacity: 1; }
-    50% { transform: translateX(20px); opacity: 0.5; }
-    100% { transform: translateX(0); opacity: 1; }
+@keyframes swipeRightUltra {
+    0% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: translateX(8px) scale(0.998);
+        opacity: 0.95;
+    }
+    100% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Enhanced performance optimizations */
+.swipe-transitioning {
+    pointer-events: none; /* Prevent interactions during transition */
+    overflow: hidden;
+}
+
+/* Hardware acceleration for mobile devices */
+@media (max-width: 768px) {
+    .swipe-left,
+    .swipe-right {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+    }
+}
+
+/* Micro-interaction for swipe feedback */
+.swipe-feedback {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.swipe-feedback.active {
+    opacity: 0.3;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
+                rgba(103, 80, 164, 0.2) 0%, 
+                transparent 70%);
+}
+
+/* Visual swipe guide */
+.swipe-guide {
+    position: fixed;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(103, 80, 164, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 12px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.swipe-guide.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.swipe-guide.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.swipe-arrows {
+    display: flex;
+    gap: 4px;
+}
+
+.swipe-arrow {
+    width: 16px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    animation: arrowPulse 1.5s infinite;
+}
+
+.swipe-arrow:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.swipe-arrow:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes arrowPulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% { 
+        transform: scale(1.2);
+        opacity: 1;
+    }
 }
           
         </style>
@@ -2848,101 +2972,180 @@ document.getElementById('back-to-home-btn').addEventListener('click', () => {
 });
   </script>
   <script>
-  // Swipe gesture detection for tab navigation
+  // Ultra-optimized swipe gesture detection
 let touchStartX = 0;
 let touchEndX = 0;
+let isSwiping = false;
 let currentTabIndex = 0;
 const tabs = ['home', 'favorites', 'updates'];
+const minSwipeDistance = 30; // Reduced from 50px for faster response
 
-// Function to handle tab switching
+// Performance-optimized tab switching
 function switchTab(direction) {
+    if (isSwiping) return;
+    isSwiping = true;
+    
     if (direction === 'left') {
         currentTabIndex = (currentTabIndex + 1) % tabs.length;
     } else if (direction === 'right') {
         currentTabIndex = (currentTabIndex - 1 + tabs.length) % tabs.length;
     }
     
-    // Update the active tab
+    const mainContent = document.getElementById('main-content');
     const newTab = tabs[currentTabIndex];
-    document.querySelectorAll('[data-tab]').forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.dataset.tab === newTab) {
-            tab.classList.add('active');
-        }
+    
+    // Add performance-optimized animation
+    mainContent.classList.add('swipe-transitioning', direction === 'left' ? 'swipe-left' : 'swipe-right');
+    
+    // Batch DOM updates
+    requestAnimationFrame(() => {
+        // Update active tab
+        document.querySelectorAll('[data-tab]').forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.tab === newTab);
+        });
+        
+        // Update navigation pill
+        const activeIndex = Array.from(document.querySelectorAll('[data-tab]')).findIndex(
+            item => item.classList.contains('active')
+        );
+        movePill(activeIndex);
+        
+        // Update content
+        currentTab = newTab;
+        renderContent();
     });
     
-    // Update the navigation pill position
-    const activeIndex = Array.from(document.querySelectorAll('[data-tab]')).findIndex(
-        item => item.classList.contains('active')
-    );
-    movePill(activeIndex);
-    
-    // Update content
-    currentTab = newTab;
-    renderContent();
+    // Ultra-fast cleanup
+    setTimeout(() => {
+        mainContent.classList.remove('swipe-transitioning', 'swipe-left', 'swipe-right');
+        isSwiping = false;
+    }, 37.5); // 8x faster cleanup
 }
 
-// Touch event handlers for swipe detection
+// High-performance touch event handlers
+let rafId = null;
+
 document.addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].screenX;
-});
+    cancelAnimationFrame(rafId);
+}, { passive: true });
+
+document.addEventListener('touchmove', e => {
+    if (!touchStartX) return;
+    
+    // Throttle with requestAnimationFrame
+    if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+            const currentX = e.changedTouches[0].screenX;
+            const diff = currentX - touchStartX;
+            
+            // Add visual feedback during swipe
+            if (Math.abs(diff) > 10) {
+                showSwipeFeedback(currentX, diff);
+            }
+            
+            rafId = null;
+        });
+    }
+}, { passive: true });
 
 document.addEventListener('touchend', e => {
     touchEndX = e.changedTouches[0].screenX;
     handleSwipe();
-});
+    hideSwipeFeedback();
+}, { passive: true });
 
-// Mouse event handlers for desktop testing
+// Optimized mouse handlers for desktop
 let mouseDownX = 0;
-let mouseUpX = 0;
 
 document.addEventListener('mousedown', e => {
     mouseDownX = e.screenX;
 });
 
 document.addEventListener('mouseup', e => {
-    mouseUpX = e.screenX;
-    handleMouseSwipe();
+    const mouseUpX = e.screenX;
+    handleMouseSwipe(mouseUpX);
 });
 
-// Handle swipe gesture
+// Ultra-fast swipe detection
 function handleSwipe() {
-    const minSwipeDistance = 50; // Minimum distance for a swipe to be registered
+    const swipeDistance = touchEndX - touchStartX;
     
-    if (touchEndX < touchStartX - minSwipeDistance) {
-        // Swipe left - go to next tab
-        switchTab('left');
+    if (Math.abs(swipeDistance) >= minSwipeDistance) {
+        if (swipeDistance < 0) {
+            switchTab('left');
+        } else {
+            switchTab('right');
+        }
     }
     
-    if (touchEndX > touchStartX + minSwipeDistance) {
-        // Swipe right - go to previous tab
-        switchTab('right');
+    touchStartX = 0;
+    touchEndX = 0;
+}
+
+function handleMouseSwipe(mouseUpX) {
+    const swipeDistance = mouseUpX - mouseDownX;
+    
+    if (Math.abs(swipeDistance) >= minSwipeDistance) {
+        if (swipeDistance < 0) {
+            switchTab('left');
+        } else {
+            switchTab('right');
+        }
+    }
+    
+    mouseDownX = 0;
+}
+
+// Visual feedback functions
+function showSwipeFeedback(x, diff) {
+    let feedback = document.getElementById('swipe-feedback');
+    if (!feedback) {
+        feedback = document.createElement('div');
+        feedback.id = 'swipe-feedback';
+        feedback.className = 'swipe-feedback';
+        document.body.appendChild(feedback);
+    }
+    
+    feedback.style.setProperty('--x', `${x}px`);
+    feedback.style.setProperty('--y', '50%');
+    feedback.classList.add('active');
+}
+
+function hideSwipeFeedback() {
+    const feedback = document.getElementById('swipe-feedback');
+    if (feedback) {
+        feedback.classList.remove('active');
     }
 }
 
-// Handle mouse swipe for desktop testing
-function handleMouseSwipe() {
-    const minSwipeDistance = 50;
-    
-    if (mouseUpX < mouseDownX - minSwipeDistance) {
-        switchTab('left');
-    }
-    
-    if (mouseUpX > mouseDownX + minSwipeDistance) {
-        switchTab('right');
+// Enhanced swipe guide
+function showSwipeGuide() {
+    const guide = document.getElementById('swipe-guide');
+    if (guide) {
+        guide.classList.remove('hide');
+        guide.classList.add('show');
+        
+        setTimeout(() => {
+            guide.classList.remove('show');
+            guide.classList.add('hide');
+        }, 3000);
     }
 }
 
-// Initialize current tab index based on active tab
+// Initialize with performance optimizations
 function initializeTabIndex() {
     const activeTab = document.querySelector('.nav-item.active');
     currentTabIndex = tabs.indexOf(activeTab.dataset.tab);
+    
+    // Show swipe guide on first visit
+    if (!localStorage.getItem('hasSeenSwipeHint')) {
+        setTimeout(showSwipeGuide, 1000);
+        localStorage.setItem('hasSeenSwipeHint', 'true');
+    }
 }
 
-// Call this after DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeTabIndex);  
-  
-  
+document.addEventListener('DOMContentLoaded', initializeTabIndex);
   </script>
   
   
