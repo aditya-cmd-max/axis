@@ -986,7 +986,15 @@
         }
 
         .nav-container {
-            position: fixed;
+            
+           z-index: 1000 !important; /* Increased z-index */
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+          
+          
+          position: fixed;
             bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
@@ -1847,7 +1855,7 @@
             if (lastWelcomeDate !== today) {
                 addNotification({
                     id: 'welcome-' + Date.now(),
-                    title: 'Welcome to Exonova Axis! 🚀',
+                    title: ' Exonova Axis! 🚀',
                     message: 'Your productivity hub is ready. Explore all tools in one place.',
                     type: 'welcome',
                     timestamp: Date.now(),
@@ -2191,9 +2199,14 @@
                     <div class="product-grid">
                         ${products.map(product => `
                             <div class="product-card ripple" data-product-id="${product.id}">
-                                <div class="product-logo ${product.color}">
-                                    <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
-                                </div>
+                                <div class="product-logo ${product.color} relative overflow-hidden">
+    <div class="absolute inset-0 flex items-center justify-center">
+        <svg width="48" height="48" viewBox="0 0 444 442" class="absolute inset-0 w-full h-full">
+            <path d="M204.205 4.63126C215.258 -1.54115 228.742 -1.54115 239.795 4.63125L266.874 19.7527C272.176 22.7136 278.139 24.3042 284.218 24.3792L315.264 24.762C327.936 24.9182 339.614 31.6297 346.086 42.4769L361.942 69.0507C365.046 74.2541 369.412 78.5999 374.639 81.6906L401.333 97.4751C412.229 103.918 418.971 115.543 419.128 128.158L419.512 159.064C419.588 165.116 421.186 171.052 424.16 176.33L439.35 203.287C445.55 214.29 445.55 227.713 439.35 238.717L424.16 265.674C421.186 270.952 419.588 276.888 419.512 282.94L419.128 313.846C418.971 326.461 412.229 338.086 401.333 344.529L374.639 360.313C369.412 363.404 365.046 367.75 361.942 372.953L346.086 399.527C339.614 410.374 327.936 417.086 315.264 417.242L284.218 417.625C278.139 417.7 272.176 419.29 266.874 422.251L239.795 437.373C228.742 443.545 215.258 443.545 204.205 437.373L177.126 422.251C171.824 419.29 165.861 417.7 159.782 417.625L128.736 417.242C116.064 417.086 104.386 410.374 97.9142 399.527L82.0583 372.953C78.9536 367.75 74.5882 363.404 69.3612 360.313L42.6671 344.529C31.7709 338.086 25.029 326.461 24.8721 313.846L24.4875 282.94C24.4123 276.888 22.8144 270.952 19.8401 265.674L4.65025 238.717C-1.55008 227.713 -1.55008 214.29 4.65025 203.287L19.8401 176.33C22.8144 171.052 24.4122 165.116 24.4875 159.064L24.8721 128.158C25.029 115.543 31.7709 103.918 42.6671 97.4751L69.3612 81.6906C74.5882 78.5999 78.9536 74.2541 82.0583 69.0507L97.9142 42.4769C104.386 31.6297 116.064 24.9182 128.736 24.762L159.782 24.3792C165.861 24.3042 171.824 22.7136 177.126 19.7527L204.205 4.63126Z" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"/>
+        </svg>
+    </div>
+    <img src="${product.logoUrl}" alt="${product.name}" class="relative z-10 w-6 h-6 object-contain" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
+</div>
                                 <div class="product-info">
                                     <h3>${product.name}</h3>
                                     <p>${product.description}</p>
