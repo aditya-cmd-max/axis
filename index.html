@@ -81,6 +81,7 @@
                         'fade-in': 'fadeIn 0.5s ease-out',
                         'slide-up': 'slideUp 0.5s ease-out',
                         'bounce-subtle': 'bounceSubtle 2s infinite',
+                        'pulse-gentle': 'pulseGentle 2s infinite',
                     },
                     keyframes: {
                         fadeIn: {
@@ -94,6 +95,10 @@
                         bounceSubtle: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-5px)' },
+                        },
+                        pulseGentle: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' },
                         }
                     }
                 }
@@ -543,110 +548,106 @@
             min-height: 100vh;
         }
 
-        /* Header styling */
         /* Header styling - Material 3 inspired */
-.app-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* logo left, menu right */
-    padding: 16px 24px;
-    background: rgba(255, 255, 255, 0.06); /* subtle translucent background */
-    backdrop-filter: blur(12px); /* soft glassy effect */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* gentle elevation */
-    transition: all 0.3s ease;
-}
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
 
-/* Hover / scroll effect for extra expressiveness */
-.app-header.scrolled {
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
-}
+        /* Hover / scroll effect for extra expressiveness */
+        .app-header.scrolled {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
 
-/* Logo styling */
-.app-header .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #6750A4; /* Material 3 purple accent */
-    letter-spacing: 1px;
-}
+        /* Logo styling */
+        .app-header .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6750A4;
+            letter-spacing: 1px;
+        }
 
-/* Menu / nav links styling */
-.app-header .nav-links {
-    display: flex;
-    gap: 20px;
-}
+        /* Menu / nav links styling */
+        .app-header .nav-links {
+            display: flex;
+            gap: 20px;
+        }
 
-.app-header .nav-links a {
-    text-decoration: none;
-    font-weight: 500;
-    color: var(--md-sys-color-on-surface);
-    transition: color 0.2s ease, transform 0.2s ease;
-}
+        .app-header .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
 
-.app-header .nav-links a:hover {
-    color: #7F3FBF; /* subtle hover accent */
-    transform: translateY(-2px);
-}
+        .app-header .nav-links a:hover {
+            color: #7F3FBF;
+            transform: translateY(-2px);
+        }
 
+        .update-card {
+            background: rgba(103, 80, 164, 0.08);
+            border-radius: 24px;
+            padding: 16px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            cursor: pointer;
+        }
 
-      .update-card {
-  background: rgba(103, 80, 164, 0.08); /* expressive surface */
-  border-radius: 24px;
-  padding: 16px;
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-  cursor: pointer;
-}
+        .update-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(103, 80, 164, 0.35);
+        }
 
-.update-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(103, 80, 164, 0.35);
-}
+        .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            background: var(--accent-color, #6366F1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+        }
 
-.icon-wrapper {
-  width: 48px;
-  height: 48px;
-  border-radius: 24px;
-  background: var(--accent-color, #6366F1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-  transition: all 0.3s ease;
-}
+        .icon-wrapper:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+        }
 
-.icon-wrapper:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-}
+        .update-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+        }
 
-.update-card h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 4px;
-}
+        .update-card p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 2px;
+        }
 
-.update-card p {
-  font-size: 14px;
-  color: rgba(255,255,255,0.75);
-  margin-bottom: 2px;
-}
-
-.update-card .text-xs {
-  font-size: 12px;
-  color: rgba(255,255,255,0.5);
-}
-
-      
+        .update-card .text-xs {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
       
         /* Product card styling */
         .product-card {
@@ -758,7 +759,7 @@
 
         /* Search overlay */
         #search-overlay {
-           border-radius: 999px;
+            border-radius: 999px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -815,9 +816,8 @@
         }
     
         button.ripple {
-    padding: 6px; /* smaller than p-2 */
-}
-      
+            padding: 6px;
+        }
       
         /* Animation for favorite button */
         @keyframes pulse {
@@ -946,64 +946,62 @@
 
         /* Spinner loader */
         /* Base spinner */
-.spinner {
-  width: 40px;
-  height: 40px;
-  margin: 40px auto;
-  border-radius: 50%;
-  border: 4px solid transparent;
-  border-top-color: #ffffff; /* start with white */
-  animation: spin 1s linear infinite, dash 1.4s ease-in-out infinite, colorShift 2s ease-in-out infinite;
-}
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 40px auto;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: #ffffff;
+            animation: spin 1s linear infinite, dash 1.4s ease-in-out infinite, colorShift 2s ease-in-out infinite;
+        }
 
-/* Light theme variation */
-.light .spinner {
-  border-top-color: #ffffff;
-}
+        /* Light theme variation */
+        .light .spinner {
+            border-top-color: #ffffff;
+        }
 
-/* Gradient style variation */
-.gradient-bg .spinner {
-  border-top-color: #6200ee; /* violet */
-  border-bottom-color: #ffffff;
-}
+        /* Gradient style variation */
+        .gradient-bg .spinner {
+            border-top-color: #6200ee;
+            border-bottom-color: #ffffff;
+        }
 
-/* Spin rotation */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+        /* Spin rotation */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-/* Dash effect for expressive stroke */
-@keyframes dash {
-  0% {
-    stroke-dasharray: 1, 150;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: -35;
-  }
-  100% {
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: -124;
-  }
-}
+        /* Dash effect for expressive stroke */
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -124;
+            }
+        }
 
-/* Color transition between white and violet */
-@keyframes colorShift {
-  0%, 100% {
-    border-top-color: #ffffff;
-  }
-  50% {
-    border-top-color: #6200ee; /* violet */
-  }
-}
-
-
+        /* Color transition between white and violet */
+        @keyframes colorShift {
+            0%, 100% {
+                border-top-color: #ffffff;
+            }
+            50% {
+                border-top-color: #6200ee;
+            }
+        }
 
         /* Animations */
         @keyframes logoPop {
@@ -1068,15 +1066,8 @@
         }
 
         .nav-container {
-            
-           z-index: 1000 !important; /* Increased z-index */
-    position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-          
-          
-          position: fixed;
+            z-index: 1000;
+            position: fixed;
             bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
@@ -1154,26 +1145,26 @@
             padding: 16px;
         }
 
-      /* Thank you section - Left-aligned, expressive */
-.thank-you-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* left align */
-    justify-content: center;
-    padding: 24px 16px;
-    margin-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* subtle divider */
-    font-size: 2rem; /* bigger text */
-    font-weight: 500;
-    line-height: 1.6;
-    color: var(--md-sys-color-on-surface);
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-}
+        /* Thank you section - Left-aligned, expressive */
+        .thank-you-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            margin-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 2rem;
+            font-weight: 500;
+            line-height: 1.6;
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
 
-.thank-you-section:hover {
-    opacity: 1;
-}
+        .thank-you-section:hover {
+            opacity: 1;
+        }
 
         /* Search input styling */
         .search-input {
@@ -1232,8 +1223,6 @@
             animation: pulse 1.5s infinite;
         }
 
-        
-
         /* Mobile optimizations */
         @media (max-width: 480px) {
             .product-card {
@@ -1265,6 +1254,154 @@
             
             .app-header {
                 padding: 12px 16px;
+            }
+        }
+
+        /* Swipe animation for tab transitions */
+        #main-content {
+            transition: transform 0.0375s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .swipe-left {
+            animation: swipeLeftUltra 0.0375s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .swipe-right {
+            animation: swipeRightUltra 0.0375s cubic-bezier(0.2, 0, 0, 1) !important;
+        }
+
+        /* Ultra-fast keyframe animations */
+        @keyframes swipeLeftUltra {
+            0% { 
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+            50% { 
+                transform: translateX(-8px) scale(0.998);
+                opacity: 0.95;
+            }
+            100% { 
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes swipeRightUltra {
+            0% { 
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+            50% { 
+                transform: translateX(8px) scale(0.998);
+                opacity: 0.95;
+            }
+            100% { 
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced performance optimizations */
+        .swipe-transitioning {
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Hardware acceleration for mobile devices */
+        @media (max-width: 768px) {
+            .swipe-left,
+            .swipe-right {
+                transform: translateZ(0);
+                backface-visibility: hidden;
+                perspective: 1000px;
+            }
+        }
+
+        /* Micro-interaction for swipe feedback */
+        .swipe-feedback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .swipe-feedback.active {
+            opacity: 0.3;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
+                        rgba(103, 80, 164, 0.2) 0%, 
+                        transparent 70%);
+        }
+
+        /* Visual swipe guide */
+        .swipe-guide {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(103, 80, 164, 0.9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 12px;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .swipe-guide.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .swipe-guide.hide {
+            opacity: 0;
+            transform: translateX(-50%) translateY(10px);
+        }
+
+        .swipe-arrows {
+            display: flex;
+            gap: 4px;
+        }
+
+        .swipe-arrow {
+            width: 16px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            animation: arrowPulse 1.5s infinite;
+        }
+
+        .swipe-arrow:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .swipe-arrow:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: scale(1.2);
+                opacity: 1;
             }
         }
     </style>
@@ -1334,156 +1471,6 @@
                 opacity: 0.2;
                 z-index: -1;
             }
-          
-          /* Swipe animation for tab transitions */
-/* Ultra-fast swipe animation for tab transitions - 8x improvement */
-#main-content {
-    transition: transform 0.0375s cubic-bezier(0.4, 0, 0.2, 1); /* 8x faster (0.3s -> 0.0375s) */
-    will-change: transform; /* Performance optimization */
-}
-
-.swipe-left {
-    animation: swipeLeftUltra 0.0375s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-.swipe-right {
-    animation: swipeRightUltra 0.0375s cubic-bezier(0.2, 0, 0, 1) !important;
-}
-
-/* Ultra-fast keyframe animations */
-@keyframes swipeLeftUltra {
-    0% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-    50% { 
-        transform: translateX(-8px) scale(0.998);
-        opacity: 0.95;
-    }
-    100% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes swipeRightUltra {
-    0% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-    50% { 
-        transform: translateX(8px) scale(0.998);
-        opacity: 0.95;
-    }
-    100% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-}
-
-/* Enhanced performance optimizations */
-.swipe-transitioning {
-    pointer-events: none; /* Prevent interactions during transition */
-    overflow: hidden;
-}
-
-/* Hardware acceleration for mobile devices */
-@media (max-width: 768px) {
-    .swipe-left,
-    .swipe-right {
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        perspective: 1000px;
-    }
-}
-
-/* Micro-interaction for swipe feedback */
-.swipe-feedback {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.15s;
-}
-
-.swipe-feedback.active {
-    opacity: 0.3;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
-                rgba(103, 80, 164, 0.2) 0%, 
-                transparent 70%);
-}
-
-/* Visual swipe guide */
-.swipe-guide {
-    position: fixed;
-    bottom: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(103, 80, 164, 0.9);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 24px;
-    font-size: 12px;
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-}
-
-.swipe-guide.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-.swipe-guide.hide {
-    opacity: 0;
-    transform: translateX(-50%) translateY(10px);
-}
-
-.swipe-arrows {
-    display: flex;
-    gap: 4px;
-}
-
-.swipe-arrow {
-    width: 16px;
-    height: 16px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-    animation: arrowPulse 1.5s infinite;
-}
-
-.swipe-arrow:nth-child(2) {
-    animation-delay: 0.5s;
-}
-
-.swipe-arrow:nth-child(3) {
-    animation-delay: 1s;
-}
-
-@keyframes arrowPulse {
-    0%, 100% { 
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    50% { 
-        transform: scale(1.2);
-        opacity: 1;
-    }
-}
-          
         </style>
    </div> 
     
@@ -1544,7 +1531,6 @@
         <!-- Main Container -->
         <div id="main-container" class="min-h-screen flex flex-col">
            
-            
             <!-- Header -->
             <header class="app-header flex items-center justify-between">
                 <div class="flex items-center space-x-3">
@@ -1561,21 +1547,20 @@
                         <p class="text-xs opacity-75">All of Exonova • At one place</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-"> <!-- smaller gap -->
-    <button id="search-btn" class="p-2 rounded-full ripple">
-        <span class="material-icons">search</span>
-    </button>
-    <button id="settings-btn" class="p-2 rounded-full ripple">
-        <span class="material-icons">settings</span>
-    </button>
-    <div class="relative">
-        <button id="notifications-btn" class="p-2 rounded-full ripple">
-            <span class="material-icons">notifications</span>
-        </button>
-        <div id="notification-badge" class="notification-badge hidden">3</div>
-    </div>
-</div>
-
+                <div class="flex items-center gap-">
+                    <button id="search-btn" class="p-2 rounded-full ripple">
+                        <span class="material-icons">search</span>
+                    </button>
+                    <button id="settings-btn" class="p-2 rounded-full ripple">
+                        <span class="material-icons">settings</span>
+                    </button>
+                    <div class="relative">
+                        <button id="notifications-btn" class="p-2 rounded-full ripple">
+                            <span class="material-icons">notifications</span>
+                        </button>
+                        <div id="notification-badge" class="notification-badge hidden">3</div>
+                    </div>
+                </div>
             </header>
  
             <!-- Search Bar Overlay -->
@@ -1727,1136 +1712,623 @@
     </div>
 
     <script>
-        // Data for Exonova Products with real logos and URLs
-        const products = [{
-            id: 'el-futuro',
-            name: 'El Futuro',
-            description: 'Intelligent AI • Useful for everyday tasks',
-            logoUrl: 'https://aditya-cmd-max.github.io/exonovaai/logo.png',
-            url: 'https://aditya-cmd-max.github.io/exonovaai/chat/'
-        }, {
-            id: 'skycast-pro',
-            name: 'SkyCast Pro',
-            description: 'Interactive environmental science platform with real-world data visualization.',
-            logoUrl: 'https://aditya-cmd-max.github.io/exonovaweather/skycast.png',
-            url: 'https://aditya-cmd-max.github.io/exonovaweather/app.html'
-        }, {
-            id: 'popout-pro',
-            name: 'PopOut Pro',
-            description: 'AI-powered visual learning tool for creating engaging educational content.',
-            logoUrl: 'https://aditya-cmd-max.github.io/popout/ChatGPT%20Image%20Aug%2015,%202025,%2008_26_20%20PM.png',
-             url: 'https://aditya-cmd-max.github.io/popout/app.html'
-        }, {
-            id: 'mindscribe-notes',
-            name: 'Mindscribe',
-            description: 'Mindscribe is your AI powered digital notebook to make everyday learning easier.',
-            logoUrl: 'https://aditya-cmd-max.github.io/mindscribe/logo.png',
-            url: 'https://aditya-cmd-max.github.io/mindscribe/'
-        }, {
-            id: 'peo-tts',
-            name: 'Peo-TTS',
-            description: 'Natural sounding text-to-speech for accessible learning materials.',
-            logoUrl: 'https://aditya-cmd-max.github.io/Peo/tts.png',
-          url: 'https://aditya-cmd-max.github.io/Peo/app.html'
-        }, {
-            id: 'securepass',
-            name: 'Securepass',
-            description: 'Your perfect password advisor for secure and strong passwords.',
-            logoUrl: 'https://aditya-cmd-max.github.io/securepass/logo-dark.png',
-           url: 'https://aditya-cmd-max.github.io/securepass'
-        }];
-
-        // App State
-        let currentTheme = localStorage.getItem('theme') || 'dark';
-        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        let currentTab = 'home';
-        let hasSeenLogoHint = localStorage.getItem('hasSeenLogoHint') === 'true';
-        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
-        let pushNotificationsEnabled = localStorage.getItem('pushNotificationsEnabled') !== 'false';
-        let inAppNotificationsEnabled = localStorage.getItem('inAppNotificationsEnabled') !== 'false';
-        let deferredPrompt = null;
-        let isAppInstalled = localStorage.getItem('isAppInstalled') === 'true';
-        
-        // Notification intervals tracking
-        let notificationIntervals = [];
-
-        // DOM Elements
-        const mainContent = document.getElementById('main-content');
-        const settingsModal = document.getElementById('settings-modal');
-        const searchOverlay = document.getElementById('search-overlay');
-        const searchModal = document.getElementById('search-modal');
-        const searchInput = document.getElementById('search-input');
-        const searchResults = document.getElementById('search-results');
-        const appView = document.getElementById('app-view');
-        const appTitle = document.getElementById('app-title');
-        const appContent = document.getElementById('app-content');
-        const splashScreen = document.getElementById('splash');
-        const toast = document.getElementById('toast');
-        const settingsModalContent = document.getElementById('settings-modal-content');
-        const logoModal = document.getElementById('logo-modal');
-        const logoModalContent = document.getElementById('logo-modal-content');
-        const logoBtn = document.getElementById('logo-btn');
-        const firstTimeHint = document.getElementById('first-time-hint');
-        const notificationsBtn = document.getElementById('notifications-btn');
-        const notificationBadge = document.getElementById('notification-badge');
-        const notificationsModal = document.getElementById('notifications-modal');
-        const notificationsModalContent = document.getElementById('notifications-modal-content');
-        const notificationsList = document.getElementById('notifications-list');
-        const pushNotificationsToggle = document.getElementById('push-notifications-toggle');
-        const inAppNotificationsToggle = document.getElementById('inapp-notifications-toggle');
-        const installPrompt = document.getElementById('install-prompt');
-        const installBtn = document.getElementById('install-btn');
-        const closeInstallPrompt = document.getElementById('close-install-prompt');
-        const installAppBtn = document.getElementById('install-app-btn');
-
-        // Initialize the app
-        function initApp() {
-            updateTime();
-            setInterval(updateTime, 60000);
-            
-            // Apply saved theme
-            applyTheme(currentTheme);
-            
-            // Render initial content
-            renderContent();
-            
-            // Set up event listeners
-            setupEventListeners();
-            
-            // Set active theme button
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                if (btn.dataset.theme === currentTheme) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Initialize notifications
-            initNotifications();
-            
-            // Initialize PWA features
-            initPWA();
-            
-            // Show first-time hint if needed
-            if (!hasSeenLogoHint) {
-                setTimeout(() => {
-                    firstTimeHint.classList.remove('hidden');
-                    // Remove hint after 5 seconds
-                    setTimeout(() => {
-                        firstTimeHint.classList.add('hidden');
-                        localStorage.setItem('hasSeenLogoHint', 'true');
-                        hasSeenLogoHint = true;
-                    }, 5000);
-                }, 2000);
+        // Enhanced App State Management
+        class AppState {
+            constructor() {
+                this.currentTheme = localStorage.getItem('theme') || 'dark';
+                this.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                this.currentTab = 'home';
+                this.hasSeenLogoHint = localStorage.getItem('hasSeenLogoHint') === 'true';
+                this.notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+                this.pushNotificationsEnabled = localStorage.getItem('pushNotificationsEnabled') !== 'false';
+                this.inAppNotificationsEnabled = localStorage.getItem('inAppNotificationsEnabled') !== 'false';
+                this.deferredPrompt = null;
+                this.isAppInstalled = localStorage.getItem('isAppInstalled') === 'true';
+                this.notificationIntervals = [];
+                this.products = [];
             }
-        }
 
-        // Initialize PWA features
-        function initPWA() {
-            // Set toggle states
-            pushNotificationsToggle.checked = pushNotificationsEnabled;
-            inAppNotificationsToggle.checked = inAppNotificationsEnabled;
-            
-            // Listen for before install prompt
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                
-                // Show install prompt if app isn't installed
-                if (!isAppInstalled) {
-                    setTimeout(() => {
-                        installPrompt.classList.remove('hidden');
-                    }, 5000);
-                }
-            });
-            
-            // Check if app is already installed
-            window.addEventListener('appinstalled', () => {
-                isAppInstalled = true;
-                localStorage.setItem('isAppInstalled', 'true');
-                installPrompt.classList.add('hidden');
-                showToast('App installed successfully!');
-            });
-            
-            // Check if running in standalone mode (installed)
-            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-                isAppInstalled = true;
-                localStorage.setItem('isAppInstalled', 'true');
-            }
-        }
-
-        // Install app
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the install prompt');
+            // Load products from external source or use default
+            async loadProducts() {
+                try {
+                    // Try to load from external source first
+                    const response = await fetch('/axis/products.json');
+                    if (response.ok) {
+                        this.products = await response.json();
                     } else {
-                        console.log('User dismissed the install prompt');
+                        throw new Error('Failed to load products');
                     }
-                    deferredPrompt = null;
+                } catch (error) {
+                    // Fallback to default products
+                    this.products = [{
+                        id: 'el-futuro',
+                        name: 'El Futuro',
+                        description: 'Intelligent AI • Useful for everyday tasks',
+                        logoUrl: 'https://aditya-cmd-max.github.io/exonovaai/logo.png',
+                        url: 'https://aditya-cmd-max.github.io/exonovaai/chat/',
+                        color: 'bg-purple-500'
+                    }, {
+                        id: 'skycast-pro',
+                        name: 'SkyCast Pro',
+                        description: 'Interactive environmental science platform with real-world data visualization.',
+                        logoUrl: 'https://aditya-cmd-max.github.io/exonovaweather/skycast.png',
+                        url: 'https://aditya-cmd-max.github.io/exonovaweather/app.html',
+                        color: 'bg-blue-500'
+                    }, {
+                        id: 'popout-pro',
+                        name: 'PopOut Pro',
+                        description: 'AI-powered visual learning tool for creating engaging educational content.',
+                        logoUrl: 'https://aditya-cmd-max.github.io/popout/ChatGPT%20Image%20Aug%2015,%202025,%2008_26_20%20PM.png',
+                        url: 'https://aditya-cmd-max.github.io/popout/app.html',
+                        color: 'bg-green-500'
+                    }, {
+                        id: 'mindscribe-notes',
+                        name: 'Mindscribe',
+                        description: 'Mindscribe is your AI powered digital notebook to make everyday learning easier.',
+                        logoUrl: 'https://aditya-cmd-max.github.io/mindscribe/logo.png',
+                        url: 'https://aditya-cmd-max.github.io/mindscribe/',
+                        color: 'bg-indigo-500'
+                    }, {
+                        id: 'peo-tts',
+                        name: 'Peo-TTS',
+                        description: 'Natural sounding text-to-speech for accessible learning materials.',
+                        logoUrl: 'https://aditya-cmd-max.github.io/Peo/tts.png',
+                        url: 'https://aditya-cmd-max.github.io/Peo/app.html',
+                        color: 'bg-pink-500'
+                    }, {
+                        id: 'securepass',
+                        name: 'Securepass',
+                        description: 'Your perfect password advisor for secure and strong passwords.',
+                        logoUrl: 'https://aditya-cmd-max.github.io/securepass/logo-dark.png',
+                        url: 'https://aditya-cmd-max.github.io/securepass',
+                        color: 'bg-red-500'
+                    }];
+                }
+            }
+
+            saveToLocalStorage() {
+                localStorage.setItem('theme', this.currentTheme);
+                localStorage.setItem('favorites', JSON.stringify(this.favorites));
+                localStorage.setItem('hasSeenLogoHint', this.hasSeenLogoHint.toString());
+                localStorage.setItem('notifications', JSON.stringify(this.notifications));
+                localStorage.setItem('pushNotificationsEnabled', this.pushNotificationsEnabled.toString());
+                localStorage.setItem('inAppNotificationsEnabled', this.inAppNotificationsEnabled.toString());
+                localStorage.setItem('isAppInstalled', this.isAppInstalled.toString());
+            }
+        }
+
+        // Enhanced UI Controller
+        class UIController {
+            constructor(appState) {
+                this.state = appState;
+                this.elements = this.initializeElements();
+                this.setupEventListeners();
+            }
+
+            initializeElements() {
+                return {
+                    mainContent: document.getElementById('main-content'),
+                    settingsModal: document.getElementById('settings-modal'),
+                    searchOverlay: document.getElementById('search-overlay'),
+                    searchModal: document.getElementById('search-modal'),
+                    searchInput: document.getElementById('search-input'),
+                    searchResults: document.getElementById('search-results'),
+                    appView: document.getElementById('app-view'),
+                    appTitle: document.getElementById('app-title'),
+                    appContent: document.getElementById('app-content'),
+                    splashScreen: document.getElementById('splash'),
+                    toast: document.getElementById('toast'),
+                    settingsModalContent: document.getElementById('settings-modal-content'),
+                    logoModal: document.getElementById('logo-modal'),
+                    logoModalContent: document.getElementById('logo-modal-content'),
+                    logoBtn: document.getElementById('logo-btn'),
+                    firstTimeHint: document.getElementById('first-time-hint'),
+                    notificationsBtn: document.getElementById('notifications-btn'),
+                    notificationBadge: document.getElementById('notification-badge'),
+                    notificationsModal: document.getElementById('notifications-modal'),
+                    notificationsModalContent: document.getElementById('notifications-modal-content'),
+                    notificationsList: document.getElementById('notifications-list'),
+                    pushNotificationsToggle: document.getElementById('push-notifications-toggle'),
+                    inAppNotificationsToggle: document.getElementById('inapp-notifications-toggle'),
+                    installPrompt: document.getElementById('install-prompt'),
+                    installBtn: document.getElementById('install-btn'),
+                    closeInstallPrompt: document.getElementById('close-install-prompt'),
+                    installAppBtn: document.getElementById('install-app-btn')
+                };
+            }
+
+            setupEventListeners() {
+                // Theme buttons
+                document.querySelectorAll('.theme-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.applyTheme(btn.dataset.theme);
+                    });
                 });
-            } else {
-                showToast('App Update not available');
-            }
-        }
-
-        // Enhanced notification initialization
-        async function initNotifications() {
-            console.log('🔔 Initializing notifications...');
-            
-            // Clear any existing intervals
-            clearAllNotificationIntervals();
-            
-            // Update notification badge
-            updateNotificationBadge();
-            
-            // Initialize push notifications only if enabled
-            if (pushNotificationsEnabled) {
-                await initializePushNotifications();
-            }
-            
-            // Schedule regular notifications
-            scheduleEnhancedNotifications();
-        }
-
-        // Separate push notification initialization
-        async function initializePushNotifications() {
-            try {
-                // Check if we have permission
-                if (Notification.permission === 'granted') {
-                    console.log('✅ Notification permission already granted');
-                    await subscribeToPushNotifications();
-                } else if (Notification.permission === 'default') {
-                    console.log('ℹ️ Notification permission not yet requested');
-                    // We'll request permission on first user interaction
-                } else {
-                    console.log('❌ Notification permission denied');
-                }
-            } catch (error) {
-                console.error('❌ Push notification initialization failed:', error);
-            }
-        }
-
-        // Enhanced push notification subscription
-        async function subscribeToPushNotifications() {
-            try {
-                // Check browser support
-                if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-                    console.log('❌ Push notifications not supported in this browser');
-                    showToast('Push notifications not supported');
-                    return null;
-                }
-
-                // Check notification permission
-                if (Notification.permission === 'denied') {
-                    console.log('❌ Notification permission denied by user');
-                    showToast('Please enable notifications in browser settings');
-                    return null;
-                }
-
-                // Wait for service worker to be ready
-                const registration = await navigator.serviceWorker.ready;
                 
-                // Check if already subscribed
-                let subscription = await registration.pushManager.getSubscription();
-                
-                if (subscription) {
-                    console.log('✅ Already subscribed to push notifications');
-                    return subscription;
-                }
-
-                // Request permission if not already granted
-                if (Notification.permission === 'default') {
-                    const permission = await Notification.requestPermission();
-                    if (permission !== 'granted') {
-                        console.log('❌ Notification permission not granted');
-                        showToast('Notifications permission required');
-                        return null;
-                    }
-                }
-
-                // Subscribe to push notifications
-                subscription = await registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array('BLaZmVYnyEcksSzkLqgJYbeUcDUsqwQRcPoypsbMLBYiAKDymDtYboOJ1SBr7Thh0apXN17UDeAC2EPNnyh5x-c')
+                // Settings button
+                document.getElementById('settings-btn').addEventListener('click', () => {
+                    this.elements.settingsModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        this.elements.settingsModalContent.classList.add('opacity-100');
+                        this.elements.settingsModalContent.classList.remove('scale-95');
+                    }, 10);
                 });
-
-                console.log('✅ Push subscription successful:', subscription);
                 
-                // Store subscription locally
-                localStorage.setItem('pushSubscription', JSON.stringify(subscription));
-                showToast('Push notifications enabled!');
+                // Close settings button
+                document.getElementById('close-settings-btn').addEventListener('click', () => this.closeSettings());
                 
-                return subscription;
-
-            } catch (error) {
-                console.error('❌ Push subscription failed:', error);
+                // Search button
+                document.getElementById('search-btn').addEventListener('click', () => {
+                    this.elements.searchOverlay.classList.remove('hidden');
+                    setTimeout(() => {
+                        this.elements.searchModal.classList.add('opacity-100');
+                        this.elements.searchModal.classList.remove('scale-95');
+                        this.elements.searchInput.focus();
+                    }, 10);
+                });
                 
-                // Show specific error messages
-                if (error.name === 'NotAllowedError') {
-                    showToast('Notification permission denied');
-                } else if (error.name === 'AbortError') {
-                    showToast('Push subscription was aborted');
-                } else {
-                    showToast('Failed to enable push notifications');
-                }
+                // Close search button
+                document.getElementById('close-search-btn').addEventListener('click', () => this.closeSearch());
                 
-                return null;
-            }
-        }
-
-        // Enhanced VAPID key conversion function
-        function urlBase64ToUint8Array(base64String) {
-            try {
-                const padding = '='.repeat((4 - base64String.length % 4) % 4);
-                const base64 = (base64String + padding)
-                    .replace(/\-/g, '+')
-                    .replace(/_/g, '/');
+                // Logo button
+                this.elements.logoBtn.addEventListener('click', () => this.openLogoModal());
                 
-                const rawData = atob(base64);
-                const outputArray = new Uint8Array(rawData.length);
+                // Close logo modal button
+                document.getElementById('close-logo-modal-btn').addEventListener('click', () => this.closeLogoModal());
                 
-                for (let i = 0; i < rawData.length; ++i) {
-                    outputArray[i] = rawData.charCodeAt(i);
-                }
-                return outputArray;
-            } catch (error) {
-                console.error('❌ Invalid VAPID key format:', error);
-                throw new Error('Invalid VAPID key format');
-            }
-        }
-
-        // Function to unsubscribe from push notifications
-        async function unsubscribeFromPushNotifications() {
-            try {
-                if ('serviceWorker' in navigator) {
-                    const registration = await navigator.serviceWorker.ready;
-                    const subscription = await registration.pushManager.getSubscription();
+                // Notifications button
+                this.elements.notificationsBtn.addEventListener('click', () => this.openNotificationsModal());
+                
+                // Close notifications button
+                document.getElementById('close-notifications-btn').addEventListener('click', () => this.closeNotificationsModal());
+                
+                // Clear notifications button
+                document.getElementById('clear-notifications-btn').addEventListener('click', () => this.clearNotifications());
+                
+                // Push notifications toggle
+                this.elements.pushNotificationsToggle.addEventListener('change', (e) => {
+                    this.state.pushNotificationsEnabled = e.target.checked;
+                    this.state.saveToLocalStorage();
                     
-                    if (subscription) {
-                        await subscription.unsubscribe();
-                        console.log('✅ Unsubscribed from push notifications');
-                        localStorage.removeItem('pushSubscription');
+                    if (this.state.pushNotificationsEnabled) {
+                        this.subscribeToPushNotifications();
+                    } else {
+                        this.unsubscribeFromPushNotifications();
                     }
-                }
-            } catch (error) {
-                console.error('❌ Failed to unsubscribe from push notifications:', error);
-            }
-        }
+                });
+                
+                // In-app notifications toggle
+                this.elements.inAppNotificationsToggle.addEventListener('change', (e) => {
+                    this.state.inAppNotificationsEnabled = e.target.checked;
+                    this.state.saveToLocalStorage();
+                    this.showToast(this.state.inAppNotificationsEnabled ? 'In-app notifications enabled' : 'In-app notifications disabled');
+                    
+                    if (this.state.inAppNotificationsEnabled) {
+                        this.scheduleEnhancedNotifications();
+                    } else {
+                        this.clearAllNotificationIntervals();
+                    }
+                });
+                
+                // Install app buttons
+                this.elements.installBtn.addEventListener('click', () => this.installApp());
+                this.elements.installAppBtn.addEventListener('click', () => this.installApp());
+                this.elements.closeInstallPrompt.addEventListener('click', () => {
+                    this.elements.installPrompt.classList.add('hidden');
+                });
+                
+                // Search input
+                this.elements.searchInput.addEventListener('input', () => this.handleSearch());
+                
+                // Navigation tabs
+                document.querySelectorAll('[data-tab]').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        document.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        this.state.currentTab = tab.dataset.tab;
+                        this.renderContent();
+                    });
+                });
+                
+                // Back to home button
+                document.getElementById('back-to-home-btn').addEventListener('click', () => {
+                    this.elements.appView.classList.remove('active');
+                    document.querySelector('.nav-container').style.opacity = '1';
+                    document.querySelector('.nav-container').style.pointerEvents = 'auto';
+                });
+                
+                // Close search when clicking outside
+                this.elements.searchOverlay.addEventListener('click', (e) => {
+                    if (e.target === this.elements.searchOverlay) {
+                        this.closeSearch();
+                    }
+                });
+                
+                // Close settings when clicking outside
+                this.elements.settingsModal.addEventListener('click', (e) => {
+                    if (e.target === this.elements.settingsModal) {
+                        this.closeSettings();
+                    }
+                });
+                
+                // Close logo modal when clicking outside
+                this.elements.logoModal.addEventListener('click', (e) => {
+                    if (e.target === this.elements.logoModal) {
+                        this.closeLogoModal();
+                    }
+                });
+                
+                // Close notifications modal when clicking outside
+                this.elements.notificationsModal.addEventListener('click', (e) => {
+                    if (e.target === this.elements.notificationsModal) {
+                        this.closeNotificationsModal();
+                    }
+                });
 
-        // Send push notification (simulated for demo)
-        function sendPushNotification(notification) {
-            if (pushNotificationsEnabled && 'serviceWorker' in navigator) {
-                navigator.serviceWorker.ready.then(registration => {
-                    registration.showNotification(notification.title, {
-                        body: notification.message,
-                        icon: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-                        badge: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-                        tag: notification.id,
-                        requireInteraction: true,
-                        actions: [
-                            {
-                                action: 'open',
-                                title: 'Open App'
-                            },
-                            {
-                                action: 'dismiss',
-                                title: 'Dismiss'
-                            }
-                        ]
+                // Add swipe navigation
+                this.setupSwipeNavigation();
+            }
+
+            setupSwipeNavigation() {
+                let startX = 0;
+                let currentX = 0;
+                const threshold = 50;
+
+                this.elements.mainContent.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                });
+
+                this.elements.mainContent.addEventListener('touchmove', (e) => {
+                    currentX = e.touches[0].clientX;
+                });
+
+                this.elements.mainContent.addEventListener('touchend', () => {
+                    const diff = startX - currentX;
+                    
+                    if (Math.abs(diff) > threshold) {
+                        if (diff > 0) {
+                            // Swipe left - go to next tab
+                            this.switchToNextTab();
+                        } else {
+                            // Swipe right - go to previous tab
+                            this.switchToPreviousTab();
+                        }
+                    }
+                });
+            }
+
+            switchToNextTab() {
+                const tabs = ['home', 'favorites', 'updates'];
+                const currentIndex = tabs.indexOf(this.state.currentTab);
+                const nextIndex = (currentIndex + 1) % tabs.length;
+                this.switchTab(tabs[nextIndex]);
+            }
+
+            switchToPreviousTab() {
+                const tabs = ['home', 'favorites', 'updates'];
+                const currentIndex = tabs.indexOf(this.state.currentTab);
+                const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                this.switchTab(tabs[prevIndex]);
+            }
+
+            switchTab(tabName) {
+                document.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('active'));
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+                this.state.currentTab = tabName;
+                this.renderContent();
+                
+                // Add swipe animation
+                this.elements.mainContent.classList.add('swipe-transitioning');
+                setTimeout(() => {
+                    this.elements.mainContent.classList.remove('swipe-transitioning');
+                }, 300);
+            }
+
+            applyTheme(theme) {
+                document.documentElement.className = theme;
+                this.state.currentTheme = theme;
+                this.state.saveToLocalStorage();
+            }
+
+            renderContent() {
+                let html = '';
+                
+                if (this.state.currentTab === 'home') {
+                    html = this.renderHomeTab();
+                } else if (this.state.currentTab === 'favorites') {
+                    html = this.renderFavoritesTab();
+                } else if (this.state.currentTab === 'updates') {
+                    html = this.renderUpdatesTab();
+                }
+                
+                this.elements.mainContent.innerHTML = html;
+                
+                // Add event listeners to product cards
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const productId = card.dataset.productId;
+                        this.openProduct(productId);
+                    });
+                });
+                
+                // Add event listeners to favorite buttons
+                document.querySelectorAll('.favorite-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const productId = btn.dataset.productId;
+                        this.toggleFavorite(productId);
                     });
                 });
             }
-        }
 
-        // FIXED: Schedule notifications with proper timing and cleanup
-        function scheduleEnhancedNotifications() {
-            if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
-            
-            // Clear any existing intervals first
-            clearAllNotificationIntervals();
-            
-            // Add welcome notification (only once per day)
-            const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
-            const today = new Date().toDateString();
-            
-            if (lastWelcomeDate !== today) {
-                addNotification({
-                    id: 'welcome-' + Date.now(),
-                    title: ' Exonova Axis! 🚀',
-                    message: 'Your productivity hub is ready. Explore all tools in one place.',
-                    type: 'welcome',
-                    timestamp: Date.now(),
-                    read: false
-                });
-                localStorage.setItem('lastWelcomeDate', today);
-                console.log('✅ Welcome notification added for today');
-            } else {
-                console.log('ℹ️ Welcome notification already shown today');
-            }
-            
-            // Schedule in-app notifications with much longer intervals for safety
-            scheduleInAppNotifications();
-        }
-
-        // FIXED: Schedule in-app notifications with proper intervals
-        function scheduleInAppNotifications() {
-            // Clear any existing intervals
-            clearAllNotificationIntervals();
-            
-            const oneHourNotifications = [
-                {
-                    title: 'Productivity Tip 💡',
-                    message: 'Use El Futuro AI to automate your daily tasks and save time.',
-                    type: 'tip'
-                },
-                {
-                    title: 'Did You Know? 🤔',
-                    message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
-                    type: 'info'
-                }
-            ];
-            
-            const twoHourNotifications = [
-                {
-                    title: 'Feature Spotlight 🔦',
-                    message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
-                    type: 'update'
-                },
-                {
-                    title: 'Try This 👇',
-                    message: 'Peo-TTS for natural sounding text-to-speech conversion.',
-                    type: 'tip'
-                }
-            ];
-            
-            // Use much longer intervals for safety (6 hours and 12 hours)
-            const sixHourInterval = setInterval(() => {
-                if (oneHourNotifications.length > 0 && document.visibilityState === 'visible') {
-                    const oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
-                    const notification = oneHourNotifications[oneHourIndex];
-                    
-                    addNotification({
-                        id: 'inapp-6h-' + Date.now(),
-                        title: notification.title,
-                        message: notification.message,
-                        type: notification.type,
-                        timestamp: Date.now(),
-                        read: false
-                    });
-                    
-                    localStorage.setItem('oneHourIndex', ((oneHourIndex + 1) % oneHourNotifications.length).toString());
-                }
-            }, 6 * 60 * 60 * 1000); // 6 hours
-            
-            const twelveHourInterval = setInterval(() => {
-                if (twoHourNotifications.length > 0 && document.visibilityState === 'visible') {
-                    const twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
-                    const notification = twoHourNotifications[twoHourIndex];
-                    
-                    addNotification({
-                        id: 'inapp-12h-' + Date.now(),
-                        title: notification.title,
-                        message: notification.message,
-                        type: notification.type,
-                        timestamp: Date.now(),
-                        read: false
-                    });
-                    
-                    localStorage.setItem('twoHourIndex', ((twoHourIndex + 1) % twoHourNotifications.length).toString());
-                }
-            }, 12 * 60 * 60 * 1000); // 12 hours
-            
-            // Track intervals for cleanup
-            notificationIntervals.push(sixHourInterval, twelveHourInterval);
-        }
-
-        // FIXED: Clear all notification intervals
-        function clearAllNotificationIntervals() {
-            notificationIntervals.forEach(interval => {
-                clearInterval(interval);
-            });
-            notificationIntervals = [];
-        }
-
-        // Add a notification
-        function addNotification(notification) {
-            notifications.unshift(notification);
-            localStorage.setItem('notifications', JSON.stringify(notifications));
-            updateNotificationBadge();
-            
-            // Show push notification if enabled
-            if (pushNotificationsEnabled) {
-                sendPushNotification(notification);
-            }
-            
-            // Show in-app notification if enabled
-            if (inAppNotificationsEnabled && document.visibilityState === 'visible') {
-                showToast(`📱 ${notification.title}`);
-            }
-        }
-
-        // Update notification badge
-        function updateNotificationBadge() {
-            const unreadCount = notifications.filter(n => !n.read).length;
-            if (unreadCount > 0) {
-                notificationBadge.textContent = unreadCount > 9 ? '9+' : unreadCount;
-                notificationBadge.classList.remove('hidden');
-            } else {
-                notificationBadge.classList.add('hidden');
-            }
-        }
-
-        // Mark notification as read
-        function markNotificationAsRead(notificationId) {
-            const notification = notifications.find(n => n.id === notificationId);
-            if (notification && !notification.read) {
-                notification.read = true;
-                localStorage.setItem('notifications', JSON.stringify(notifications));
-                updateNotificationBadge();
-                renderNotifications();
-            }
-        }
-
-        // Clear all notifications
-        function clearNotifications() {
-            notifications = [];
-            localStorage.setItem('notifications', JSON.stringify(notifications));
-            updateNotificationBadge();
-            renderNotifications();
-            showToast('Notifications cleared');
-        }
-
-        // Enhanced notification display with better styling
-        function renderNotifications() {
-            if (notifications.length === 0) {
-                notificationsList.innerHTML = `
-                    <div class="text-center py-8 opacity-75">
-                        <span class="material-icons text-4xl mb-2">notifications_off</span>
-                        <p>No notifications</p>
-                        <p class="text-xs mt-2">You'll receive notifications about updates and tips</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Group notifications by date
-            const today = new Date().toDateString();
-            const yesterday = new Date(Date.now() - 86400000).toDateString();
-            
-            const todayNotifications = notifications.filter(n => 
-                new Date(n.timestamp).toDateString() === today
-            );
-            
-            const yesterdayNotifications = notifications.filter(n => 
-                new Date(n.timestamp).toDateString() === yesterday
-            );
-            
-            const olderNotifications = notifications.filter(n => {
-                const date = new Date(n.timestamp).toDateString();
-                return date !== today && date !== yesterday;
-            });
-            
-            let html = '';
-            
-            // Today's notifications
-            if (todayNotifications.length > 0) {
-                html += `<div class="mb-4">
-                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Today</h3>
-                    ${todayNotifications.map(notification => renderNotificationItem(notification)).join('')}
-                </div>`;
-            }
-            
-            // Yesterday's notifications
-            if (yesterdayNotifications.length > 0) {
-                html += `<div class="mb-4">
-                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Yesterday</h3>
-                    ${yesterdayNotifications.map(notification => renderNotificationItem(notification)).join('')}
-                </div>`;
-            }
-            
-            // Older notifications
-            if (olderNotifications.length > 0) {
-                html += `<div class="mb-4">
-                    <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Older</h3>
-                    ${olderNotifications.map(notification => renderNotificationItem(notification)).join('')}
-                </div>`;
-            }
-            
-            notificationsList.innerHTML = html;
-            
-            // Add event listeners to notifications
-            notificationsList.querySelectorAll('[data-notification-id]').forEach(item => {
-                item.addEventListener('click', () => {
-                    const notificationId = item.dataset.notificationId;
-                    markNotificationAsRead(notificationId);
-                });
-            });
-        }
-
-        // Helper function to render individual notification items
-        function renderNotificationItem(notification) {
-            return `
-                <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ${!notification.read ? 'bg-opacity-5' : ''}" data-notification-id="${notification.id}">
-                    <div class="flex items-start space-x-3">
-                        <span class="material-icons text-${getNotificationColor(notification.type)} ${!notification.read ? 'animate-pulse' : ''}">${getNotificationIcon(notification.type)}</span>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start">
-                                <h3 class="font-medium ${!notification.read ? 'font-semibold' : ''}">${notification.title}</h3>
-                                <span class="text-xs opacity-50 whitespace-nowrap">${formatTime(notification.timestamp)}</span>
-                            </div>
-                            <p class="text-sm opacity-75 mt-1">${notification.message}</p>
-                            ${notification.type === 'welcome' ? '<div class="mt-2 text-xs bg-blue-500 bg-opacity-20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full inline-block">Daily Welcome</div>' : ''}
-                        </div>
-                        ${!notification.read ? '<div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>' : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        // Enhanced notification icon mapping
-        function getNotificationIcon(type) {
-            switch(type) {
-                case 'welcome': return 'rocket_launch';
-                case 'info': return 'info';
-                case 'update': return 'update';
-                case 'tip': return 'lightbulb';
-                case 'warning': return 'warning';
-                default: return 'notifications';
-            }
-        }
-
-        // Enhanced notification color mapping
-        function getNotificationColor(type) {
-            switch(type) {
-                case 'welcome': return 'purple-500';
-                case 'info': return 'blue-500';
-                case 'update': return 'green-500';
-                case 'tip': return 'yellow-500';
-                case 'warning': return 'red-500';
-                default: return 'gray-500';
-            }
-        }
-
-        // Format time for notifications
-        function formatTime(timestamp) {
-            const now = Date.now();
-            const diff = now - timestamp;
-            const minutes = Math.floor(diff / 60000);
-            const hours = Math.floor(diff / 3600000);
-            const days = Math.floor(diff / 86400000);
-            
-            if (minutes < 1) return 'Just now';
-            if (minutes < 60) return `${minutes}m ago`;
-            if (hours < 24) return `${hours}h ago`;
-            return `${days}d ago`;
-        }
-
-        // Open notifications modal
-        function openNotificationsModal() {
-            renderNotifications();
-            notificationsModal.classList.remove('hidden');
-            setTimeout(() => {
-                notificationsModalContent.classList.add('opacity-100');
-                notificationsModalContent.classList.remove('scale-95');
-            }, 10);
-        }
-
-        // Close notifications modal
-        function closeNotificationsModal() {
-            notificationsModalContent.classList.remove('opacity-100');
-            notificationsModalContent.classList.add('scale-95');
-            
-            setTimeout(() => {
-                notificationsModal.classList.add('hidden');
-            }, 300);
-        }
-
-        // Update current time
-        function updateTime() {
-            const now = new Date();
-            const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', options);
-        }
-
-        // Apply theme to the app
-        function applyTheme(theme) {
-            document.documentElement.className = theme;
-            localStorage.setItem('theme', theme);
-            currentTheme = theme;
-        }
-
-        // Render content based on current tab
-        function renderContent() {
-            let html = '';
-            
-            if (currentTab === 'home') {
-                html = renderHomeTab();
-            } else if (currentTab === 'favorites') {
-                html = renderFavoritesTab();
-            } else if (currentTab === 'updates') {
-                html = renderUpdatesTab();
-            }
-            
-            mainContent.innerHTML = html;
-            
-            // Add event listeners to product cards
-            document.querySelectorAll('.product-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const productId = card.dataset.productId;
-                    openProduct(productId);
-                });
-            });
-            
-            // Add event listeners to favorite buttons
-            document.querySelectorAll('.favorite-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const productId = btn.dataset.productId;
-                    toggleFavorite(productId);
-                });
-            });
-        }
-
-        // Render Home Tab
-        function renderHomeTab() {
-            return `
-                <div class="p-4">
-                    <h2 class="text-5xl font-bold mb-2">Welcome to Exonova</h2>
-  
-  
-  
-                    <p class="text-2xl opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
-                    
-                    <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-  <!-- First SVG -->
-  <svg width="52" height="52" viewBox="0 0 282 281">
-    <path 
-      d="M75.9469 280.078C91.5033 280.078 105.96 275.398 117.97 267.376C130.585 258.951 151.308 258.951 163.924 267.376C175.934 275.398 190.39 280.078 205.947 280.078C247.615 280.078 281.394 246.499 281.394 205.078C281.394 189.768 276.779 175.529 268.856 163.661C260.282 150.817 260.282 129.339 268.856 116.496C276.779 104.628 281.394 90.3887 281.394 75.0781C281.394 33.6568 247.615 0.078125 205.947 0.078125C190.39 0.078125 175.934 4.75843 163.924 12.7798C151.308 21.2056 130.585 21.2056 117.97 12.7798C105.96 4.75843 91.5033 0.078125 75.9469 0.078125C34.2787 0.078125 0.5 33.6568 0.5 75.0781C0.5 90.3887 5.11505 104.628 13.0377 116.496C21.6119 129.339 21.6119 150.817 13.0377 163.661C5.11505 175.529 0.5 189.768 0.5 205.078C0.5 246.499 34.2787 280.078 75.9469 280.078Z" 
-      fill="url(#purple-gradient)" stroke="#6750A4" stroke-width="2"
-    />
-    <defs>
-      <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#7F3FBF"/>
-        <stop offset="100%" stop-color="#6750A4"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <!-- Second SVG: scaled to fit same visual size -->
-  <svg width="60" height="60" viewBox="0 0 249 247">
-    <path 
-      d="M245.7,56.1l0-9.9c0-22.7-18.4-41-41-41l-160.2,0c-22.7,0-41,18.4-41,41l0,9.9c0,11,4.3,21,11.4,28.4 c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4l0,9.9c0,11,4.3,21,11.4,28.4c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4 l0,10.1c0,22.7,18.4,41,41,41l160.2,0c22.7,0,41-18.4,41-41l0-10.1c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5 c7.1-7.4,11.4-17.4,11.4-28.4l0-9.9c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5C241.3,77.1,245.7,67.1,245.7,56.1z" 
-      fill="url(#purple-gradient2)" stroke="#6750A4" stroke-width="2"
-      transform="scale(0.8) translate(28,28)" 
-    />
-    <defs>
-      <linearGradient id="purple-gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#7F3FBF"/>
-        <stop offset="100%" stop-color="#6750A4"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <!-- Third SVG: scaled to fit same visual size -->
-  <svg width="60" height="60" viewBox="0 0 277 301">
-    <path 
-      d="M108.103 8.24078C126.954 -2.64276 150.179 -2.64276 169.03 8.24078L246.169 52.7773C265.02 63.6609 276.633 83.7745 276.633 105.542V194.615C276.633 216.382 265.02 236.495 246.169 247.379L169.03 291.915C150.179 302.799 126.954 302.799 108.103 291.915L30.9635 247.379C12.1126 236.495 0.5 216.382 0.5 194.615V105.542C0.5 83.7745 12.1126 63.6609 30.9635 52.7773L108.103 8.24078Z" 
-      fill="url(#purple-gradient3)" stroke="#6750A4" stroke-width="2"
-      transform="scale(0.85) translate(22,15)" 
-    />
-    <defs>
-      <linearGradient id="purple-gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#7F3FBF"/>
-        <stop offset="100%" stop-color="#6750A4"/>
-      </linearGradient>
-    </defs>
-  </svg>
-</div>
-
-                    
-                    
-                    <div class="product-grid">
-                   
-                    
-                        ${products.map(product => `
-                            <div class="product-card ripple" data-product-id="${product.id}">
-                                <div class="product-logo ${product.color} relative overflow-hidden">
-    <div class="absolute inset-0 flex items-center justify-center">
-        <svg width="48" height="48" viewBox="0 0 444 442" class="absolute inset-0 w-full h-full">
-            <path d="M204.205 4.63126C215.258 -1.54115 228.742 -1.54115 239.795 4.63125L266.874 19.7527C272.176 22.7136 278.139 24.3042 284.218 24.3792L315.264 24.762C327.936 24.9182 339.614 31.6297 346.086 42.4769L361.942 69.0507C365.046 74.2541 369.412 78.5999 374.639 81.6906L401.333 97.4751C412.229 103.918 418.971 115.543 419.128 128.158L419.512 159.064C419.588 165.116 421.186 171.052 424.16 176.33L439.35 203.287C445.55 214.29 445.55 227.713 439.35 238.717L424.16 265.674C421.186 270.952 419.588 276.888 419.512 282.94L419.128 313.846C418.971 326.461 412.229 338.086 401.333 344.529L374.639 360.313C369.412 363.404 365.046 367.75 361.942 372.953L346.086 399.527C339.614 410.374 327.936 417.086 315.264 417.242L284.218 417.625C278.139 417.7 272.176 419.29 266.874 422.251L239.795 437.373C228.742 443.545 215.258 443.545 204.205 437.373L177.126 422.251C171.824 419.29 165.861 417.7 159.782 417.625L128.736 417.242C116.064 417.086 104.386 410.374 97.9142 399.527L82.0583 372.953C78.9536 367.75 74.5882 363.404 69.3612 360.313L42.6671 344.529C31.7709 338.086 25.029 326.461 24.8721 313.846L24.4875 282.94C24.4123 276.888 22.8144 270.952 19.8401 265.674L4.65025 238.717C-1.55008 227.713 -1.55008 214.29 4.65025 203.287L19.8401 176.33C22.8144 171.052 24.4122 165.116 24.4875 159.064L24.8721 128.158C25.029 115.543 31.7709 103.918 42.6671 97.4751L69.3612 81.6906C74.5882 78.5999 78.9536 74.2541 82.0583 69.0507L97.9142 42.4769C104.386 31.6297 116.064 24.9182 128.736 24.762L159.782 24.3792C165.861 24.3042 171.824 22.7136 177.126 19.7527L204.205 4.63126Z" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"/>
-        </svg>
-    </div>
-    <img src="${product.logoUrl}" alt="${product.name}" class="relative z-10 w-6 h-6 object-contain" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
-</div>
-                                <div class="product-info">
-                                    <h3>${product.name}</h3>
-                                    <p>${product.description}</p>
-                                </div>
-                                <button class="favorite-btn ripple" data-product-id="${product.id}">
-                                    <span class="material-icons ${favorites.includes(product.id) ? 'text-red-500' : 'opacity-50'}">favorite</span>
-                                </button>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="thank-you-section">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-blue-500 mb-2">
-                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                        </svg>
-                        <p>With Love,</p><p>From Exonova!</p>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Render Favorites Tab
-        function renderFavoritesTab() {
-            const favoriteProducts = products.filter(product => favorites.includes(product.id));
-            
-            if (favoriteProducts.length === 0) {
+            renderHomeTab() {
                 return `
-                    <div class="empty-state">
-                        <span class="material-icons">favorite_border</span>
-                        <h3 class="font-medium mb-2">No favorites yet</h3>
-                        <p class="opacity-75">Add products to favorites to see them here</p>
+                    <div class="p-4">
+                        <h2 class="text-5xl font-bold mb-2">Welcome to Exonova</h2>
+                        <p class="text-2xl opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
+                        
+                        <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
+                            <!-- SVG icons would go here -->
+                        </div>
+                        
+                        <div class="product-grid">
+                            ${this.state.products.map(product => `
+                                <div class="product-card ripple" data-product-id="${product.id}">
+                                    <div class="product-logo ${product.color} relative overflow-hidden">
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <svg width="48" height="48" viewBox="0 0 444 442" class="absolute inset-0 w-full h-full">
+                                                <path d="M204.205 4.63126C215.258 -1.54115 228.742 -1.54115 239.795 4.63125L266.874 19.7527C272.176 22.7136 278.139 24.3042 284.218 24.3792L315.264 24.762C327.936 24.9182 339.614 31.6297 346.086 42.4769L361.942 69.0507C365.046 74.2541 369.412 78.5999 374.639 81.6906L401.333 97.4751C412.229 103.918 418.971 115.543 419.128 128.158L419.512 159.064C419.588 165.116 421.186 171.052 424.16 176.33L439.35 203.287C445.55 214.29 445.55 227.713 439.35 238.717L424.16 265.674C421.186 270.952 419.588 276.888 419.512 282.94L419.128 313.846C418.971 326.461 412.229 338.086 401.333 344.529L374.639 360.313C369.412 363.404 365.046 367.75 361.942 372.953L346.086 399.527C339.614 410.374 327.936 417.086 315.264 417.242L284.218 417.625C278.139 417.7 272.176 419.29 266.874 422.251L239.795 437.373C228.742 443.545 215.258 443.545 204.205 437.373L177.126 422.251C171.824 419.29 165.861 417.7 159.782 417.625L128.736 417.242C116.064 417.086 104.386 410.374 97.9142 399.527L82.0583 372.953C78.9536 367.75 74.5882 363.404 69.3612 360.313L42.6671 344.529C31.7709 338.086 25.029 326.461 24.8721 313.846L24.4875 282.94C24.4123 276.888 22.8144 270.952 19.8401 265.674L4.65025 238.717C-1.55008 227.713 -1.55008 214.29 4.65025 203.287L19.8401 176.33C22.8144 171.052 24.4122 165.116 24.4875 159.064L24.8721 128.158C25.029 115.543 31.7709 103.918 42.6671 97.4751L69.3612 81.6906C74.5882 78.5999 78.9536 74.2541 82.0583 69.0507L97.9142 42.4769C104.386 31.6297 116.064 24.9182 128.736 24.762L159.782 24.3792C165.861 24.3042 171.824 22.7136 177.126 19.7527L204.205 4.63126Z" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"/>
+                                            </svg>
+                                        </div>
+                                        <img src="${product.logoUrl}" alt="${product.name}" class="relative z-10 w-6 h-6 object-contain" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>${product.name}</h3>
+                                        <p>${product.description}</p>
+                                    </div>
+                                    <button class="favorite-btn ripple" data-product-id="${product.id}">
+                                        <span class="material-icons ${this.state.favorites.includes(product.id) ? 'text-red-500' : 'opacity-50'}">favorite</span>
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="thank-you-section">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-blue-500 mb-2">
+                                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                            </svg>
+                            <p>With Love,</p><p>From Exonova!</p>
+                        </div>
                     </div>
                 `;
             }
-            
-            return `
-                <div class="p-4">
-                    <h2 class="text-5xl font-bold mb-6">Your Favorites</h2>
-                    <div class="product-grid">
-                        ${favoriteProducts.map(product => `
-                            <div class="product-card ripple" data-product-id="${product.id}">
-                                <div class="product-logo ${product.color}">
-                                    <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+
+            renderFavoritesTab() {
+                const favoriteProducts = this.state.products.filter(product => this.state.favorites.includes(product.id));
+                
+                if (favoriteProducts.length === 0) {
+                    return `
+                        <div class="empty-state">
+                            <span class="material-icons">favorite_border</span>
+                            <h3 class="font-medium mb-2">No favorites yet</h3>
+                            <p class="opacity-75">Add products to favorites to see them here</p>
+                        </div>
+                    `;
+                }
+                
+                return `
+                    <div class="p-4">
+                        <h2 class="text-5xl font-bold mb-6">Your Favorites</h2>
+                        <div class="product-grid">
+                            ${favoriteProducts.map(product => `
+                                <div class="product-card ripple" data-product-id="${product.id}">
+                                    <div class="product-logo ${product.color}">
+                                        <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>${product.name}</h3>
+                                        <p>${product.description}</p>
+                                    </div>
+                                    <button class="favorite-btn ripple" data-product-id="${product.id}">
+                                        <span class="material-icons text-red-500">favorite</span>
+                                    </button>
                                 </div>
-                                <div class="product-info">
-                                    <h3>${product.name}</h3>
-                                    <p>${product.description}</p>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderUpdatesTab() {
+                return `
+                    <div class="p-4">
+                        <h2 class="text-5xl font-bold mb-6 text-white">Recent Updates</h2>
+
+                        <div class="m3-surface update-card" style="--accent-color: #6366F1;">
+                            <div class="flex items-start space-x-3">
+                                <div class="icon-wrapper">
+                                    <span class="material-icons">update</span>
                                 </div>
-                                <button class="favorite-btn ripple" data-product-id="${product.id}">
-                                    <span class="material-icons text-red-500">favorite</span>
-                                </button>
+                                <div>
+                                    <h3 class="font-medium">Background Notifications</h3>
+                                    <p>Notifications now work even when the app is closed using Background Sync API.</p>
+                                    <p class="text-xs opacity-50 mt-1">Just now</p>
+                                </div>
                             </div>
-                        `).join('')}
+                        </div>
+
+                        <div class="m3-surface update-card" style="--accent-color: #10B981;">
+                            <div class="flex items-start space-x-3">
+                                <div class="icon-wrapper">
+                                    <span class="material-icons">update</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Exonova Axis Improvement</h3>
+                                    <p>Completely redesigned UI with Android app feel</p>
+                                    <p class="text-xs opacity-50 mt-1">17/09/25 5:44 PM</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="m3-surface update-card" style="--accent-color: #8B5CF6;">
+                            <div class="flex items-start space-x-3">
+                                <div class="icon-wrapper">
+                                    <span class="material-icons">update</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">El Futuro AI Enhancements</h3>
+                                    <p>Improved the backing for better responses</p>
+                                    <p class="text-xs opacity-50 mt-1">12/09/25 7:48 PM</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            `;
-        }
-
-        // Render Updates Tab
-        function renderUpdatesTab() {
-            return `
-             <div class="p-4">
-  <h2 class="text-5xl font-bold mb-6 text-white">Recent Updates</h2>
-
-  <div class="m3-surface update-card" style="--accent-color: #6366F1;">
-    <div class="flex items-start space-x-3">
-      <div class="icon-wrapper">
-        <span class="material-icons">update</span>
-      </div>
-      <div>
-        <h3 class="font-medium">Background Notifications</h3>
-        <p>Notifications now work even when the app is closed using Background Sync API.</p>
-        <p class="text-xs opacity-50 mt-1">Just now</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="m3-surface update-card" style="--accent-color: #10B981;">
-    <div class="flex items-start space-x-3">
-      <div class="icon-wrapper">
-        <span class="material-icons">update</span>
-      </div>
-      <div>
-        <h3 class="font-medium">Exonova Axis Improvement</h3>
-        <p>Completely redesigned UI with Android app feel</p>
-        <p class="text-xs opacity-50 mt-1">17/09/25 5:44 PM</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="m3-surface update-card" style="--accent-color: #8B5CF6;">
-    <div class="flex items-start space-x-3">
-      <div class="icon-wrapper">
-        <span class="material-icons">update</span>
-      </div>
-      <div>
-        <h3 class="font-medium">El Futuro AI Enhancements</h3>
-        <p>Improved the backing for better responses</p>
-        <p class="text-xs opacity-50 mt-1">12/09/25 7:48 PM</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-            `;
-        }
-
-        // Toggle favorite status for a product
-        function toggleFavorite(productId) {
-            const index = favorites.indexOf(productId);
-            
-            if (index === -1) {
-                favorites.push(productId);
-                showToast('Added to favorites');
-                
-                // Send notification for favorite
-                const product = products.find(p => p.id === productId);
-                addNotification({
-                    id: Date.now(),
-                    title: 'Added to Favorites',
-                    message: `${product.name} has been added to your favorites.`,
-                    type: 'info',
-                    timestamp: Date.now(),
-                    read: false
-                });
-            } else {
-                favorites.splice(index, 1);
-                showToast('Removed from favorites');
-            }
-            
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            
-            // Update UI
-            const favoriteBtn = document.querySelector(`.favorite-btn[data-product-id="${productId}"]`);
-            if (favoriteBtn) {
-                const icon = favoriteBtn.querySelector('.material-icons');
-                if (favorites.includes(productId)) {
-                    icon.classList.remove('opacity-50');
-                    icon.classList.add('text-red-500');
-                    icon.classList.add('favorite-pulse');
-                    setTimeout(() => icon.classList.remove('favorite-pulse'), 300);
-                } else {
-                    icon.classList.add('opacity-50');
-                    icon.classList.remove('text-red-500');
-                }
-            }
-            
-            // If we're on the favorites tab, re-render it
-            if (currentTab === 'favorites') {
-                renderContent();
-            }
-        }
-
-        // Open a product in the app view
-        function openProduct(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            
-            appTitle.textContent = product.name;
-            appContent.innerHTML = `
-                <div class="h-full w-full flex items-center justify-center">
-                    <div class="text-center p-6">
-                        <div class="spinner mb-4"></div>
-                        <p>Loading ${product.name}...</p>
-                    </div>
-                </div>
-            `;
-            
-            appView.classList.add('active');
-            
-            // Simulate loading delay for demo purposes
-            setTimeout(() => {
-                appContent.innerHTML = `
-                    <iframe src="${product.url}" class="w-full h-full border-0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
                 `;
-            }, 1500);
-        }
+            }
 
-        // Show toast notification
-        function showToast(message) {
-            toast.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // Close search overlay
-        function closeSearch() {
-            searchModal.classList.remove('opacity-100');
-            searchModal.classList.add('scale-95');
-            searchInput.value = '';
-            searchResults.innerHTML = '';
-            
-            setTimeout(() => {
-                searchOverlay.classList.add('hidden');
-            }, 300);
-        }
-
-        // Close settings modal
-        function closeSettings() {
-            settingsModalContent.classList.remove('opacity-100');
-            settingsModalContent.classList.add('scale-95');
-            
-            setTimeout(() => {
-                settingsModal.classList.add('hidden');
-            }, 300);
-        }
-
-        // Open logo modal
-        function openLogoModal() {
-            logoModal.classList.remove('hidden');
-            setTimeout(() => {
-                logoModalContent.classList.add('opacity-100');
-                logoModalContent.classList.remove('scale-95');
-            }, 10);
-            
-            // Stop the logo animation once the modal is opened
-            logoBtn.classList.remove('logo-pulse');
-        }
-
-        // Close logo modal
-        function closeLogoModal() {
-            logoModalContent.classList.remove('opacity-100');
-            logoModalContent.classList.add('scale-95');
-            
-            setTimeout(() => {
-                logoModal.classList.add('hidden');
-            }, 300);
-        }
-
-        // Debug function to test notifications manually
-        function testAllNotifications() {
-            console.log('=== TESTING ALL NOTIFICATION TYPES ===');
-            
-            // Test in-app toast
-            showToast('🔔 Testing in-app notifications...');
-            
-            // Test adding to notification list
-            addNotification({
-                id: 'manual-test-' + Date.now(),
-                title: 'Manual Test ✅',
-                message: 'This is a test notification in your notifications list.',
-                type: 'info',
-                timestamp: Date.now(),
-                read: false
-            });
-        }
-
-        // Make it available globally for testing
-        window.testNotifications = testAllNotifications;
-
-        // Set up event listeners
-        function setupEventListeners() {
-            // Theme buttons
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    applyTheme(btn.dataset.theme);
-                });
-            });
-            
-            // Settings button
-            document.getElementById('settings-btn').addEventListener('click', () => {
-                settingsModal.classList.remove('hidden');
-                setTimeout(() => {
-                    settingsModalContent.classList.add('opacity-100');
-                    settingsModalContent.classList.remove('scale-95');
-                }, 10);
-            });
-            
-            // Close settings button
-            document.getElementById('close-settings-btn').addEventListener('click', closeSettings);
-            
-            // Search button
-            document.getElementById('search-btn').addEventListener('click', () => {
-                searchOverlay.classList.remove('hidden');
-                setTimeout(() => {
-                    searchModal.classList.add('opacity-100');
-                    searchModal.classList.remove('scale-95');
-                    searchInput.focus();
-                }, 10);
-            });
-            
-            // Close search button
-            document.getElementById('close-search-btn').addEventListener('click', closeSearch);
-            
-            // Logo button
-            logoBtn.addEventListener('click', openLogoModal);
-            
-            // Close logo modal button
-            document.getElementById('close-logo-modal-btn').addEventListener('click', closeLogoModal);
-            
-            // Notifications button
-            notificationsBtn.addEventListener('click', openNotificationsModal);
-            
-            // Close notifications button
-            document.getElementById('close-notifications-btn').addEventListener('click', closeNotificationsModal);
-            
-            // Clear notifications button
-            document.getElementById('clear-notifications-btn').addEventListener('click', clearNotifications);
-            
-            // Push notifications toggle - UPDATED
-            pushNotificationsToggle.addEventListener('change', async (e) => {
-                pushNotificationsEnabled = e.target.checked;
-                localStorage.setItem('pushNotificationsEnabled', pushNotificationsEnabled);
+            toggleFavorite(productId) {
+                const index = this.state.favorites.indexOf(productId);
                 
-                if (pushNotificationsEnabled) {
-                    // Enable push notifications
-                    const result = await subscribeToPushNotifications();
-                    if (!result) {
-                        // If subscription failed, uncheck the toggle
-                        pushNotificationsToggle.checked = false;
-                        pushNotificationsEnabled = false;
-                        localStorage.setItem('pushNotificationsEnabled', 'false');
+                if (index === -1) {
+                    this.state.favorites.push(productId);
+                    this.showToast('Added to favorites');
+                    
+                    // Send notification for favorite
+                    const product = this.state.products.find(p => p.id === productId);
+                    this.addNotification({
+                        id: Date.now(),
+                        title: 'Added to Favorites',
+                        message: `${product.name} has been added to your favorites.`,
+                        type: 'info',
+                        timestamp: Date.now(),
+                        read: false
+                    });
+                } else {
+                    this.state.favorites.splice(index, 1);
+                    this.showToast('Removed from favorites');
+                }
+                
+                this.state.saveToLocalStorage();
+                
+                // Update UI
+                const favoriteBtn = document.querySelector(`.favorite-btn[data-product-id="${productId}"]`);
+                if (favoriteBtn) {
+                    const icon = favoriteBtn.querySelector('.material-icons');
+                    if (this.state.favorites.includes(productId)) {
+                        icon.classList.remove('opacity-50');
+                        icon.classList.add('text-red-500');
+                        icon.classList.add('favorite-pulse');
+                        setTimeout(() => icon.classList.remove('favorite-pulse'), 300);
+                    } else {
+                        icon.classList.add('opacity-50');
+                        icon.classList.remove('text-red-500');
                     }
-                } else {
-                    // Disable push notifications
-                    await unsubscribeFromPushNotifications();
-                    showToast('Push notifications disabled');
                 }
-            });
-            
-            // In-app notifications toggle
-            inAppNotificationsToggle.addEventListener('change', (e) => {
-                inAppNotificationsEnabled = e.target.checked;
-                localStorage.setItem('inAppNotificationsEnabled', inAppNotificationsEnabled);
-                showToast(inAppNotificationsEnabled ? 'In-app notifications enabled' : 'In-app notifications disabled');
                 
-                // Restart notification scheduling
-                if (inAppNotificationsEnabled) {
-                    scheduleEnhancedNotifications();
-                } else {
-                    clearAllNotificationIntervals();
+                // If we're on the favorites tab, re-render it
+                if (this.state.currentTab === 'favorites') {
+                    this.renderContent();
                 }
-            });
-            
-            // Install app buttons
-            installBtn.addEventListener('click', installApp);
-            installAppBtn.addEventListener('click', installApp);
-            closeInstallPrompt.addEventListener('click', () => {
-                installPrompt.classList.add('hidden');
-            });
-            
-            // Search input
-            searchInput.addEventListener('input', () => {
-                const query = searchInput.value.toLowerCase();
+            }
+
+            openProduct(productId) {
+                const product = this.state.products.find(p => p.id === productId);
+                if (!product) return;
+                
+                this.elements.appTitle.textContent = product.name;
+                this.elements.appContent.innerHTML = `
+                    <div class="h-full w-full flex items-center justify-center">
+                        <div class="text-center p-6">
+                            <div class="spinner mb-4"></div>
+                            <p>Loading ${product.name}...</p>
+                        </div>
+                    </div>
+                `;
+                
+                this.elements.appView.classList.add('active');
+                
+                // Hide navigation when app is open
+                document.querySelector('.nav-container').style.opacity = '0';
+                document.querySelector('.nav-container').style.pointerEvents = 'none';
+                
+                // Simulate loading delay for demo purposes
+                setTimeout(() => {
+                    this.elements.appContent.innerHTML = `
+                        <iframe src="${product.url}" class="w-full h-full border-0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+                    `;
+                }, 1500);
+            }
+
+            showToast(message) {
+                this.elements.toast.textContent = message;
+                this.elements.toast.classList.add('show');
+                
+                setTimeout(() => {
+                    this.elements.toast.classList.remove('show');
+                }, 3000);
+            }
+
+            closeSearch() {
+                this.elements.searchModal.classList.remove('opacity-100');
+                this.elements.searchModal.classList.add('scale-95');
+                this.elements.searchInput.value = '';
+                this.elements.searchResults.innerHTML = '';
+                
+                setTimeout(() => {
+                    this.elements.searchOverlay.classList.add('hidden');
+                }, 300);
+            }
+
+            closeSettings() {
+                this.elements.settingsModalContent.classList.remove('opacity-100');
+                this.elements.settingsModalContent.classList.add('scale-95');
+                
+                setTimeout(() => {
+                    this.elements.settingsModal.classList.add('hidden');
+                }, 300);
+            }
+
+            openLogoModal() {
+                this.elements.logoModal.classList.remove('hidden');
+                setTimeout(() => {
+                    this.elements.logoModalContent.classList.add('opacity-100');
+                    this.elements.logoModalContent.classList.remove('scale-95');
+                }, 10);
+                
+                // Stop the logo animation once the modal is opened
+                this.elements.logoBtn.classList.remove('logo-pulse');
+            }
+
+            closeLogoModal() {
+                this.elements.logoModalContent.classList.remove('opacity-100');
+                this.elements.logoModalContent.classList.add('scale-95');
+                
+                setTimeout(() => {
+                    this.elements.logoModal.classList.add('hidden');
+                }, 300);
+            }
+
+            handleSearch() {
+                const query = this.elements.searchInput.value.toLowerCase();
                 
                 if (query.length === 0) {
-                    searchResults.innerHTML = '<p class="text-center py-4 opacity-75">Type to search Exonova products</p>';
+                    this.elements.searchResults.innerHTML = '<p class="text-center py-4 opacity-75">Type to search Exonova products</p>';
                     return;
                 }
                 
-                const results = products.filter(product => 
+                const results = this.state.products.filter(product => 
                     product.name.toLowerCase().includes(query) || 
                     product.description.toLowerCase().includes(query)
                 );
                 
                 if (results.length === 0) {
-                    searchResults.innerHTML = '<p class="text-center py-4 opacity-75">No products found</p>';
+                    this.elements.searchResults.innerHTML = '<p class="text-center py-4 opacity-75">No products found</p>';
                     return;
                 }
                 
-                searchResults.innerHTML = results.map(product => `
+                this.elements.searchResults.innerHTML = results.map(product => `
                     <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ripple" data-product-id="${product.id}">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-lg flex items-center justify-center ${product.color}">
@@ -2871,67 +2343,578 @@
                 `).join('');
                 
                 // Add event listeners to search results
-                searchResults.querySelectorAll('[data-product-id]').forEach(item => {
+                this.elements.searchResults.querySelectorAll('[data-product-id]').forEach(item => {
                     item.addEventListener('click', () => {
                         const productId = item.dataset.productId;
-                        closeSearch();
-                        openProduct(productId);
+                        this.closeSearch();
+                        this.openProduct(productId);
                     });
                 });
-            });
-            
-            // Navigation tabs
-            document.querySelectorAll('[data-tab]').forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    document.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    currentTab = tab.dataset.tab;
-                    renderContent();
+            }
+
+            // Notification methods
+            async initNotifications() {
+                console.log('🔔 Initializing notifications...');
+                
+                // Clear any existing intervals
+                this.clearAllNotificationIntervals();
+                
+                // Update notification badge
+                this.updateNotificationBadge();
+                
+                // Initialize push notifications only if enabled
+                if (this.state.pushNotificationsEnabled) {
+                    await this.initializePushNotifications();
+                }
+                
+                // Schedule regular notifications
+                this.scheduleEnhancedNotifications();
+            }
+
+            async initializePushNotifications() {
+                try {
+                    // Check if we have permission
+                    if (Notification.permission === 'granted') {
+                        console.log('✅ Notification permission already granted');
+                        await this.subscribeToPushNotifications();
+                    } else if (Notification.permission === 'default') {
+                        console.log('ℹ️ Notification permission not yet requested');
+                        // We'll request permission on first user interaction
+                    } else {
+                        console.log('❌ Notification permission denied');
+                    }
+                } catch (error) {
+                    console.error('❌ Push notification initialization failed:', error);
+                }
+            }
+
+            async subscribeToPushNotifications() {
+                try {
+                    // Check browser support
+                    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+                        console.log('❌ Push notifications not supported in this browser');
+                        this.showToast('Push notifications not supported');
+                        return null;
+                    }
+
+                    // Check notification permission
+                    if (Notification.permission === 'denied') {
+                        console.log('❌ Notification permission denied by user');
+                        this.showToast('Please enable notifications in browser settings');
+                        return null;
+                    }
+
+                    // Wait for service worker to be ready
+                    const registration = await navigator.serviceWorker.ready;
+                    
+                    // Check if already subscribed
+                    let subscription = await registration.pushManager.getSubscription();
+                    
+                    if (subscription) {
+                        console.log('✅ Already subscribed to push notifications');
+                        return subscription;
+                    }
+
+                    // Request permission if not already granted
+                    if (Notification.permission === 'default') {
+                        const permission = await Notification.requestPermission();
+                        if (permission !== 'granted') {
+                            console.log('❌ Notification permission not granted');
+                            this.showToast('Notifications permission required');
+                            return null;
+                        }
+                    }
+
+                    // Subscribe to push notifications
+                    subscription = await registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: this.urlBase64ToUint8Array('BLaZmVYnyEcksSzkLqgJYbeUcDUsqwQRcPoypsbMLBYiAKDymDtYboOJ1SBr7Thh0apXN17UDeAC2EPNnyh5x-c')
+                    });
+
+                    console.log('✅ Push subscription successful:', subscription);
+                    
+                    // Store subscription locally
+                    localStorage.setItem('pushSubscription', JSON.stringify(subscription));
+                    this.showToast('Push notifications enabled!');
+                    
+                    return subscription;
+
+                } catch (error) {
+                    console.error('❌ Push subscription failed:', error);
+                    
+                    // Show specific error messages
+                    if (error.name === 'NotAllowedError') {
+                        this.showToast('Notification permission denied');
+                    } else if (error.name === 'AbortError') {
+                        this.showToast('Push subscription was aborted');
+                    } else {
+                        this.showToast('Failed to enable push notifications');
+                    }
+                    
+                    return null;
+                }
+            }
+
+            urlBase64ToUint8Array(base64String) {
+                try {
+                    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+                    const base64 = (base64String + padding)
+                        .replace(/\-/g, '+')
+                        .replace(/_/g, '/');
+                    
+                    const rawData = atob(base64);
+                    const outputArray = new Uint8Array(rawData.length);
+                    
+                    for (let i = 0; i < rawData.length; ++i) {
+                        outputArray[i] = rawData.charCodeAt(i);
+                    }
+                    return outputArray;
+                } catch (error) {
+                    console.error('❌ Invalid VAPID key format:', error);
+                    throw new Error('Invalid VAPID key format');
+                }
+            }
+
+            async unsubscribeFromPushNotifications() {
+                try {
+                    if ('serviceWorker' in navigator) {
+                        const registration = await navigator.serviceWorker.ready;
+                        const subscription = await registration.pushManager.getSubscription();
+                        
+                        if (subscription) {
+                            await subscription.unsubscribe();
+                            console.log('✅ Unsubscribed from push notifications');
+                            localStorage.removeItem('pushSubscription');
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Failed to unsubscribe from push notifications:', error);
+                }
+            }
+
+            scheduleEnhancedNotifications() {
+                if (!this.state.pushNotificationsEnabled && !this.state.inAppNotificationsEnabled) return;
+                
+                // Clear any existing intervals first
+                this.clearAllNotificationIntervals();
+                
+                // Add welcome notification (only once per day)
+                const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
+                const today = new Date().toDateString();
+                
+                if (lastWelcomeDate !== today) {
+                    this.addNotification({
+                        id: 'welcome-' + Date.now(),
+                        title: ' Exonova Axis! 🚀',
+                        message: 'Your productivity hub is ready. Explore all tools in one place.',
+                        type: 'welcome',
+                        timestamp: Date.now(),
+                        read: false
+                    });
+                    localStorage.setItem('lastWelcomeDate', today);
+                    console.log('✅ Welcome notification added for today');
+                } else {
+                    console.log('ℹ️ Welcome notification already shown today');
+                }
+                
+                // Schedule in-app notifications with much longer intervals for safety
+                this.scheduleInAppNotifications();
+            }
+
+            scheduleInAppNotifications() {
+                // Clear any existing intervals
+                this.clearAllNotificationIntervals();
+                
+                const oneHourNotifications = [
+                    {
+                        title: 'Productivity Tip 💡',
+                        message: 'Use El Futuro AI to automate your daily tasks and save time.',
+                        type: 'tip'
+                    },
+                    {
+                        title: 'Did You Know? 🤔',
+                        message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
+                        type: 'info'
+                    }
+                ];
+                
+                const twoHourNotifications = [
+                    {
+                        title: 'Feature Spotlight 🔦',
+                        message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
+                        type: 'update'
+                    },
+                    {
+                        title: 'Try This 👇',
+                        message: 'Peo-TTS for natural sounding text-to-speech conversion.',
+                        type: 'tip'
+                    }
+                ];
+                
+                // Use much longer intervals for safety (6 hours and 12 hours)
+                const sixHourInterval = setInterval(() => {
+                    if (oneHourNotifications.length > 0 && document.visibilityState === 'visible') {
+                        const oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
+                        const notification = oneHourNotifications[oneHourIndex];
+                        
+                        this.addNotification({
+                            id: 'inapp-6h-' + Date.now(),
+                            title: notification.title,
+                            message: notification.message,
+                            type: notification.type,
+                            timestamp: Date.now(),
+                            read: false
+                        });
+                        
+                        localStorage.setItem('oneHourIndex', ((oneHourIndex + 1) % oneHourNotifications.length).toString());
+                    }
+                }, 6 * 60 * 60 * 1000); // 6 hours
+                
+                const twelveHourInterval = setInterval(() => {
+                    if (twoHourNotifications.length > 0 && document.visibilityState === 'visible') {
+                        const twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
+                        const notification = twoHourNotifications[twoHourIndex];
+                        
+                        this.addNotification({
+                            id: 'inapp-12h-' + Date.now(),
+                            title: notification.title,
+                            message: notification.message,
+                            type: notification.type,
+                            timestamp: Date.now(),
+                            read: false
+                        });
+                        
+                        localStorage.setItem('twoHourIndex', ((twoHourIndex + 1) % twoHourNotifications.length).toString());
+                    }
+                }, 12 * 60 * 60 * 1000); // 12 hours
+                
+                // Track intervals for cleanup
+                this.state.notificationIntervals.push(sixHourInterval, twelveHourInterval);
+            }
+
+            clearAllNotificationIntervals() {
+                this.state.notificationIntervals.forEach(interval => {
+                    clearInterval(interval);
                 });
-            });
-            
-            // Back to home button
-            document.getElementById('back-to-home-btn').addEventListener('click', () => {
-                appView.classList.remove('active');
-            });
-            
-            // Close search when clicking outside
-            searchOverlay.addEventListener('click', (e) => {
-                if (e.target === searchOverlay) {
-                    closeSearch();
+                this.state.notificationIntervals = [];
+            }
+
+            addNotification(notification) {
+                this.state.notifications.unshift(notification);
+                this.state.saveToLocalStorage();
+                this.updateNotificationBadge();
+                
+                // Show push notification if enabled
+                if (this.state.pushNotificationsEnabled) {
+                    this.sendPushNotification(notification);
                 }
-            });
-            
-            // Close settings when clicking outside
-            settingsModal.addEventListener('click', (e) => {
-                if (e.target === settingsModal) {
-                    closeSettings();
+                
+                // Show in-app notification if enabled
+                if (this.state.inAppNotificationsEnabled && document.visibilityState === 'visible') {
+                    this.showToast(`📱 ${notification.title}`);
                 }
-            });
-            
-            // Close logo modal when clicking outside
-            logoModal.addEventListener('click', (e) => {
-                if (e.target === logoModal) {
-                    closeLogoModal();
+            }
+
+            updateNotificationBadge() {
+                const unreadCount = this.state.notifications.filter(n => !n.read).length;
+                if (unreadCount > 0) {
+                    this.elements.notificationBadge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                    this.elements.notificationBadge.classList.remove('hidden');
+                } else {
+                    this.elements.notificationBadge.classList.add('hidden');
                 }
-            });
-            
-            // Close notifications modal when clicking outside
-            notificationsModal.addEventListener('click', (e) => {
-                if (e.target === notificationsModal) {
-                    closeNotificationsModal();
+            }
+
+            markNotificationAsRead(notificationId) {
+                const notification = this.state.notifications.find(n => n.id === notificationId);
+                if (notification && !notification.read) {
+                    notification.read = true;
+                    this.state.saveToLocalStorage();
+                    this.updateNotificationBadge();
+                    this.renderNotifications();
                 }
-            });
+            }
+
+            clearNotifications() {
+                this.state.notifications = [];
+                this.state.saveToLocalStorage();
+                this.updateNotificationBadge();
+                this.renderNotifications();
+                this.showToast('Notifications cleared');
+            }
+
+            renderNotifications() {
+                if (this.state.notifications.length === 0) {
+                    this.elements.notificationsList.innerHTML = `
+                        <div class="text-center py-8 opacity-75">
+                            <span class="material-icons text-4xl mb-2">notifications_off</span>
+                            <p>No notifications</p>
+                            <p class="text-xs mt-2">You'll receive notifications about updates and tips</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Group notifications by date
+                const today = new Date().toDateString();
+                const yesterday = new Date(Date.now() - 86400000).toDateString();
+                
+                const todayNotifications = this.state.notifications.filter(n => 
+                    new Date(n.timestamp).toDateString() === today
+                );
+                
+                const yesterdayNotifications = this.state.notifications.filter(n => 
+                    new Date(n.timestamp).toDateString() === yesterday
+                );
+                
+                const olderNotifications = this.state.notifications.filter(n => {
+                    const date = new Date(n.timestamp).toDateString();
+                    return date !== today && date !== yesterday;
+                });
+                
+                let html = '';
+                
+                // Today's notifications
+                if (todayNotifications.length > 0) {
+                    html += `<div class="mb-4">
+                        <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Today</h3>
+                        ${todayNotifications.map(notification => this.renderNotificationItem(notification)).join('')}
+                    </div>`;
+                }
+                
+                // Yesterday's notifications
+                if (yesterdayNotifications.length > 0) {
+                    html += `<div class="mb-4">
+                        <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Yesterday</h3>
+                        ${yesterdayNotifications.map(notification => this.renderNotificationItem(notification)).join('')}
+                    </div>`;
+                }
+                
+                // Older notifications
+                if (olderNotifications.length > 0) {
+                    html += `<div class="mb-4">
+                        <h3 class="text-sm font-medium opacity-75 mb-2 px-2">Older</h3>
+                        ${olderNotifications.map(notification => this.renderNotificationItem(notification)).join('')}
+                    </div>`;
+                }
+                
+                this.elements.notificationsList.innerHTML = html;
+                
+                // Add event listeners to notifications
+                this.elements.notificationsList.querySelectorAll('[data-notification-id]').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const notificationId = item.dataset.notificationId;
+                        this.markNotificationAsRead(notificationId);
+                    });
+                });
+            }
+
+            renderNotificationItem(notification) {
+                return `
+                    <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ${!notification.read ? 'bg-opacity-5' : ''}" data-notification-id="${notification.id}">
+                        <div class="flex items-start space-x-3">
+                            <span class="material-icons text-${this.getNotificationColor(notification.type)} ${!notification.read ? 'animate-pulse' : ''}">${this.getNotificationIcon(notification.type)}</span>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <h3 class="font-medium ${!notification.read ? 'font-semibold' : ''}">${notification.title}</h3>
+                                    <span class="text-xs opacity-50 whitespace-nowrap">${this.formatTime(notification.timestamp)}</span>
+                                </div>
+                                <p class="text-sm opacity-75 mt-1">${notification.message}</p>
+                                ${notification.type === 'welcome' ? '<div class="mt-2 text-xs bg-blue-500 bg-opacity-20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full inline-block">Daily Welcome</div>' : ''}
+                            </div>
+                            ${!notification.read ? '<div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>' : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            getNotificationIcon(type) {
+                switch(type) {
+                    case 'welcome': return 'rocket_launch';
+                    case 'info': return 'info';
+                    case 'update': return 'update';
+                    case 'tip': return 'lightbulb';
+                    case 'warning': return 'warning';
+                    default: return 'notifications';
+                }
+            }
+
+            getNotificationColor(type) {
+                switch(type) {
+                    case 'welcome': return 'purple-500';
+                    case 'info': return 'blue-500';
+                    case 'update': return 'green-500';
+                    case 'tip': return 'yellow-500';
+                    case 'warning': return 'red-500';
+                    default: return 'gray-500';
+                }
+            }
+
+            formatTime(timestamp) {
+                const now = Date.now();
+                const diff = now - timestamp;
+                const minutes = Math.floor(diff / 60000);
+                const hours = Math.floor(diff / 3600000);
+                const days = Math.floor(diff / 86400000);
+                
+                if (minutes < 1) return 'Just now';
+                if (minutes < 60) return `${minutes}m ago`;
+                if (hours < 24) return `${hours}h ago`;
+                return `${days}d ago`;
+            }
+
+            openNotificationsModal() {
+                this.renderNotifications();
+                this.elements.notificationsModal.classList.remove('hidden');
+                setTimeout(() => {
+                    this.elements.notificationsModalContent.classList.add('opacity-100');
+                    this.elements.notificationsModalContent.classList.remove('scale-95');
+                }, 10);
+            }
+
+            closeNotificationsModal() {
+                this.elements.notificationsModalContent.classList.remove('opacity-100');
+                this.elements.notificationsModalContent.classList.add('scale-95');
+                
+                setTimeout(() => {
+                    this.elements.notificationsModal.classList.add('hidden');
+                }, 300);
+            }
+
+            sendPushNotification(notification) {
+                if (this.state.pushNotificationsEnabled && 'serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.showNotification(notification.title, {
+                            body: notification.message,
+                            icon: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+                            badge: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                            tag: notification.id,
+                            requireInteraction: true,
+                            actions: [
+                                {
+                                    action: 'open',
+                                    title: 'Open App'
+                                },
+                                {
+                                    action: 'dismiss',
+                                    title: 'Dismiss'
+                                }
+                            ]
+                        });
+                    });
+                }
+            }
+
+            // PWA methods
+            initPWA() {
+                // Set toggle states
+                this.elements.pushNotificationsToggle.checked = this.state.pushNotificationsEnabled;
+                this.elements.inAppNotificationsToggle.checked = this.state.inAppNotificationsEnabled;
+                
+                // Listen for before install prompt
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    this.state.deferredPrompt = e;
+                    
+                    // Show install prompt if app isn't installed
+                    if (!this.state.isAppInstalled) {
+                        setTimeout(() => {
+                            this.elements.installPrompt.classList.remove('hidden');
+                        }, 5000);
+                    }
+                });
+                
+                // Check if app is already installed
+                window.addEventListener('appinstalled', () => {
+                    this.state.isAppInstalled = true;
+                    this.state.saveToLocalStorage();
+                    this.elements.installPrompt.classList.add('hidden');
+                    this.showToast('App installed successfully!');
+                });
+                
+                // Check if running in standalone mode (installed)
+                if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+                    this.state.isAppInstalled = true;
+                    this.state.saveToLocalStorage();
+                }
+            }
+
+            installApp() {
+                if (this.state.deferredPrompt) {
+                    this.state.deferredPrompt.prompt();
+                    this.state.deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the install prompt');
+                        } else {
+                            console.log('User dismissed the install prompt');
+                        }
+                        this.state.deferredPrompt = null;
+                    });
+                } else {
+                    this.showToast('App Update not available');
+                }
+            }
+
+            updateTime() {
+                const now = new Date();
+                const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+                document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', options);
+            }
         }
 
-        // Hide splash screen after 2 seconds
-        setTimeout(() => {
-            splashScreen.style.opacity = '0';
+        // Initialize the app
+        async function initApp() {
+            const appState = new AppState();
+            await appState.loadProducts();
+            const uiController = new UIController(appState);
+            
+            // Initialize time
+            uiController.updateTime();
+            setInterval(() => uiController.updateTime(), 60000);
+            
+            // Apply saved theme
+            uiController.applyTheme(appState.currentTheme);
+            
+            // Set active theme button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                if (btn.dataset.theme === appState.currentTheme) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Render initial content
+            uiController.renderContent();
+            
+            // Initialize notifications
+            uiController.initNotifications();
+            
+            // Initialize PWA features
+            uiController.initPWA();
+            
+            // Show first-time hint if needed
+            if (!appState.hasSeenLogoHint) {
+                setTimeout(() => {
+                    uiController.elements.firstTimeHint.classList.remove('hidden');
+                    // Remove hint after 5 seconds
+                    setTimeout(() => {
+                        uiController.elements.firstTimeHint.classList.add('hidden');
+                        appState.hasSeenLogoHint = true;
+                        appState.saveToLocalStorage();
+                    }, 5000);
+                }, 2000);
+            }
+            
+            // Hide splash screen after 2 seconds
             setTimeout(() => {
-                splashScreen.style.display = 'none';
-            }, 600);
-        }, 2000);
+                uiController.elements.splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    uiController.elements.splashScreen.style.display = 'none';
+                }, 600);
+            }, 2000);
+            
+            // Make UI controller available globally for debugging
+            window.uiController = uiController;
+        }
 
         // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', initApp);
@@ -2969,50 +2952,5 @@
             movePill(activeIndex);
         });
     </script>
-  
-  <script>
-    // Enhanced openProduct function to hide navigation
-function openProduct(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-    
-    appTitle.textContent = product.name;
-    appContent.innerHTML = `
-        <div class="h-full w-full flex items-center justify-center">
-            <div class="text-center p-6">
-                <div class="spinner mb-4"></div>
-                <p>Loading ${product.name}...</p>
-            </div>
-        </div>
-    `;
-    
-    appView.classList.add('active');
-    
-    // Hide navigation when app is open
-    document.querySelector('.nav-container').style.opacity = '0';
-    document.querySelector('.nav-container').style.pointerEvents = 'none';
-    
-    // Simulate loading delay for demo purposes
-    setTimeout(() => {
-        appContent.innerHTML = `
-            <iframe src="${product.url}" class="w-full h-full border-0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
-        `;
-    }, 1500);
-}
-
-// Enhanced back to home function to show navigation
-document.getElementById('back-to-home-btn').addEventListener('click', () => {
-    appView.classList.remove('active');
-    
-    // Show navigation when returning to home
-    setTimeout(() => {
-        document.querySelector('.nav-container').style.opacity = '1';
-        document.querySelector('.nav-container').style.pointerEvents = 'auto';
-    }, 300);
-});
-  </script>
- 
-  
-  
 </body>
 </html>
