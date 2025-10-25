@@ -102,51 +102,50 @@
     </script>
     <style>
         :root {
-             --md-sys-color-primary-dark: #D0BCFF;
-  --md-sys-color-on-primary-dark: #381E72;
-  --md-sys-color-primary-container-dark: #4F378B;
-  --md-sys-color-on-primary-container-dark: #EADDFF;
-
-  --md-sys-color-secondary-dark: #CCC2DC;
-  --md-sys-color-on-secondary-dark: #332D41;
-  --md-sys-color-secondary-container-dark: #4A4458;
-  --md-sys-color-on-secondary-container-dark: #E8DEF8;
-
-  --md-sys-color-tertiary-dark: #EFB8C8;
-  --md-sys-color-on-tertiary-dark: #492532;
-  --md-sys-color-tertiary-container-dark: #633B48;
-  --md-sys-color-on-tertiary-container-dark: #FFD8E4;
-
-  --md-sys-color-error-dark: #FFB4AB;
-  --md-sys-color-on-error-dark: #690005;
-  --md-sys-color-error-container-dark: #93000A;
-  --md-sys-color-on-error-container-dark: #FFDAD6;
-
-  --md-sys-color-background-dark: #1E1E1E;
-  --md-sys-color-on-background-dark: #D0BCFF;
-  --md-sys-color-surface-dark: #1E1E1E;
-  --md-sys-color-on-surface-dark: #E6E1E5;
-
-  --md-sys-color-surface-variant-dark: #49454E;
-  --md-sys-color-on-surface-variant-dark: #CAC4D0;
-  --md-sys-color-outline-dark: #938F99;
-
-  --md-sys-color-shadow-dark: #000000;
-  --md-sys-color-inverse-surface-dark: #E6E1E5;
-  --md-sys-color-inverse-on-surface-dark: #313033;
-  --md-sys-color-inverse-primary-dark: #6750A4;
-}
+            /* Material 3 Color Tokens - Dark Theme */
+            --md-sys-color-primary: #D0BCFF;
+            --md-sys-color-on-primary: #381E72;
+            --md-sys-color-primary-container: #4F378B;
+            --md-sys-color-on-primary-container: #EADDFF;
             
-            /* Elevation shadows */
+            --md-sys-color-secondary: #CCC2DC;
+            --md-sys-color-on-secondary: #332D41;
+            --md-sys-color-secondary-container: #4A4458;
+            --md-sys-color-on-secondary-container: #E8DEF8;
+            
+            --md-sys-color-tertiary: #EFB8C8;
+            --md-sys-color-on-tertiary: #492532;
+            --md-sys-color-tertiary-container: #633B48;
+            --md-sys-color-on-tertiary-container: #FFD8E4;
+            
+            --md-sys-color-error: #F2B8B5;
+            --md-sys-color-on-error: #601410;
+            --md-sys-color-error-container: #8C1D18;
+            --md-sys-color-on-error-container: #F9DEDC;
+            
+            --md-sys-color-background: #141218;
+            --md-sys-color-on-background: #E6E1E5;
+            --md-sys-color-surface: #141218;
+            --md-sys-color-on-surface: #E6E1E5;
+            --md-sys-color-surface-variant: #49454F;
+            --md-sys-color-on-surface-variant: #CAC4D0;
+            --md-sys-color-outline: #938F99;
+            --md-sys-color-shadow: #000000;
+            
+            /* Material 3 Elevation */
             --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
             --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
             --md-elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
             --md-elevation-4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px rgba(0, 0, 0, 0.3);
             --md-elevation-5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
             
-            /* Gradient themes */
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --primary-gradient-dark: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            /* Material 3 Shape */
+            --md-sys-shape-corner-extra-small: 4px;
+            --md-sys-shape-corner-small: 8px;
+            --md-sys-shape-corner-medium: 12px;
+            --md-sys-shape-corner-large: 16px;
+            --md-sys-shape-corner-extra-large: 28px;
+            --md-sys-shape-corner-full: 9999px;
         }
 
         * {
@@ -156,314 +155,77 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Product Sans', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             transition: all 0.3s ease;
-            overflow-x: hidden;
-        }
-
-        /* Light theme */
-        .light {
+            overflow: hidden;
+            position: relative;
             background-color: var(--md-sys-color-background);
             color: var(--md-sys-color-on-background);
         }
 
-        .light .status-bar {
+        /* Dark theme (default) */
+        .dark {
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+        }
+
+        .dark .status-bar {
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
         }
 
-        .light #main-container {
+        .dark #main-container {
             background-color: var(--md-sys-color-background);
             color: var(--md-sys-color-on-background);
         }
 
-        .light .app-header {
-            background: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
-            box-shadow: var(--md-elevation-1);
-        }
-
-        .light .product-card {
-            background: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
-            box-shadow: var(--md-elevation-1);
-        }
-
-        .light .m3-surface {
-            background-color: var(--md-sys-color-surface-variant);
-            color: var(--md-sys-color-on-surface-variant);
-        }
-
-        .light #search-modal {
-            background: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
-        }
-
-        .light #settings-modal > div {
-            background: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
-        }
-
-        .light .ripple:after {
-            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, transparent 10.01%);
-        }
-
-        /* Dark theme */
-        .dark {
-            background-color: var(--md-sys-color-background-dark);
-            color: var(--md-sys-color-on-background-dark);
-        }
-
-        .dark .status-bar {
-            background-color: var(--md-sys-color-surface-dark);
-            color: var(--md-sys-color-on-surface-dark);
-        }
-
-        .dark #main-container {
-            background-color: var(--md-sys-color-background-dark);
-            color: var(--md-sys-color-on-background-dark);
-        }
-
         .dark .app-header {
-            background: var(--md-sys-color-surface-dark);
-            color: var(--md-sys-color-on-surface-dark);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
             box-shadow: var(--md-elevation-1);
         }
 
         .dark .product-card {
-            background: var(--md-sys-color-surface-dark);
-            color: var(--md-sys-color-on-surface-dark);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
             box-shadow: var(--md-elevation-1);
         }
 
         .dark .m3-surface {
-            background-color: var(--md-sys-color-surface-variant-dark);
-            color: var(--md-sys-color-on-surface-variant-dark);
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
         }
 
         .dark #search-modal {
-            background: var(--md-sys-color-surface-dark);
-            color: var(--md-sys-color-on-surface-dark);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
         }
 
         .dark #settings-modal > div {
-            background: var(--md-sys-color-surface-dark);
-            color: var(--md-sys-color-on-surface-dark);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
         }
 
         .dark .ripple:after {
             background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10.01%);
         }
 
-        .logo-hint {
-            animation: logoHint 2s ease-in-out infinite;
-        }
-        
-        .logo-pulse {
-            animation: logoPulse 3s infinite;
-        }
-        
-        .logo-tooltip {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--md-sys-color-inverse-surface);
-            color: var(--md-sys-color-inverse-on-surface);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 100;
-        }
-        
-        .dark .logo-tooltip {
-            background-color: var(--md-sys-color-inverse-surface-dark);
-            color: var(--md-sys-color-inverse-on-surface-dark);
-        }
-        
-        .gradient-bg .logo-tooltip,
-        .gradient-dark .logo-tooltip {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #ffffff;
-        }
-        
-        .logo-container:hover .logo-tooltip {
-            opacity: 1;
-        }
-        
-        /* First time user hint */
-        .first-time-hint {
-            position: absolute;
-            top: 60px;
-            left: 0;
-            background: var(--md-sys-color-primary);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            z-index: 20;
-            animation: fadeIn 0.5s ease-out;
-            box-shadow: var(--md-elevation-2);
-        }
-        
-        .dark .first-time-hint {
-            background: var(--md-sys-color-primary-dark);
-        }
-        
-        .gradient-bg .first-time-hint,
-        .gradient-dark .first-time-hint {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        
-        .first-time-hint:after {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: 20px;
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 6px solid var(--md-sys-color-primary);
-        }
-        
-        .dark .first-time-hint:after {
-            border-bottom-color: var(--md-sys-color-primary-dark);
-        }
-        
-        .gradient-bg .first-time-hint:after,
-        .gradient-dark .first-time-hint:after {
-            border-bottom-color: rgba(255, 255, 255, 0.2);
-        }
-      
-        /* Gradient theme */
-        .gradient-bg {
-            color: #ffffff;
-            background: var(--primary-gradient);
-        }
-
-        .gradient-bg .status-bar {
-            color: #ffffff;
-            background: var(--primary-gradient);
-        }
-
-        .gradient-bg #main-container {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-bg .app-header {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradient-bg .product-card {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradient-bg .m3-surface {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-bg #search-modal {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-bg #settings-modal > div {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-bg .ripple:after {
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.01%);
-        }
-
-        /* Gradient Dark theme */
-        .gradient-dark {
-            color: #ffffff;
-            background: var(--primary-gradient-dark);
-        }
-
-        .gradient-dark .status-bar {
-            color: #ffffff;
-            background: var(--primary-gradient-dark);
-        }
-
-        .gradient-dark #main-container {
-            background-color: rgba(0, 0, 0, 0.2);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-dark .app-header {
-            background: rgba(0, 0, 0, 0.2);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradient-dark .product-card {
-            background: rgba(0, 0, 0, 0.25);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradient-dark .m3-surface {
-            background-color: rgba(0, 0, 0, 0.25);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-dark #search-modal {
-            background: rgba(0, 0, 0, 0.25);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-dark #settings-modal > div {
-            background: rgba(0, 0, 0, 0.25);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-dark .ripple:after {
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 10.01%);
+        /* Light theme */
+        .light {
+            --md-sys-color-background: #FEF7FF;
+            --md-sys-color-on-background: #1D1B20;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-on-surface: #1D1B20;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
         }
 
         /* App view container */
@@ -479,18 +241,6 @@
             background: var(--md-sys-color-background);
         }
 
-        .dark .app-view-container {
-            background-color: var(--md-sys-color-background-dark);
-        }
-
-        .gradient-bg .app-view-container {
-            background: var(--primary-gradient);
-        }
-
-        .gradient-dark .app-view-container {
-            background: var(--primary-gradient-dark);
-        }
-
         .app-view-container.active {
             transform: translateY(0);
         }
@@ -500,13 +250,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: rgba(103, 80, 164, 0.3);
-            color: #fff;
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
             font-size: 14px;
-            padding: 6px 12px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: transform 0.3s, background 0.3s;
+            padding: 6px 16px;
+            border-radius: var(--md-sys-shape-corner-full);
+            box-shadow: var(--md-elevation-1);
+            transition: all 0.3s ease;
             cursor: default;
             user-select: none;
         }
@@ -530,8 +280,9 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            min-height: 100vh;
+            height: 100vh;
             padding: 0;
+            overflow: hidden;
         }
 
         #main-container {
@@ -540,135 +291,109 @@
             position: relative;
             border-radius: 0;
             overflow: hidden;
-            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--md-sys-color-background);
         }
 
-        /* Header styling */
-        /* Header styling - Material 3 inspired */
-.app-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* logo left, menu right */
-    padding: 16px 24px;
-    background: rgba(255, 255, 255, 0.06); /* subtle translucent background */
-    backdrop-filter: blur(12px); /* soft glassy effect */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* gentle elevation */
-    transition: all 0.3s ease;
-}
+        /* Header styling - Material 3 expressive */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
 
-/* Hover / scroll effect for extra expressiveness */
-.app-header.scrolled {
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
-}
+        /* Hover / scroll effect for extra expressiveness */
+        .app-header.scrolled {
+            background: var(--md-sys-color-surface);
+            box-shadow: var(--md-elevation-2);
+        }
 
-/* Logo styling */
-.app-header .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #6750A4; /* Material 3 purple accent */
-    letter-spacing: 1px;
-}
+        .update-card {
+            background: var(--md-sys-color-surface-variant);
+            border-radius: var(--md-sys-shape-corner-large);
+            padding: 16px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            box-shadow: var(--md-elevation-1);
+            cursor: pointer;
+        }
 
-/* Menu / nav links styling */
-.app-header .nav-links {
-    display: flex;
-    gap: 20px;
-}
+        .update-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--md-elevation-2);
+        }
 
-.app-header .nav-links a {
-    text-decoration: none;
-    font-weight: 500;
-    color: var(--md-sys-color-on-surface);
-    transition: color 0.2s ease, transform 0.2s ease;
-}
+        .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--md-sys-shape-corner-large);
+            background: var(--md-sys-color-primary-container);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--md-sys-color-on-primary-container);
+            font-size: 24px;
+            box-shadow: var(--md-elevation-1);
+            transition: all 0.3s ease;
+        }
 
-.app-header .nav-links a:hover {
-    color: #7F3FBF; /* subtle hover accent */
-    transform: translateY(-2px);
-}
+        .icon-wrapper:hover {
+            transform: scale(1.05);
+            box-shadow: var(--md-elevation-2);
+        }
 
+        .update-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 4px;
+        }
 
-      .update-card {
-  background: rgba(103, 80, 164, 0.08); /* expressive surface */
-  border-radius: 24px;
-  padding: 16px;
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-  cursor: pointer;
-}
+        .update-card p {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 2px;
+        }
 
-.update-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(103, 80, 164, 0.35);
-}
-
-.icon-wrapper {
-  width: 48px;
-  height: 48px;
-  border-radius: 24px;
-  background: var(--accent-color, #6366F1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-  transition: all 0.3s ease;
-}
-
-.icon-wrapper:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-}
-
-.update-card h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 4px;
-}
-
-.update-card p {
-  font-size: 14px;
-  color: rgba(255,255,255,0.75);
-  margin-bottom: 2px;
-}
-
-.update-card .text-xs {
-  font-size: 12px;
-  color: rgba(255,255,255,0.5);
-}
-
-      
-      
-        /* Product card styling */
+        .update-card .text-xs {
+            font-size: 12px;
+            color: var(--md-sys-color-outline);
+        }
+        
+        /* Product card styling - Material 3 expressive */
         .product-card {
             background: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
-            border: 1px solid var(--md-sys-color-outline);
-            border-radius: 16px;
-            padding: 12px;
+            border-radius: var(--md-sys-shape-corner-large);
+            padding: 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
             transition: all 0.25s ease;
             cursor: pointer;
             max-width: 100%;
             box-sizing: border-box;
+            box-shadow: var(--md-elevation-1);
+            border: 1px solid transparent;
         }
 
         .product-card:hover {
             background: var(--md-sys-color-primary-container);
             color: var(--md-sys-color-on-primary-container);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            box-shadow: var(--md-elevation-2);
+            border-color: var(--md-sys-color-primary);
         }
 
         .product-card:active {
@@ -677,20 +402,21 @@
 
         /* Product logo */
         .product-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 56px;
+            height: 56px;
+            border-radius: var(--md-sys-shape-corner-medium);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             background: var(--md-sys-color-secondary-container);
             color: var(--md-sys-color-on-secondary-container);
+            box-shadow: var(--md-elevation-1);
         }
 
         .product-logo img {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             object-fit: contain;
         }
 
@@ -701,17 +427,17 @@
         }
 
         .product-info h3 {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
-            margin: 0 0 2px 0;
+            margin: 0 0 4px 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .product-info p {
-            font-size: 13px;
-            opacity: 0.75;
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
             margin: 0;
             white-space: nowrap;
             overflow: hidden;
@@ -721,9 +447,9 @@
         /* Favorite button */
         .favorite-btn {
             flex-shrink: 0;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--md-sys-shape-corner-full);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -747,18 +473,9 @@
             border-color: var(--md-sys-color-primary);
         }
 
-        .dark .theme-btn.active {
-            border-color: var(--md-sys-color-primary-dark);
-        }
-
-        .gradient-bg .theme-btn.active,
-        .gradient-dark .theme-btn.active {
-            border-color: rgba(255, 255, 255, 0.7);
-        }
-
         /* Search overlay */
         #search-overlay {
-           border-radius: 999px;
+            border-radius: var(--md-sys-shape-corner-full);
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -766,7 +483,7 @@
 
         /* Settings modal */
         #settings-modal > div {
-            border-radius: 32px;
+            border-radius: var(--md-sys-shape-corner-extra-large);
             box-shadow: var(--md-elevation-4);
         }
 
@@ -778,9 +495,9 @@
             justify-content: center;
             width: 40px;  
             height: 40px;
-            border-radius: 50%; 
-            background-color: rgba(103, 80, 164, 0.3); 
-            color: white;
+            border-radius: var(--md-sys-shape-corner-full); 
+            background-color: var(--md-sys-color-primary-container); 
+            color: var(--md-sys-color-on-primary-container);
         }
 
         /* Tab content */
@@ -807,17 +524,18 @@
 
         /* Material 3 button styles */
         .m3-button {
-            border-radius: 20px;
+            border-radius: var(--md-sys-shape-corner-full);
             padding: 10px 24px;
             font-weight: 500;
             text-transform: none;
             transition: all 0.2s ease;
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
         }
-    
+
         button.ripple {
-    padding: 6px; /* smaller than p-2 */
-}
-      
+            padding: 6px;
+        }
       
         /* Animation for favorite button */
         @keyframes pulse {
@@ -879,13 +597,13 @@
         /* Toast notification */
         .toast {
             position: fixed;
-            bottom: 80px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background-color: var(--md-sys-color-inverse-surface);
             color: var(--md-sys-color-inverse-on-surface);
             padding: 12px 24px;
-            border-radius: 24px;
+            border-radius: var(--md-sys-shape-corner-full);
             z-index: 1000;
             opacity: 0;
             transition: transform 0.3s, opacity 0.3s;
@@ -893,18 +611,12 @@
             box-shadow: var(--md-elevation-2);
         }
 
-        .gradient-bg .toast,
-        .gradient-dark .toast {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #ffffff;
-        }
-
         .toast.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
 
-        /* Splash screen - Simplified Android style */
+        /* Enhanced Splash Screen - Material 3 expressive */
         #splash {
             display: flex;
             justify-content: center;
@@ -915,24 +627,63 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: var(--md-sys-color-background-dark);
+            background: var(--md-sys-color-background);
             z-index: 9999;
+            overflow: hidden;
+        }
+
+        #splash .logo-container {
+            position: relative;
+            margin-bottom: 2rem;
         }
 
         #splash img {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            animation: logoPop 0.6s ease-in-out forwards;
+            width: 120px;
+            height: 120px;
+            border-radius: var(--md-sys-shape-corner-large);
+            animation: logoPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            box-shadow: var(--md-elevation-3);
         }
 
         #splash h1 {
-            margin-top: 16px;
-            font-size: 3rem;
-            color: var(--md-sys-color-on-background-dark);
-            font-weight: 500;
+            margin-top: 1.5rem;
+            font-size: 3.5rem;
+            color: var(--md-sys-color-on-background);
+            font-weight: 700;
             opacity: 0;
-            animation: fadeInText 0.5s ease forwards 0.3s;
+            animation: fadeInText 0.8s ease forwards 0.4s;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        #splash .tagline {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: var(--md-sys-color-on-surface-variant);
+            opacity: 0;
+            animation: fadeInText 0.8s ease forwards 0.6s;
+            text-align: center;
+            max-width: 80%;
+            line-height: 1.4;
+        }
+
+        #splash .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--md-sys-color-surface-variant);
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInText 0.8s ease forwards 0.8s;
+        }
+
+        #splash .loading-progress {
+            height: 100%;
+            width: 0%;
+            background: var(--md-sys-color-primary);
+            border-radius: 2px;
+            transition: width 2s ease;
         }
 
         /* Footer styling */
@@ -945,74 +696,61 @@
         }
 
         /* Spinner loader */
-        /* Base spinner */
-.spinner {
-  width: 40px;
-  height: 40px;
-  margin: 40px auto;
-  border-radius: 50%;
-  border: 4px solid transparent;
-  border-top-color: #ffffff; /* start with white */
-  animation: spin 1s linear infinite, dash 1.4s ease-in-out infinite, colorShift 2s ease-in-out infinite;
-}
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 40px auto;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--md-sys-color-primary);
+            animation: spin 1s linear infinite, dash 1.4s ease-in-out infinite, colorShift 2s ease-in-out infinite;
+        }
 
-/* Light theme variation */
-.light .spinner {
-  border-top-color: #ffffff;
-}
+        /* Spin rotation */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-/* Gradient style variation */
-.gradient-bg .spinner {
-  border-top-color: #6200ee; /* violet */
-  border-bottom-color: #ffffff;
-}
+        /* Dash effect for expressive stroke */
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -124;
+            }
+        }
 
-/* Spin rotation */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Dash effect for expressive stroke */
-@keyframes dash {
-  0% {
-    stroke-dasharray: 1, 150;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: -35;
-  }
-  100% {
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: -124;
-  }
-}
-
-/* Color transition between white and violet */
-@keyframes colorShift {
-  0%, 100% {
-    border-top-color: #ffffff;
-  }
-  50% {
-    border-top-color: #6200ee; /* violet */
-  }
-}
-
-
+        /* Color transition */
+        @keyframes colorShift {
+            0%, 100% {
+                border-top-color: var(--md-sys-color-primary);
+            }
+            50% {
+                border-top-color: var(--md-sys-color-secondary);
+            }
+        }
 
         /* Animations */
         @keyframes logoPop {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
         @keyframes fadeInText {
-            0% { opacity: 0; transform: translateY(10px); }
+            0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
@@ -1030,7 +768,7 @@
         .back-button {
             width: 48px;
             height: 48px;
-            border-radius: 24px;
+            border-radius: var(--md-sys-shape-corner-full);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1048,57 +786,33 @@
             box-shadow: var(--md-elevation-1);
         }
 
-        .dark .app-bar {
-            background: var(--md-sys-color-surface-dark);
-            color: var(--md-sys-color-on-surface-dark);
-        }
-
-        .gradient-bg .app-bar {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .gradient-dark .app-bar {
-            background: rgba(0, 0, 0, 0.2);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
+        /* Material 3 Bottom Navigation */
         .nav-container {
-            
-           z-index: 1000 !important; /* Increased z-index */
-    position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-          
-          
-          position: fixed;
+            z-index: 1000;
+            position: fixed;
             bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            background: #1e1e1e;
-            border-radius: 1024px;
+            background: var(--md-sys-color-surface);
+            border-radius: var(--md-sys-shape-corner-full);
             padding: 12px 16px;
             width: 90%;
             max-width: 400px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            box-shadow: var(--md-elevation-3);
+            transition: opacity 0.3s, transform 0.3s;
         }
 
         .bg-pill {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 48px;
-            height: 36px;
-            border-radius: 18px;
-            background: rgba(103, 80, 164, 0.3);
+            width: 64px;
+            height: 32px;
+            border-radius: var(--md-sys-shape-corner-full);
+            background: var(--md-sys-color-secondary-container);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 0;
             left: 0;
@@ -1110,18 +824,19 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #aaa;
-            font-size: 13px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 12px;
             cursor: pointer;
             position: relative;
             z-index: 1;
             transition: color 0.3s;
             font-weight: 500;
+            padding: 8px 0;
         }
 
         .nav-icon-wrapper {
-            width: 48px;
-            height: 36px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1130,50 +845,52 @@
         }
 
         .nav-item svg, .nav-item .material-icons {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             fill: currentColor;
-            font-size: 22px;
+            font-size: 24px;
             transition: transform 0.3s;
         }
 
         .nav-item.active {
-            color: #fff;
+            color: var(--md-sys-color-on-secondary-container);
         }
 
         .nav-item.active svg, .nav-item.active .material-icons {
             transform: scale(1.1);
-            color: #bb86fc;
         }
         
         /* Improved product grid */
         .product-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 16px;
             padding: 16px;
         }
 
-      /* Thank you section - Left-aligned, expressive */
-.thank-you-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* left align */
-    justify-content: center;
-    padding: 24px 16px;
-    margin-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* subtle divider */
-    font-size: 2rem; /* bigger text */
-    font-weight: 500;
-    line-height: 1.6;
-    color: var(--md-sys-color-on-surface);
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-}
+        /* Thank you section - Material 3 expressive */
+        .thank-you-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+            margin: 32px 16px 80px;
+            border-radius: var(--md-sys-shape-corner-large);
+            background: var(--md-sys-color-surface-variant);
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 1.6;
+            color: var(--md-sys-color-on-surface-variant);
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--md-elevation-1);
+        }
 
-.thank-you-section:hover {
-    opacity: 1;
-}
+        .thank-you-section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--md-elevation-2);
+        }
 
         /* Search input styling */
         .search-input {
@@ -1183,32 +900,29 @@
             width: 100%;
             font-size: 16px;
             padding: 8px 0;
+            color: var(--md-sys-color-on-surface);
         }
 
         .search-input::placeholder {
+            color: var(--md-sys-color-on-surface-variant);
             opacity: 0.7;
         }
 
         /* Install Prompt */
         .install-prompt {
             position: fixed;
-            bottom: 80px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
             padding: 16px;
-            border-radius: 16px;
+            border-radius: var(--md-sys-shape-corner-large);
             box-shadow: var(--md-elevation-3);
             z-index: 1000;
             max-width: 400px;
             width: 90%;
             animation: slideUp 0.3s ease-out;
-        }
-
-        .dark .install-prompt {
-            background: var(--md-sys-color-surface-dark);
-            color: var(--md-sys-color-on-surface-dark);
         }
 
         .install-prompt.hidden {
@@ -1220,271 +934,132 @@
             position: absolute;
             top: -2px;
             right: -2px;
-            background-color: #ff4444;
-            color: white;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
+            background-color: var(--md-sys-color-error);
+            color: var(--md-sys-color-on-error);
+            border-radius: var(--md-sys-shape-corner-full);
+            width: 18px;
+            height: 18px;
             font-size: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             animation: pulse 1.5s infinite;
+            font-weight: bold;
         }
 
-        
+        /* Main content area - Fixed scrolling */
+        #main-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 100px;
+            scroll-behavior: smooth;
+        }
+
+        /* Expressive Headings */
+        .expressive-heading {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .expressive-subheading {
+            font-size: 1.25rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        /* Status bar with time - Fixed position */
+        .status-bar {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            pointer-events: none;
+        }
 
         /* Mobile optimizations */
         @media (max-width: 480px) {
             .product-card {
-                padding: 14px;
+                padding: 16px;
             }
             
             .product-logo {
-                width: 48px;
-                height: 48px;
+                width: 56px;
+                height: 56px;
             }
             
             .product-logo img {
-                width: 28px;
-                height: 28px;
+                width: 32px;
+                height: 32px;
             }
             
             .product-info h3 {
-                font-size: 15px;
+                font-size: 16px;
             }
             
             .product-info p {
-                font-size: 13px;
+                font-size: 14px;
             }
             
             .product-grid {
-                gap: 10px;
-                padding: 12px;
+                gap: 16px;
+                padding: 16px;
             }
             
             .app-header {
-                padding: 12px 16px;
+                padding: 16px 20px;
             }
+            
+            #splash h1 {
+                font-size: 2.5rem;
+            }
+            
+            #splash .tagline {
+                font-size: 1rem;
+            }
+            
+            .expressive-heading {
+                font-size: 2.5rem;
+            }
+            
+            .expressive-subheading {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Performance optimizations */
+        .will-change-transform {
+            will-change: transform;
+        }
+
+        .backface-hidden {
+            backface-visibility: hidden;
         }
     </style>
 </head>
 
 <body class="dark">
    
+   <!-- Enhanced Splash Screen -->
    <div id="splash">
-        <img src="https://aditya-cmd-max.github.io/axis/axisrotate.gif" alt="Exonova Logo">
-        <h1>Exonova Axis</h1>
-        <br><br><br><br><br>
-        <!-- tagline section -->
-        <div class="tagline-container">
-            <div class="mesh"></div>
-            <section class="hero">
-                <span data-text="Exonova is for the curious"></span> Exonova is for the curious.
-            </section>
+        <div class="logo-container">
+            <img src="https://aditya-cmd-max.github.io/axis/axisrotate.gif" alt="Exonova Logo">
         </div>
-
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@700&display=swap');
-
-            .tagline-container {
-                position: relative;
-                background: var(--md-sys-color-background-dark);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 80px 20px;
-                overflow: hidden;
-            }
-
-            .tagline-container .mesh {
-                position: absolute;
-                inset: 0;
-                background: var(--md-sys-color-background-dark);
-                background-size: 40px 40px;
-                opacity: 0.05;
-                z-index: -1;
-            }
-
-            .tagline-container .hero {
-                color: var(--md-sys-color-on-background-dark);
-                font-family: "Product Sans", Arial, sans-serif;
-                font-weight: 700;
-                font-size: clamp(2rem, 8vw, 7rem);
-                text-align: center;
-                letter-spacing: -1px;
-                line-height: 1.1;
-                width: 90%;
-                z-index: 1;
-            }
-
-            .tagline-container .hero span {
-                position: relative;
-                display: inline-block;
-            }
-
-            .tagline-container .hero span::after {
-                content: attr(data-text);
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                color: #fff;
-                filter: blur(15px);
-                opacity: 0.2;
-                z-index: -1;
-            }
-          
-          /* Swipe animation for tab transitions */
-/* Ultra-fast swipe animation for tab transitions - 8x improvement */
-#main-content {
-    transition: transform 0.0375s cubic-bezier(0.4, 0, 0.2, 1); /* 8x faster (0.3s -> 0.0375s) */
-    will-change: transform; /* Performance optimization */
-}
-
-.swipe-left {
-    animation: swipeLeftUltra 0.0375s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-.swipe-right {
-    animation: swipeRightUltra 0.0375s cubic-bezier(0.2, 0, 0, 1) !important;
-}
-
-/* Ultra-fast keyframe animations */
-@keyframes swipeLeftUltra {
-    0% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-    50% { 
-        transform: translateX(-8px) scale(0.998);
-        opacity: 0.95;
-    }
-    100% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes swipeRightUltra {
-    0% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-    50% { 
-        transform: translateX(8px) scale(0.998);
-        opacity: 0.95;
-    }
-    100% { 
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-}
-
-/* Enhanced performance optimizations */
-.swipe-transitioning {
-    pointer-events: none; /* Prevent interactions during transition */
-    overflow: hidden;
-}
-
-/* Hardware acceleration for mobile devices */
-@media (max-width: 768px) {
-    .swipe-left,
-    .swipe-right {
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        perspective: 1000px;
-    }
-}
-
-/* Micro-interaction for swipe feedback */
-.swipe-feedback {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.15s;
-}
-
-.swipe-feedback.active {
-    opacity: 0.3;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
-                rgba(103, 80, 164, 0.2) 0%, 
-                transparent 70%);
-}
-
-/* Visual swipe guide */
-.swipe-guide {
-    position: fixed;
-    bottom: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(103, 80, 164, 0.9);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 24px;
-    font-size: 12px;
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-}
-
-.swipe-guide.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-.swipe-guide.hide {
-    opacity: 0;
-    transform: translateX(-50%) translateY(10px);
-}
-
-.swipe-arrows {
-    display: flex;
-    gap: 4px;
-}
-
-.swipe-arrow {
-    width: 16px;
-    height: 16px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-    animation: arrowPulse 1.5s infinite;
-}
-
-.swipe-arrow:nth-child(2) {
-    animation-delay: 0.5s;
-}
-
-.swipe-arrow:nth-child(3) {
-    animation-delay: 1s;
-}
-
-@keyframes arrowPulse {
-    0%, 100% { 
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    50% { 
-        transform: scale(1.2);
-        opacity: 1;
-    }
-}
-          
-        </style>
+        <h1>Exonova Axis</h1>
+        <p class="tagline">All of Exonova • At one place</p>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
    </div> 
     
     <!-- Toast notification -->
@@ -1544,38 +1119,33 @@
         <!-- Main Container -->
         <div id="main-container" class="min-h-screen flex flex-col">
            
-            
+          
+           
             <!-- Header -->
             <header class="app-header flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="logo-container relative">
                         <img src="https://aditya-cmd-max.github.io/axis/axisrotate.gif" alt="Exonova Logo" class="h-10 w-10 rounded-xl cursor-pointer ripple logo-pulse" id="logo-btn" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
-                        <div class="logo-tooltip">Click for info</div>
-                        <!-- First time user hint -->
-                        <div id="first-time-hint" class="first-time-hint hidden">
-                            Click the logo to learn more about Exonova
-                        </div>
                     </div>
                     <div>
                         <h1 class="text-xl font-bold">Exonova Axis</h1>
                         <p class="text-xs opacity-75">All of Exonova • At one place</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-"> <!-- smaller gap -->
-    <button id="search-btn" class="p-2 rounded-full ripple">
-        <span class="material-icons">search</span>
-    </button>
-    <button id="settings-btn" class="p-2 rounded-full ripple">
-        <span class="material-icons">settings</span>
-    </button>
-    <div class="relative">
-        <button id="notifications-btn" class="p-2 rounded-full ripple">
-            <span class="material-icons">notifications</span>
-        </button>
-        <div id="notification-badge" class="notification-badge hidden">3</div>
-    </div>
-</div>
-
+                <div class="flex items-center gap-2">
+                    <button id="search-btn" class="p-2 rounded-full ripple">
+                        <span class="material-icons">search</span>
+                    </button>
+                    <button id="settings-btn" class="p-2 rounded-full ripple">
+                        <span class="material-icons">settings</span>
+                    </button>
+                    <div class="relative">
+                        <button id="notifications-btn" class="p-2 rounded-full ripple">
+                            <span class="material-icons">notifications</span>
+                        </button>
+                        <div id="notification-badge" class="notification-badge hidden">3</div>
+                    </div>
+                </div>
             </header>
  
             <!-- Search Bar Overlay -->
@@ -1611,14 +1181,6 @@
                         <button data-theme="dark" class="theme-btn active p-4 rounded-xl flex flex-col items-center transition-all ripple">
                             <div class="bg-gray-900 w-full h-8 rounded-lg mb-2 border border-gray-800"></div>
                             <span class="text-sm font-medium">Dark</span>
-                        </button>
-                        <button data-theme="gradient-bg" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
-                            <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-full h-8 rounded-lg mb-2"></div>
-                            <span class="text-sm font-medium">Gradient</span>
-                        </button>
-                        <button data-theme="gradient-dark" class="theme-btn p-4 rounded-xl flex flex-col items-center transition-all ripple">
-                            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-full h-8 rounded-lg mb-2"></div>
-                            <span class="text-sm font-medium">Night</span>
                         </button>
                     </div>
                     <div class="border-t border-opacity-20 pt-4">
@@ -1671,12 +1233,6 @@
             <main id="main-content" class="flex-grow overflow-y-auto">
                 <!-- Tab content will be rendered here -->
             </main>
-           <div class="status-bar w-full text-center py-1">
-                <div class="isolated-pill">
-                    <div id="current-time" class="font-medium">12:00 PM</div>
-                </div>
-            </div>
-            <br><br><br><br>
             
             <!-- New Bottom Navigation -->
             <nav class="nav-container">
@@ -1722,9 +1278,18 @@
                 <div id="app-content" class="h-full">
                     <!-- App content will be loaded here -->
                 </div>
+        <div class="status-bar">
+                <div class="isolated-pill">
+                    <div id="current-time" class="font-medium">12:00 PM</div>
+                </div>
             </div>
+          
+          </div>
         </div>
     </div>
+  
+    <!-- Status Bar with Time - Fixed at top -->
+            
 
     <script>
         // Data for Exonova Products with real logos and URLs
@@ -1782,7 +1347,6 @@
         let currentTheme = localStorage.getItem('theme') || 'dark';
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let currentTab = 'home';
-        let hasSeenLogoHint = localStorage.getItem('hasSeenLogoHint') === 'true';
         let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
         let pushNotificationsEnabled = localStorage.getItem('pushNotificationsEnabled') !== 'false';
         let inAppNotificationsEnabled = localStorage.getItem('inAppNotificationsEnabled') !== 'false';
@@ -1808,7 +1372,6 @@
         const logoModal = document.getElementById('logo-modal');
         const logoModalContent = document.getElementById('logo-modal-content');
         const logoBtn = document.getElementById('logo-btn');
-        const firstTimeHint = document.getElementById('first-time-hint');
         const notificationsBtn = document.getElementById('notifications-btn');
         const notificationBadge = document.getElementById('notification-badge');
         const notificationsModal = document.getElementById('notifications-modal');
@@ -1847,19 +1410,6 @@
             
             // Initialize PWA features
             initPWA();
-            
-            // Show first-time hint if needed
-            if (!hasSeenLogoHint) {
-                setTimeout(() => {
-                    firstTimeHint.classList.remove('hidden');
-                    // Remove hint after 5 seconds
-                    setTimeout(() => {
-                        firstTimeHint.classList.add('hidden');
-                        localStorage.setItem('hasSeenLogoHint', 'true');
-                        hasSeenLogoHint = true;
-                    }, 5000);
-                }, 2000);
-            }
         }
 
         // Initialize PWA features
@@ -2431,77 +1981,72 @@
             });
         }
 
-        // Render Home Tab
+        // Render Home Tab with expressive headings
         function renderHomeTab() {
             return `
-                <div class="p-4">
-                    <h2 class="text-5xl font-bold mb-2">Welcome to Exonova</h2>
-  
-  
-  
-                    <p class="text-2xl opacity-75 mb-6">Explore all our products in one place to increase your productivity.</p>
+                <div class="p-6">
+                    <h1 class="expressive-heading">Welcome to Exonova</h1>
+                    <p class="expressive-subheading">Explore all our products in one place to increase your productivity.</p>
                     
-                    <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-  <!-- First SVG -->
-  <svg width="52" height="52" viewBox="0 0 282 281">
-    <path 
-      d="M75.9469 280.078C91.5033 280.078 105.96 275.398 117.97 267.376C130.585 258.951 151.308 258.951 163.924 267.376C175.934 275.398 190.39 280.078 205.947 280.078C247.615 280.078 281.394 246.499 281.394 205.078C281.394 189.768 276.779 175.529 268.856 163.661C260.282 150.817 260.282 129.339 268.856 116.496C276.779 104.628 281.394 90.3887 281.394 75.0781C281.394 33.6568 247.615 0.078125 205.947 0.078125C190.39 0.078125 175.934 4.75843 163.924 12.7798C151.308 21.2056 130.585 21.2056 117.97 12.7798C105.96 4.75843 91.5033 0.078125 75.9469 0.078125C34.2787 0.078125 0.5 33.6568 0.5 75.0781C0.5 90.3887 5.11505 104.628 13.0377 116.496C21.6119 129.339 21.6119 150.817 13.0377 163.661C5.11505 175.529 0.5 189.768 0.5 205.078C0.5 246.499 34.2787 280.078 75.9469 280.078Z" 
-      fill="url(#purple-gradient)" stroke="#6750A4" stroke-width="2"
-    />
-    <defs>
-      <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#7F3FBF"/>
-        <stop offset="100%" stop-color="#6750A4"/>
-      </linearGradient>
-    </defs>
-  </svg>
+                    <div class="flex justify-center mb-8">
+                        <div class="flex space-x-4">
+                            <!-- First SVG -->
+                            <svg width="52" height="52" viewBox="0 0 282 281">
+                                <path 
+                                    d="M75.9469 280.078C91.5033 280.078 105.96 275.398 117.97 267.376C130.585 258.951 151.308 258.951 163.924 267.376C175.934 275.398 190.39 280.078 205.947 280.078C247.615 280.078 281.394 246.499 281.394 205.078C281.394 189.768 276.779 175.529 268.856 163.661C260.282 150.817 260.282 129.339 268.856 116.496C276.779 104.628 281.394 90.3887 281.394 75.0781C281.394 33.6568 247.615 0.078125 205.947 0.078125C190.39 0.078125 175.934 4.75843 163.924 12.7798C151.308 21.2056 130.585 21.2056 117.97 12.7798C105.96 4.75843 91.5033 0.078125 75.9469 0.078125C34.2787 0.078125 0.5 33.6568 0.5 75.0781C0.5 90.3887 5.11505 104.628 13.0377 116.496C21.6119 129.339 21.6119 150.817 13.0377 163.661C5.11505 175.529 0.5 189.768 0.5 205.078C0.5 246.499 34.2787 280.078 75.9469 280.078Z" 
+                                    fill="url(#purple-gradient)" stroke="#6750A4" stroke-width="2"
+                                />
+                                <defs>
+                                    <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#7F3FBF"/>
+                                        <stop offset="100%" stop-color="#6750A4"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
 
-  <!-- Second SVG: scaled to fit same visual size -->
-  <svg width="60" height="60" viewBox="0 0 249 247">
-    <path 
-      d="M245.7,56.1l0-9.9c0-22.7-18.4-41-41-41l-160.2,0c-22.7,0-41,18.4-41,41l0,9.9c0,11,4.3,21,11.4,28.4 c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4l0,9.9c0,11,4.3,21,11.4,28.4c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4 l0,10.1c0,22.7,18.4,41,41,41l160.2,0c22.7,0,41-18.4,41-41l0-10.1c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5 c7.1-7.4,11.4-17.4,11.4-28.4l0-9.9c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5C241.3,77.1,245.7,67.1,245.7,56.1z" 
-      fill="url(#purple-gradient2)" stroke="#6750A4" stroke-width="2"
-      transform="scale(0.8) translate(28,28)" 
-    />
-    <defs>
-      <linearGradient id="purple-gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#7F3FBF"/>
-        <stop offset="100%" stop-color="#6750A4"/>
-      </linearGradient>
-    </defs>
-  </svg>
+                            <!-- Second SVG: scaled to fit same visual size -->
+                            <svg width="60" height="60" viewBox="0 0 249 247">
+                                <path 
+                                    d="M245.7,56.1l0-9.9c0-22.7-18.4-41-41-41l-160.2,0c-22.7,0-41,18.4-41,41l0,9.9c0,11,4.3,21,11.4,28.4 c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4l0,9.9c0,11,4.3,21,11.4,28.4c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4 l0,10.1c0,22.7,18.4,41,41,41l160.2,0c22.7,0,41-18.4,41-41l0-10.1c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5 c7.1-7.4,11.4-17.4,11.4-28.4l0-9.9c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5C241.3,77.1,245.7,67.1,245.7,56.1z" 
+                                    fill="url(#purple-gradient2)" stroke="#6750A4" stroke-width="2"
+                                    transform="scale(0.8) translate(28,28)" 
+                                />
+                                <defs>
+                                    <linearGradient id="purple-gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#7F3FBF"/>
+                                        <stop offset="100%" stop-color="#6750A4"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
 
-  <!-- Third SVG: scaled to fit same visual size -->
-  <svg width="60" height="60" viewBox="0 0 277 301">
-    <path 
-      d="M108.103 8.24078C126.954 -2.64276 150.179 -2.64276 169.03 8.24078L246.169 52.7773C265.02 63.6609 276.633 83.7745 276.633 105.542V194.615C276.633 216.382 265.02 236.495 246.169 247.379L169.03 291.915C150.179 302.799 126.954 302.799 108.103 291.915L30.9635 247.379C12.1126 236.495 0.5 216.382 0.5 194.615V105.542C0.5 83.7745 12.1126 63.6609 30.9635 52.7773L108.103 8.24078Z" 
-      fill="url(#purple-gradient3)" stroke="#6750A4" stroke-width="2"
-      transform="scale(0.85) translate(22,15)" 
-    />
-    <defs>
-      <linearGradient id="purple-gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#7F3FBF"/>
-        <stop offset="100%" stop-color="#6750A4"/>
-      </linearGradient>
-    </defs>
-  </svg>
-</div>
-
-                    
+                            <!-- Third SVG: scaled to fit same visual size -->
+                            <svg width="60" height="60" viewBox="0 0 277 301">
+                                <path 
+                                    d="M108.103 8.24078C126.954 -2.64276 150.179 -2.64276 169.03 8.24078L246.169 52.7773C265.02 63.6609 276.633 83.7745 276.633 105.542V194.615C276.633 216.382 265.02 236.495 246.169 247.379L169.03 291.915C150.179 302.799 126.954 302.799 108.103 291.915L30.9635 247.379C12.1126 236.495 0.5 216.382 0.5 194.615V105.542C0.5 83.7745 12.1126 63.6609 30.9635 52.7773L108.103 8.24078Z" 
+                                    fill="url(#purple-gradient3)" stroke="#6750A4" stroke-width="2"
+                                    transform="scale(0.85) translate(22,15)" 
+                                />
+                                <defs>
+                                    <linearGradient id="purple-gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#7F3FBF"/>
+                                        <stop offset="100%" stop-color="#6750A4"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
                     
                     <div class="product-grid">
-                   
-                    
                         ${products.map(product => `
-                            <div class="product-card ripple" data-product-id="${product.id}">
-                                <div class="product-logo ${product.color} relative overflow-hidden">
-    <div class="absolute inset-0 flex items-center justify-center">
-        <svg width="48" height="48" viewBox="0 0 444 442" class="absolute inset-0 w-full h-full">
-            <path d="M204.205 4.63126C215.258 -1.54115 228.742 -1.54115 239.795 4.63125L266.874 19.7527C272.176 22.7136 278.139 24.3042 284.218 24.3792L315.264 24.762C327.936 24.9182 339.614 31.6297 346.086 42.4769L361.942 69.0507C365.046 74.2541 369.412 78.5999 374.639 81.6906L401.333 97.4751C412.229 103.918 418.971 115.543 419.128 128.158L419.512 159.064C419.588 165.116 421.186 171.052 424.16 176.33L439.35 203.287C445.55 214.29 445.55 227.713 439.35 238.717L424.16 265.674C421.186 270.952 419.588 276.888 419.512 282.94L419.128 313.846C418.971 326.461 412.229 338.086 401.333 344.529L374.639 360.313C369.412 363.404 365.046 367.75 361.942 372.953L346.086 399.527C339.614 410.374 327.936 417.086 315.264 417.242L284.218 417.625C278.139 417.7 272.176 419.29 266.874 422.251L239.795 437.373C228.742 443.545 215.258 443.545 204.205 437.373L177.126 422.251C171.824 419.29 165.861 417.7 159.782 417.625L128.736 417.242C116.064 417.086 104.386 410.374 97.9142 399.527L82.0583 372.953C78.9536 367.75 74.5882 363.404 69.3612 360.313L42.6671 344.529C31.7709 338.086 25.029 326.461 24.8721 313.846L24.4875 282.94C24.4123 276.888 22.8144 270.952 19.8401 265.674L4.65025 238.717C-1.55008 227.713 -1.55008 214.29 4.65025 203.287L19.8401 176.33C22.8144 171.052 24.4122 165.116 24.4875 159.064L24.8721 128.158C25.029 115.543 31.7709 103.918 42.6671 97.4751L69.3612 81.6906C74.5882 78.5999 78.9536 74.2541 82.0583 69.0507L97.9142 42.4769C104.386 31.6297 116.064 24.9182 128.736 24.762L159.782 24.3792C165.861 24.3042 171.824 22.7136 177.126 19.7527L204.205 4.63126Z" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"/>
-        </svg>
-    </div>
-    <img src="${product.logoUrl}" alt="${product.name}" class="relative z-10 w-6 h-6 object-contain" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
-</div>
+                            <div class="product-card ripple will-change-transform backface-hidden" data-product-id="${product.id}">
+                                <div class="product-logo relative overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <svg width="48" height="48" viewBox="0 0 444 442" class="absolute inset-0 w-full h-full">
+                                            <path d="M204.205 4.63126C215.258 -1.54115 228.742 -1.54115 239.795 4.63125L266.874 19.7527C272.176 22.7136 278.139 24.3042 284.218 24.3792L315.264 24.762C327.936 24.9182 339.614 31.6297 346.086 42.4769L361.942 69.0507C365.046 74.2541 369.412 78.5999 374.639 81.6906L401.333 97.4751C412.229 103.918 418.971 115.543 419.128 128.158L419.512 159.064C419.588 165.116 421.186 171.052 424.16 176.33L439.35 203.287C445.55 214.29 445.55 227.713 439.35 238.717L424.16 265.674C421.186 270.952 419.588 276.888 419.512 282.94L419.128 313.846C418.971 326.461 412.229 338.086 401.333 344.529L374.639 360.313C369.412 363.404 365.046 367.75 361.942 372.953L346.086 399.527C339.614 410.374 327.936 417.086 315.264 417.242L284.218 417.625C278.139 417.7 272.176 419.29 266.874 422.251L239.795 437.373C228.742 443.545 215.258 443.545 204.205 437.373L177.126 422.251C171.824 419.29 165.861 417.7 159.782 417.625L128.736 417.242C116.064 417.086 104.386 410.374 97.9142 399.527L82.0583 372.953C78.9536 367.75 74.5882 363.404 69.3612 360.313L42.6671 344.529C31.7709 338.086 25.029 326.461 24.8721 313.846L24.4875 282.94C24.4123 276.888 22.8144 270.952 19.8401 265.674L4.65025 238.717C-1.55008 227.713 -1.55008 214.29 4.65025 203.287L19.8401 176.33C22.8144 171.052 24.4122 165.116 24.4875 159.064L24.8721 128.158C25.029 115.543 31.7709 103.918 42.6671 97.4751L69.3612 81.6906C74.5882 78.5999 78.9536 74.2541 82.0583 69.0507L97.9142 42.4769C104.386 31.6297 116.064 24.9182 128.736 24.762L159.782 24.3792C165.861 24.3042 171.824 22.7136 177.126 19.7527L204.205 4.63126Z" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"/>
+                                        </svg>
+                                    </div>
+                                    <img src="${product.logoUrl}" alt="${product.name}" class="relative z-10 w-6 h-6 object-contain" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
+                                </div>
                                 <div class="product-info">
                                     <h3>${product.name}</h3>
                                     <p>${product.description}</p>
@@ -2522,27 +2067,32 @@
             `;
         }
 
-        // Render Favorites Tab
+        // Render Favorites Tab with expressive headings
         function renderFavoritesTab() {
             const favoriteProducts = products.filter(product => favorites.includes(product.id));
             
             if (favoriteProducts.length === 0) {
                 return `
-                    <div class="empty-state">
-                        <span class="material-icons">favorite_border</span>
-                        <h3 class="font-medium mb-2">No favorites yet</h3>
-                        <p class="opacity-75">Add products to favorites to see them here</p>
+                    <div class="p-6">
+                        <h1 class="expressive-heading">Your Favorites</h1>
+                        <p class="expressive-subheading">Your most loved Exonova products will appear here</p>
+                        <div class="empty-state">
+                            <span class="material-icons">favorite_border</span>
+                            <h3 class="font-medium mb-2">No favorites yet</h3>
+                            <p class="opacity-75">Add products to favorites to see them here</p>
+                        </div>
                     </div>
                 `;
             }
             
             return `
-                <div class="p-4">
-                    <h2 class="text-5xl font-bold mb-6">Your Favorites</h2>
+                <div class="p-6">
+                    <h1 class="expressive-heading">Your Favorites</h1>
+                    <p class="expressive-subheading">Your most loved Exonova products</p>
                     <div class="product-grid">
                         ${favoriteProducts.map(product => `
-                            <div class="product-card ripple" data-product-id="${product.id}">
-                                <div class="product-logo ${product.color}">
+                            <div class="product-card ripple will-change-transform backface-hidden" data-product-id="${product.id}">
+                                <div class="product-logo">
                                     <img src="${product.logoUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/32x32/0ea5e9/ffffff?text=E'">
                                 </div>
                                 <div class="product-info">
@@ -2559,54 +2109,52 @@
             `;
         }
 
-        // Render Updates Tab
+        // Render Updates Tab with expressive headings
         function renderUpdatesTab() {
             return `
-             <div class="p-4">
-  <h2 class="text-5xl font-bold mb-6 text-white">Recent Updates</h2>
+                <div class="p-6">
+                    <h1 class="expressive-heading">Recent Updates</h1>
+                    <p class="expressive-subheading">Stay informed about the latest improvements</p>
 
-  <div class="m3-surface update-card" style="--accent-color: #6366F1;">
-    <div class="flex items-start space-x-3">
-      <div class="icon-wrapper">
-        <span class="material-icons">update</span>
-      </div>
-      <div>
-        <h3 class="font-medium">Background Notifications</h3>
-        <p>Notifications now work even when the app is closed using Background Sync API.</p>
-        <p class="text-xs opacity-50 mt-1">Just now</p>
-      </div>
-    </div>
-  </div>
+                    <div class="m3-surface update-card">
+                        <div class="flex items-start space-x-3">
+                        <div class="icon-wrapper">
+                            <span class="material-icons">update</span>
+                        </div>
+                        <div>
+                            <h3 class="font-medium">Background Notifications</h3>
+                            <p>Notifications now work even when the app is closed using Background Sync API.</p>
+                            <p class="text-xs opacity-50 mt-1">Just now</p>
+                        </div>
+                        </div>
+                    </div>
 
-  <div class="m3-surface update-card" style="--accent-color: #10B981;">
-    <div class="flex items-start space-x-3">
-      <div class="icon-wrapper">
-        <span class="material-icons">update</span>
-      </div>
-      <div>
-        <h3 class="font-medium">Exonova Axis Improvement</h3>
-        <p>Completely redesigned UI with Android app feel</p>
-        <p class="text-xs opacity-50 mt-1">17/09/25 5:44 PM</p>
-      </div>
-    </div>
-  </div>
+                    <div class="m3-surface update-card">
+                        <div class="flex items-start space-x-3">
+                        <div class="icon-wrapper">
+                            <span class="material-icons">update</span>
+                        </div>
+                        <div>
+                            <h3 class="font-medium">Exonova Axis Improvement</h3>
+                            <p>Completely redesigned UI with Android app feel</p>
+                            <p class="text-xs opacity-50 mt-1">17/09/25 5:44 PM</p>
+                        </div>
+                        </div>
+                    </div>
 
-  <div class="m3-surface update-card" style="--accent-color: #8B5CF6;">
-    <div class="flex items-start space-x-3">
-      <div class="icon-wrapper">
-        <span class="material-icons">update</span>
-      </div>
-      <div>
-        <h3 class="font-medium">El Futuro AI Enhancements</h3>
-        <p>Improved the backing for better responses</p>
-        <p class="text-xs opacity-50 mt-1">12/09/25 7:48 PM</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+                    <div class="m3-surface update-card">
+                        <div class="flex items-start space-x-3">
+                        <div class="icon-wrapper">
+                            <span class="material-icons">update</span>
+                        </div>
+                        <div>
+                            <h3 class="font-medium">El Futuro AI Enhancements</h3>
+                            <p>Improved the backing for better responses</p>
+                            <p class="text-xs opacity-50 mt-1">12/09/25 7:48 PM</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             `;
         }
 
@@ -2673,6 +2221,10 @@
             
             appView.classList.add('active');
             
+            // Hide navigation when app is open
+            document.querySelector('.nav-container').style.opacity = '0';
+            document.querySelector('.nav-container').style.pointerEvents = 'none';
+            
             // Simulate loading delay for demo purposes
             setTimeout(() => {
                 appContent.innerHTML = `
@@ -2734,27 +2286,6 @@
                 logoModal.classList.add('hidden');
             }, 300);
         }
-
-        // Debug function to test notifications manually
-        function testAllNotifications() {
-            console.log('=== TESTING ALL NOTIFICATION TYPES ===');
-            
-            // Test in-app toast
-            showToast('🔔 Testing in-app notifications...');
-            
-            // Test adding to notification list
-            addNotification({
-                id: 'manual-test-' + Date.now(),
-                title: 'Manual Test ✅',
-                message: 'This is a test notification in your notifications list.',
-                type: 'info',
-                timestamp: Date.now(),
-                read: false
-            });
-        }
-
-        // Make it available globally for testing
-        window.testNotifications = testAllNotifications;
 
         // Set up event listeners
         function setupEventListeners() {
@@ -2871,7 +2402,7 @@
                 searchResults.innerHTML = results.map(product => `
                     <div class="p-3 border-b border-opacity-20 last:border-b-0 cursor-pointer hover:bg-opacity-10 rounded-lg transition-colors ripple" data-product-id="${product.id}">
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-lg flex items-center justify-center ${product.color}">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center">
                                 <img src="${product.logoUrl}" alt="${product.name}" class="w-6 h-6" onerror="this.src='https://placehold.co/24x24/0ea5e9/ffffff?text=E'">
                             </div>
                             <div>
@@ -2900,12 +2431,21 @@
                     tab.classList.add('active');
                     currentTab = tab.dataset.tab;
                     renderContent();
+                    
+                    // Scroll to top when switching tabs
+                    mainContent.scrollTop = 0;
                 });
             });
             
             // Back to home button
             document.getElementById('back-to-home-btn').addEventListener('click', () => {
                 appView.classList.remove('active');
+                
+                // Show navigation when returning to home
+                setTimeout(() => {
+                    document.querySelector('.nav-container').style.opacity = '1';
+                    document.querySelector('.nav-container').style.pointerEvents = 'auto';
+                }, 300);
             });
             
             // Close search when clicking outside
@@ -2937,16 +2477,35 @@
             });
         }
 
-        // Hide splash screen after 2 seconds
-        setTimeout(() => {
-            splashScreen.style.opacity = '0';
-            setTimeout(() => {
-                splashScreen.style.display = 'none';
-            }, 600);
-        }, 2000);
+        // Enhanced splash screen with progress bar
+        function initSplashScreen() {
+            const progressBar = document.querySelector('.loading-progress');
+            
+            // Animate progress bar
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Hide splash screen after completion
+                    setTimeout(() => {
+                        splashScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            splashScreen.style.display = 'none';
+                        }, 600);
+                    }, 300);
+                }
+                progressBar.style.width = `${progress}%`;
+            }, 100);
+        }
 
         // Initialize the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initApp);
+        document.addEventListener('DOMContentLoaded', () => {
+            initSplashScreen();
+            setTimeout(initApp, 2500); // Delay app initialization until after splash screen
+        });
     </script>
 
     <script>
@@ -2981,50 +2540,5 @@
             movePill(activeIndex);
         });
     </script>
-  
-  <script>
-    // Enhanced openProduct function to hide navigation
-function openProduct(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-    
-    appTitle.textContent = product.name;
-    appContent.innerHTML = `
-        <div class="h-full w-full flex items-center justify-center">
-            <div class="text-center p-6">
-                <div class="spinner mb-4"></div>
-                <p>Loading ${product.name}...</p>
-            </div>
-        </div>
-    `;
-    
-    appView.classList.add('active');
-    
-    // Hide navigation when app is open
-    document.querySelector('.nav-container').style.opacity = '0';
-    document.querySelector('.nav-container').style.pointerEvents = 'none';
-    
-    // Simulate loading delay for demo purposes
-    setTimeout(() => {
-        appContent.innerHTML = `
-            <iframe src="${product.url}" class="w-full h-full border-0" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
-        `;
-    }, 1500);
-}
-
-// Enhanced back to home function to show navigation
-document.getElementById('back-to-home-btn').addEventListener('click', () => {
-    appView.classList.remove('active');
-    
-    // Show navigation when returning to home
-    setTimeout(() => {
-        document.querySelector('.nav-container').style.opacity = '1';
-        document.querySelector('.nav-container').style.pointerEvents = 'auto';
-    }, 300);
-});
-  </script>
- 
-  
-  
 </body>
 </html>
