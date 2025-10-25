@@ -245,22 +245,6 @@
             transform: translateY(0);
         }
 
-        /* Isolated pill container */
-        .isolated-pill {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-            font-size: 14px;
-            padding: 6px 16px;
-            border-radius: var(--md-sys-shape-corner-full);
-            box-shadow: var(--md-elevation-1);
-            transition: all 0.3s ease;
-            cursor: default;
-            user-select: none;
-        }
-        
         /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 4px;
@@ -977,16 +961,6 @@
             line-height: 1.4;
         }
 
-        /* Status bar with time - Fixed position */
-        .status-bar {
-            position: fixed;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            pointer-events: none;
-        }
-
         /* Mobile optimizations */
         @media (max-width: 480px) {
             .product-card {
@@ -1097,7 +1071,9 @@
                 <p class="opacity-75">Exonova is a collection of innovative tools and applications designed to enhance productivity and creativity.</p>
                 <p class="opacity-75">Our mission is to create intuitive, powerful applications that solve real-world problems and make technology more accessible.</p>
                 <div class="border-t border-opacity-20 pt-2 sm:pt-3 mt-2 sm:mt-3">
-                    <div class="isolated-pill"><h4 class="font-medium mb-1 sm:mb-2 text-sm sm:text-base">Our Products Include:</h4></div>
+                    <div class="flex items-center space-x-2 mb-2">
+                        <h4 class="font-medium text-sm sm:text-base">Our Products Include:</h4>
+                    </div>
                     <ul class="list-disc pl-4 sm:pl-5 space-y-1 opacity-75 text-sm">
                         <li>El Futuro - Intelligent AI Assistant</li>
                         <li>SkyCast Pro - Weather & Environmental Platform</li>
@@ -1118,8 +1094,6 @@
     <div id="main-container-wrapper">
         <!-- Main Container -->
         <div id="main-container" class="min-h-screen flex flex-col">
-           
-          
            
             <!-- Header -->
             <header class="app-header flex items-center justify-between">
@@ -1278,18 +1252,9 @@
                 <div id="app-content" class="h-full">
                     <!-- App content will be loaded here -->
                 </div>
-        <div class="status-bar">
-                <div class="isolated-pill">
-                    <div id="current-time" class="font-medium">12:00 PM</div>
-                </div>
             </div>
-          
-          </div>
         </div>
     </div>
-  
-    <!-- Status Bar with Time - Fixed at top -->
-            
 
     <script>
         // Data for Exonova Products with real logos and URLs
@@ -1353,8 +1318,8 @@
         let deferredPrompt = null;
         let isAppInstalled = localStorage.getItem('isAppInstalled') === 'true';
         
-        // Notification intervals tracking
-        let notificationIntervals = [];
+        // Background notification intervals tracking
+        let backgroundNotificationIntervals = [];
 
         // DOM Elements
         const mainContent = document.getElementById('main-content');
@@ -1386,9 +1351,6 @@
 
         // Initialize the app
         function initApp() {
-            updateTime();
-            setInterval(updateTime, 60000);
-            
             // Apply saved theme
             applyTheme(currentTheme);
             
@@ -1410,6 +1372,9 @@
             
             // Initialize PWA features
             initPWA();
+            
+            // Initialize background notifications
+            initBackgroundNotifications();
         }
 
         // Initialize PWA features
@@ -1446,6 +1411,143 @@
             }
         }
 
+        // Initialize background notifications
+        function initBackgroundNotifications() {
+            console.log('🔄 Initializing background notifications...');
+            
+            // Clear any existing intervals
+            clearBackgroundNotificationIntervals();
+            
+            // Schedule background notifications
+            scheduleBackgroundNotifications();
+            
+            // Set up periodic sync for background notifications
+            setupPeriodicSync();
+        }
+
+        // Schedule background notifications
+        function scheduleBackgroundNotifications() {
+            if (!pushNotificationsEnabled) return;
+            
+            // Background notification messages
+            const backgroundMessages = [
+                {
+                    title: '🚀 Productivity Tip',
+                    message: 'Try using multiple Exonova apps together for maximum efficiency!',
+                    type: 'tip'
+                },
+                {
+                    title: '📱 New Feature Alert',
+                    message: 'Check out the latest updates in your favorite Exonova apps!',
+                    type: 'update'
+                },
+                {
+                    title: '💡 Did You Know?',
+                    message: 'You can favorite your most used apps for quick access!',
+                    type: 'info'
+                },
+                {
+                    title: '🌟 Welcome Back!',
+                    message: 'Your Exonova apps are ready when you are!',
+                    type: 'welcome'
+                }
+            ];
+            
+            // Schedule notifications at different intervals (30 minutes to 2 hours)
+            const intervals = [30, 45, 60, 90, 120]; // minutes
+            
+            intervals.forEach((interval, index) => {
+                const messageIndex = index % backgroundMessages.length;
+                const notification = backgroundMessages[messageIndex];
+                
+                const intervalId = setInterval(() => {
+                    if (pushNotificationsEnabled) {
+                        sendBackgroundNotification(notification);
+                    }
+                }, interval * 60 * 1000); // Convert minutes to milliseconds
+                
+                backgroundNotificationIntervals.push(intervalId);
+                
+                // Send initial notification after a delay
+                setTimeout(() => {
+                    if (pushNotificationsEnabled) {
+                        sendBackgroundNotification(notification);
+                    }
+                }, (interval * 60 * 1000) / 2); // Half the interval for initial notification
+            });
+            
+            console.log(`✅ Scheduled ${backgroundNotificationIntervals.length} background notification intervals`);
+        }
+
+        // Send background notification
+        function sendBackgroundNotification(notification) {
+            if (!pushNotificationsEnabled) return;
+            
+            const notificationId = 'bg-' + Date.now();
+            
+            // Add to notifications list
+            addNotification({
+                id: notificationId,
+                title: notification.title,
+                message: notification.message,
+                type: notification.type,
+                timestamp: Date.now(),
+                read: false
+            });
+            
+            // Show push notification if service worker is available
+            if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification(notification.title, {
+                        body: notification.message,
+                        icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                        badge: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
+                        tag: notificationId,
+                        requireInteraction: false,
+                        silent: false,
+                        vibrate: [200, 100, 200],
+                        actions: [
+                            {
+                                action: 'open',
+                                title: 'Open App'
+                            },
+                            {
+                                action: 'dismiss',
+                                title: 'Dismiss'
+                            }
+                        ]
+                    });
+                });
+            }
+            
+            console.log('📢 Background notification sent:', notification.title);
+        }
+
+        // Clear background notification intervals
+        function clearBackgroundNotificationIntervals() {
+            backgroundNotificationIntervals.forEach(interval => {
+                clearInterval(interval);
+            });
+            backgroundNotificationIntervals = [];
+            console.log('🧹 Cleared background notification intervals');
+        }
+
+        // Set up periodic sync for background notifications
+        function setupPeriodicSync() {
+            if ('serviceWorker' in navigator && 'periodicSync' in navigator.serviceWorker) {
+                navigator.serviceWorker.ready.then(registration => {
+                    try {
+                        registration.periodicSync.register('background-notifications', {
+                            minInterval: 24 * 60 * 60 * 1000 // 24 hours
+                        });
+                        console.log('✅ Periodic sync registered for background notifications');
+                    } catch (error) {
+                        console.log('⚠️ Periodic sync not supported:', error);
+                    }
+                });
+            }
+        }
+
         // Install app
         function installApp() {
             if (deferredPrompt) {
@@ -1467,9 +1569,6 @@
         async function initNotifications() {
             console.log('🔔 Initializing notifications...');
             
-            // Clear any existing intervals
-            clearAllNotificationIntervals();
-            
             // Update notification badge
             updateNotificationBadge();
             
@@ -1477,9 +1576,6 @@
             if (pushNotificationsEnabled) {
                 await initializePushNotifications();
             }
-            
-            // Schedule regular notifications
-            scheduleEnhancedNotifications();
         }
 
         // Separate push notification initialization
@@ -1488,10 +1584,17 @@
                 // Check if we have permission
                 if (Notification.permission === 'granted') {
                     console.log('✅ Notification permission already granted');
-                    await subscribeToPushNotifications();
                 } else if (Notification.permission === 'default') {
                     console.log('ℹ️ Notification permission not yet requested');
-                    // We'll request permission on first user interaction
+                    // Request permission on user interaction
+                    document.addEventListener('click', async function requestPermissionOnce() {
+                        const permission = await Notification.requestPermission();
+                        if (permission === 'granted') {
+                            console.log('✅ Notification permission granted');
+                            showToast('Notifications enabled!');
+                        }
+                        document.removeEventListener('click', requestPermissionOnce);
+                    }, { once: true });
                 } else {
                     console.log('❌ Notification permission denied');
                 }
@@ -1500,260 +1603,13 @@
             }
         }
 
-        // Enhanced push notification subscription
-        async function subscribeToPushNotifications() {
-            try {
-                // Check browser support
-                if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-                    console.log('❌ Push notifications not supported in this browser');
-                    showToast('Push notifications not supported');
-                    return null;
-                }
-
-                // Check notification permission
-                if (Notification.permission === 'denied') {
-                    console.log('❌ Notification permission denied by user');
-                    showToast('Please enable notifications in browser settings');
-                    return null;
-                }
-
-                // Wait for service worker to be ready
-                const registration = await navigator.serviceWorker.ready;
-                
-                // Check if already subscribed
-                let subscription = await registration.pushManager.getSubscription();
-                
-                if (subscription) {
-                    console.log('✅ Already subscribed to push notifications');
-                    return subscription;
-                }
-
-                // Request permission if not already granted
-                if (Notification.permission === 'default') {
-                    const permission = await Notification.requestPermission();
-                    if (permission !== 'granted') {
-                        console.log('❌ Notification permission not granted');
-                        showToast('Notifications permission required');
-                        return null;
-                    }
-                }
-
-                // Subscribe to push notifications
-                subscription = await registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array('BLaZmVYnyEcksSzkLqgJYbeUcDUsqwQRcPoypsbMLBYiAKDymDtYboOJ1SBr7Thh0apXN17UDeAC2EPNnyh5x-c')
-                });
-
-                console.log('✅ Push subscription successful:', subscription);
-                
-                // Store subscription locally
-                localStorage.setItem('pushSubscription', JSON.stringify(subscription));
-                showToast('Push notifications enabled!');
-                
-                return subscription;
-
-            } catch (error) {
-                console.error('❌ Push subscription failed:', error);
-                
-                // Show specific error messages
-                if (error.name === 'NotAllowedError') {
-                    showToast('Notification permission denied');
-                } else if (error.name === 'AbortError') {
-                    showToast('Push subscription was aborted');
-                } else {
-                    showToast('Failed to enable push notifications');
-                }
-                
-                return null;
-            }
-        }
-
-        // Enhanced VAPID key conversion function
-        function urlBase64ToUint8Array(base64String) {
-            try {
-                const padding = '='.repeat((4 - base64String.length % 4) % 4);
-                const base64 = (base64String + padding)
-                    .replace(/\-/g, '+')
-                    .replace(/_/g, '/');
-                
-                const rawData = atob(base64);
-                const outputArray = new Uint8Array(rawData.length);
-                
-                for (let i = 0; i < rawData.length; ++i) {
-                    outputArray[i] = rawData.charCodeAt(i);
-                }
-                return outputArray;
-            } catch (error) {
-                console.error('❌ Invalid VAPID key format:', error);
-                throw new Error('Invalid VAPID key format');
-            }
-        }
-
-        // Function to unsubscribe from push notifications
-        async function unsubscribeFromPushNotifications() {
-            try {
-                if ('serviceWorker' in navigator) {
-                    const registration = await navigator.serviceWorker.ready;
-                    const subscription = await registration.pushManager.getSubscription();
-                    
-                    if (subscription) {
-                        await subscription.unsubscribe();
-                        console.log('✅ Unsubscribed from push notifications');
-                        localStorage.removeItem('pushSubscription');
-                    }
-                }
-            } catch (error) {
-                console.error('❌ Failed to unsubscribe from push notifications:', error);
-            }
-        }
-
-        // Send push notification (simulated for demo)
-        function sendPushNotification(notification) {
-            if (pushNotificationsEnabled && 'serviceWorker' in navigator) {
-                navigator.serviceWorker.ready.then(registration => {
-                    registration.showNotification(notification.title, {
-                        body: notification.message,
-                        icon: 'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
-                        badge: 'https://aditya-cmd-max.github.io/axis/axislogo.png',
-                        tag: notification.id,
-                        requireInteraction: true,
-                        actions: [
-                            {
-                                action: 'open',
-                                title: 'Open App'
-                            },
-                            {
-                                action: 'dismiss',
-                                title: 'Dismiss'
-                            }
-                        ]
-                    });
-                });
-            }
-        }
-
-        // FIXED: Schedule notifications with proper timing and cleanup
-        function scheduleEnhancedNotifications() {
-            if (!pushNotificationsEnabled && !inAppNotificationsEnabled) return;
-            
-            // Clear any existing intervals first
-            clearAllNotificationIntervals();
-            
-            // Add welcome notification (only once per day)
-            const lastWelcomeDate = localStorage.getItem('lastWelcomeDate');
-            const today = new Date().toDateString();
-            
-            if (lastWelcomeDate !== today) {
-                addNotification({
-                    id: 'welcome-' + Date.now(),
-                    title: ' Exonova Axis! 🚀',
-                    message: 'Your productivity hub is ready. Explore all tools in one place.',
-                    type: 'welcome',
-                    timestamp: Date.now(),
-                    read: false
-                });
-                localStorage.setItem('lastWelcomeDate', today);
-                console.log('✅ Welcome notification added for today');
-            } else {
-                console.log('ℹ️ Welcome notification already shown today');
-            }
-            
-            // Schedule in-app notifications with much longer intervals for safety
-            scheduleInAppNotifications();
-        }
-
-        // FIXED: Schedule in-app notifications with proper intervals
-        function scheduleInAppNotifications() {
-            // Clear any existing intervals
-            clearAllNotificationIntervals();
-            
-            const oneHourNotifications = [
-                {
-                    title: 'Productivity Tip 💡',
-                    message: 'Use El Futuro AI to automate your daily tasks and save time.',
-                    type: 'tip'
-                },
-                {
-                    title: 'Did You Know? 🤔',
-                    message: 'SkyCast Pro can predict weather patterns 7 days in advance!',
-                    type: 'info'
-                }
-            ];
-            
-            const twoHourNotifications = [
-                {
-                    title: 'Feature Spotlight 🔦',
-                    message: 'Mindscribe can help organize your thoughts and ideas efficiently.',
-                    type: 'update'
-                },
-                {
-                    title: 'Try This 👇',
-                    message: 'Peo-TTS for natural sounding text-to-speech conversion.',
-                    type: 'tip'
-                }
-            ];
-            
-            // Use much longer intervals for safety (6 hours and 12 hours)
-            const sixHourInterval = setInterval(() => {
-                if (oneHourNotifications.length > 0 && document.visibilityState === 'visible') {
-                    const oneHourIndex = parseInt(localStorage.getItem('oneHourIndex') || '0');
-                    const notification = oneHourNotifications[oneHourIndex];
-                    
-                    addNotification({
-                        id: 'inapp-6h-' + Date.now(),
-                        title: notification.title,
-                        message: notification.message,
-                        type: notification.type,
-                        timestamp: Date.now(),
-                        read: false
-                    });
-                    
-                    localStorage.setItem('oneHourIndex', ((oneHourIndex + 1) % oneHourNotifications.length).toString());
-                }
-            }, 6 * 60 * 60 * 1000); // 6 hours
-            
-            const twelveHourInterval = setInterval(() => {
-                if (twoHourNotifications.length > 0 && document.visibilityState === 'visible') {
-                    const twoHourIndex = parseInt(localStorage.getItem('twoHourIndex') || '0');
-                    const notification = twoHourNotifications[twoHourIndex];
-                    
-                    addNotification({
-                        id: 'inapp-12h-' + Date.now(),
-                        title: notification.title,
-                        message: notification.message,
-                        type: notification.type,
-                        timestamp: Date.now(),
-                        read: false
-                    });
-                    
-                    localStorage.setItem('twoHourIndex', ((twoHourIndex + 1) % twoHourNotifications.length).toString());
-                }
-            }, 12 * 60 * 60 * 1000); // 12 hours
-            
-            // Track intervals for cleanup
-            notificationIntervals.push(sixHourInterval, twelveHourInterval);
-        }
-
-        // FIXED: Clear all notification intervals
-        function clearAllNotificationIntervals() {
-            notificationIntervals.forEach(interval => {
-                clearInterval(interval);
-            });
-            notificationIntervals = [];
-        }
-
         // Add a notification
         function addNotification(notification) {
             notifications.unshift(notification);
             localStorage.setItem('notifications', JSON.stringify(notifications));
             updateNotificationBadge();
             
-            // Show push notification if enabled
-            if (pushNotificationsEnabled) {
-                sendPushNotification(notification);
-            }
-            
-            // Show in-app notification if enabled
+            // Show in-app notification if enabled and app is visible
             if (inAppNotificationsEnabled && document.visibilityState === 'visible') {
                 showToast(`📱 ${notification.title}`);
             }
@@ -1933,13 +1789,6 @@
             setTimeout(() => {
                 notificationsModal.classList.add('hidden');
             }, 300);
-        }
-
-        // Update current time
-        function updateTime() {
-            const now = new Date();
-            const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', options);
         }
 
         // Apply theme to the app
@@ -2338,23 +2187,27 @@
             // Clear notifications button
             document.getElementById('clear-notifications-btn').addEventListener('click', clearNotifications);
             
-            // Push notifications toggle - UPDATED
+            // Push notifications toggle
             pushNotificationsToggle.addEventListener('change', async (e) => {
                 pushNotificationsEnabled = e.target.checked;
                 localStorage.setItem('pushNotificationsEnabled', pushNotificationsEnabled);
                 
                 if (pushNotificationsEnabled) {
-                    // Enable push notifications
-                    const result = await subscribeToPushNotifications();
-                    if (!result) {
-                        // If subscription failed, uncheck the toggle
+                    // Request notification permission
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                        showToast('Push notifications enabled!');
+                        // Restart background notifications
+                        initBackgroundNotifications();
+                    } else {
                         pushNotificationsToggle.checked = false;
                         pushNotificationsEnabled = false;
                         localStorage.setItem('pushNotificationsEnabled', 'false');
+                        showToast('Notification permission required');
                     }
                 } else {
                     // Disable push notifications
-                    await unsubscribeFromPushNotifications();
+                    clearBackgroundNotificationIntervals();
                     showToast('Push notifications disabled');
                 }
             });
@@ -2364,13 +2217,6 @@
                 inAppNotificationsEnabled = e.target.checked;
                 localStorage.setItem('inAppNotificationsEnabled', inAppNotificationsEnabled);
                 showToast(inAppNotificationsEnabled ? 'In-app notifications enabled' : 'In-app notifications disabled');
-                
-                // Restart notification scheduling
-                if (inAppNotificationsEnabled) {
-                    scheduleEnhancedNotifications();
-                } else {
-                    clearAllNotificationIntervals();
-                }
             });
             
             // Install app buttons
@@ -2494,6 +2340,7 @@
                         splashScreen.style.opacity = '0';
                         setTimeout(() => {
                             splashScreen.style.display = 'none';
+                            initApp();
                         }, 600);
                     }, 300);
                 }
@@ -2504,7 +2351,6 @@
         // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             initSplashScreen();
-            setTimeout(initApp, 2500); // Delay app initialization until after splash screen
         });
     </script>
 
