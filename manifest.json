@@ -1,7 +1,7 @@
 {
-    "name": "Exonova Axis",
-    "short_name": "Exonova Axis",
-    "description": "All of Exonova • At one place",
+    "name": "Reverbit Axis",
+    "short_name": "Reverbit Axis",
+    "description": "All of Reverbit • At one place",
     "start_url": "https://aditya-cmd-max.github.io/axis/",
     "display": "standalone",
     "background_color": "#000000",
