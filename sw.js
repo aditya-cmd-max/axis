@@ -22,7 +22,7 @@ const urlsToCache = [
     'https://aditya-cmd-max.github.io/axis/axislogo.png',
     'https://aditya-cmd-max.github.io/axis/axisrotate.gif',
     'https://aditya-cmd-max.github.io/axis/Untitled%20design.gif',
-    'https://aditya-cmd-max.github.io/exonova-/logo-nobg.png',
+    'https://aditya-cmd-max.github.io/reverbit/logo-nobg.png',
     'https://fonts.googleapis.com/css2?family=Product+Sans:wght@300;400;500;700&display=swap',
     'https://fonts.googleapis.com/icon?family=Material+Icons',
     'https://cdn.tailwindcss.com'
@@ -30,14 +30,14 @@ const urlsToCache = [
 
 // Product assets for offline functionality
 const productAssets = [
-    'https://aditya-cmd-max.github.io/exonovaai/logo.png',
+    'https://aditya-cmd-max.github.io/cloverai/logo.png',
     'https://aditya-cmd-max.github.io/exonovaweather/skycast.png',
     'https://aditya-cmd-max.github.io/popout/ChatGPT%20Image%20Aug%2015,%202025,%2008_26_20%20PM.png',
     'https://aditya-cmd-max.github.io/mindscribe/logo.png',
     'https://aditya-cmd-max.github.io/Peo/tts.png',
     'https://aditya-cmd-max.github.io/securepass/logo-dark.png',
-    'https://aditya-cmd-max.github.io/exonova-/download.png',
-    'https://aditya-cmd-max.github.io/exonova-/cloverlogo.png'
+    'https://aditya-cmd-max.github.io/reverbit/download.png',
+    'https://aditya-cmd-max.github.io/reverbit/cloverlogo.png'
 ];
 
 // Enhanced notification messages with variety
@@ -45,19 +45,19 @@ const NOTIFICATION_MESSAGES = {
     SHORT: [
         {
             title: '🚀 Quick Tip',
-            message: 'Use multiple Exonova apps together for maximum productivity!',
+            message: 'Use multiple Reverbit apps together for maximum productivity!',
             type: 'tip',
             icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png'
         },
         {
             title: '💡 Productivity Hack',
-            message: 'Try El Futuro AI for automating your daily tasks.',
+            message: 'Try Clover AI for automating your daily tasks.',
             type: 'tip',
-            icon: 'https://aditya-cmd-max.github.io/exonovaai/logo.png'
+            icon: 'https://aditya-cmd-max.github.io/cloverai/logo.png'
         },
         {
             title: '📱 Quick Reminder',
-            message: 'Your favorite apps are just a tap away in Exonova Axis!',
+            message: 'Your favorite apps are just a tap away in Reverbit Axis!',
             type: 'reminder',
             icon: 'https://aditya-cmd-max.github.io/axis/axislogo.png'
         }
