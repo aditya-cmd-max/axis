@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -2352,6 +2353,96 @@
             }, 100);
         }
 
+      // FIX FOR IFRAME SCROLLING - Add this function
+function fixIframeScrolling(iframe) {
+    // Wait for iframe to load
+    iframe.addEventListener('load', function() {
+        try {
+            // Access iframe document
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            
+            // Set iframe body to expand
+            if (iframeDoc && iframeDoc.body) {
+                iframeDoc.body.style.minHeight = '100vh';
+                iframeDoc.body.style.height = 'auto';
+                
+                // Also set html height
+                iframeDoc.documentElement.style.height = 'auto';
+                iframeDoc.documentElement.style.minHeight = '100vh';
+                
+                console.log('✅ Fixed iframe scrolling');
+            }
+        } catch (e) {
+            // If CORS prevents access, use a different approach
+            console.log('Using alternative scrolling fix');
+            
+            // Alternative: Make parent container scrollable
+            const wrapper = iframe.parentElement;
+            wrapper.style.overflowY = 'auto';
+            wrapper.style.height = 'auto';
+            wrapper.style.minHeight = '100vh';
+            
+            // Make iframe very tall
+            iframe.style.height = '2000px'; // Large enough for most content
+            iframe.style.minHeight = '100vh';
+        }
+    });
+}
+
+
+function openProduct(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    
+    appTitle.textContent = product.name;
+    
+    // COMPLETELY DIFFERENT APPROACH: Open in new tab
+    // But make it feel like it's in the app
+    
+    appContent.innerHTML = `
+        <div style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--reverbit-background);
+            color: var(--reverbit-on-background);
+            text-align: center;
+            padding: 20px;
+        ">
+            <div class="spinner mb-4"></div>
+            <h3 class="text-xl font-semibold mb-2">Opening ${product.name}</h3>
+            <p class="opacity-75 mb-4">Opening in new window for best experience...</p>
+            <button onclick="window.open('${product.url}', '_blank')" class="reverbit-button">
+                Open Now
+            </button>
+            <button onclick="document.getElementById('back-to-home-btn').click()" class="mt-2 px-4 py-2 rounded-lg border">
+                Cancel
+            </button>
+        </div>
+    `;
+    
+    appView.classList.add('active');
+    
+    // Auto-open after 1 second
+    setTimeout(() => {
+        window.open(product.url, '_blank');
+        // Optionally close the app view
+        setTimeout(() => {
+            document.getElementById('back-to-home-btn').click();
+        }, 500);
+    }, 1000);
+}
+      
+      
+      
+      
+      
         // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             initSplashScreen();
