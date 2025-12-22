@@ -1023,6 +1023,13 @@
         .backface-hidden {
             backface-visibility: hidden;
         }
+      
+      .nav-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(20px);
+}
+      
     </style>
 </head>
 
@@ -1105,10 +1112,7 @@
                     <div class="logo-container relative">
                         <img src="https://aditya-cmd-max.github.io/reverbit/logo-insvg.svg" alt="Reverbit Logo" class="h-10 w-10 rounded-xl cursor-pointer ripple logo-pulse" id="logo-btn" onerror="this.src='https://placehold.co/40x40/0ea5e9/ffffff?text=E'">
                     </div>
-                    <div>
-                        <h1 class="text-xl font-bold">Reverbit Axis</h1>
-                        <p class="text-xs opacity-75">All of Reverbit • At one place</p>
-                    </div>
+                   
                 </div>
                 <div class="flex items-center gap-2">
                     <button id="search-btn" class="p-2 rounded-full ripple">
@@ -2120,26 +2124,35 @@
         }
 
         // Open logo modal
-        function openLogoModal() {
-            logoModal.classList.remove('hidden');
-            setTimeout(() => {
-                logoModalContent.classList.add('opacity-100');
-                logoModalContent.classList.remove('scale-95');
-            }, 10);
-            
-            // Stop the logo animation once the modal is opened
-            logoBtn.classList.remove('logo-pulse');
-        }
+       // In openLogoModal function, add:
+function openLogoModal() {
+    logoModal.classList.remove('hidden');
+    
+    // Hide navigation
+    document.querySelector('.nav-container').classList.add('hidden');
+    
+    setTimeout(() => {
+        logoModalContent.classList.add('opacity-100');
+        logoModalContent.classList.remove('scale-95');
+    }, 10);
+    
+    logoBtn.classList.remove('logo-pulse');
+}
 
-        // Close logo modal
-        function closeLogoModal() {
-            logoModalContent.classList.remove('opacity-100');
-            logoModalContent.classList.add('scale-95');
-            
-            setTimeout(() => {
-                logoModal.classList.add('hidden');
-            }, 300);
-        }
+       // In closeLogoModal function, add:
+function closeLogoModal() {
+    logoModalContent.classList.remove('opacity-100');
+    logoModalContent.classList.add('scale-95');
+    
+    // Show navigation
+    document.querySelector('.nav-container').classList.remove('hidden');
+    
+    setTimeout(() => {
+        logoModal.classList.add('hidden');
+    }, 300);
+}
+      
+      
 
         // Set up event listeners
         function setupEventListeners() {
@@ -2153,16 +2166,30 @@
             });
             
             // Settings button
-            document.getElementById('settings-btn').addEventListener('click', () => {
-                settingsModal.classList.remove('hidden');
-                setTimeout(() => {
-                    settingsModalContent.classList.add('opacity-100');
-                    settingsModalContent.classList.remove('scale-95');
-                }, 10);
-            });
-            
-            // Close settings button
-            document.getElementById('close-settings-btn').addEventListener('click', closeSettings);
+            // In the settings button event listener, add:
+document.getElementById('settings-btn').addEventListener('click', () => {
+    settingsModal.classList.remove('hidden');
+    
+    // Hide navigation
+    document.querySelector('.nav-container').classList.add('hidden');
+    
+    setTimeout(() => {
+        settingsModalContent.classList.add('opacity-100');
+        settingsModalContent.classList.remove('scale-95');
+    }, 10);
+});
+           // In closeSettings function, add:
+function closeSettings() {
+    settingsModalContent.classList.remove('opacity-100');
+    settingsModalContent.classList.add('scale-95');
+    
+    // Show navigation
+    document.querySelector('.nav-container').classList.remove('hidden');
+    
+    setTimeout(() => {
+        settingsModal.classList.add('hidden');
+    }, 300);
+}
             
             // Search button
             document.getElementById('search-btn').addEventListener('click', () => {
@@ -2288,6 +2315,35 @@
                 });
             });
             
+          
+          // In openNotificationsModal function, add:
+function openNotificationsModal() {
+    renderNotifications();
+    notificationsModal.classList.remove('hidden');
+    
+    // Hide navigation
+    document.querySelector('.nav-container').classList.add('hidden');
+    
+    setTimeout(() => {
+        notificationsModalContent.classList.add('opacity-100');
+        notificationsModalContent.classList.remove('scale-95');
+    }, 10);
+}
+
+// In closeNotificationsModal function, add:
+function closeNotificationsModal() {
+    notificationsModalContent.classList.remove('opacity-100');
+    notificationsModalContent.classList.add('scale-95');
+    
+    // Show navigation
+    document.querySelector('.nav-container').classList.remove('hidden');
+    
+    setTimeout(() => {
+        notificationsModal.classList.add('hidden');
+    }, 300);
+}
+          
+          
             // Back to home button
             document.getElementById('back-to-home-btn').addEventListener('click', () => {
                 appView.classList.remove('active');
