@@ -10,14 +10,14 @@
     "scope": "https://aditya-cmd-max.github.io/axis/",
     "icons": [
         {
-            "src": "https://aditya-cmd-max.github.io/reverbit/logo-nobg.png",
+            "src": "https://aditya-cmd-max.github.io/reverbit/logo-insvg.svg",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/svg"
         },
         {
-            "src": "https://aditya-cmd-max.github.io/reverbit/logo-nobg.png",
+            "src": "https://aditya-cmd-max.github.io/reverbit/logo-insvg.svg",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/svg"
         }
     ],
     "categories": ["productivity", "utilities"],
